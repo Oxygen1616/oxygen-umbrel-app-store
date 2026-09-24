@@ -2,7 +2,7 @@ manifestVersion: 1
 id: oxygen-unsloth
 name: Unsloth Studio
 tagline: 2x-5x faster LLM fine-tuning and training with 70% less VRAM
-icon: https://github.com/unslothai/unsloth/blob/main/images/unsloth%20sticker.png
+icon: https://raw.githubusercontent.com/unslothai/unsloth/main/images/unsloth%20sticker.png
 category: AI
 version: "1.0.1"
 port: 8890
