@@ -361,7 +361,7 @@ This repository contains **Oxygen1616's** custom Community App Store for umbrelO
 4. Select **Community App Stores**.
 5. Paste this repository URL:
    ```text
-   https://github.com/Oxygen1616/dennys-umbrel-app-store
+   https://github.com/Oxygen1616/oxygen-umbrel-app-store
    ```
 6. Click **Add**.
 
