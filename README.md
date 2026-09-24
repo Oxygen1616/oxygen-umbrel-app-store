@@ -1,33 +1,21 @@
-# Denny´s Umbrel App Store ☂️
+# Oxygen1616´s Umbrel App Store ☂️
 
 <p align="center">
   <img
     src="https://github.com/user-attachments/assets/41725ef0-6886-4023-bcc9-f2274ffdbaab"
-    alt="Dennys Umbrel App Store Banner"
+    alt="Oxygen1616 Umbrel App Store Banner"
     width="100%"
   >
 </p>
 
-<p align="center">
-<a href="https://appstore.subke.cloud/"><img src="https://img.shields.io/badge/Open%20App%20Store-appstore.subke.cloud-5B3FD8?style=for-the-badge&logo=umbrel&logoColor=white" alt="Open Denny's Umbrel App Store"></a>&nbsp;<a href="http://jskvc7syjc7t2uzzhyddchyeylnzjpx3xk6cvpzsl5db2twiohqtanid.onion/"><img src="https://img.shields.io/badge/Open%20via%20Tor-.onion-7D4698?style=for-the-badge&logo=torproject&logoColor=white" alt="Open Denny's Umbrel App Store via Tor"></a>
-</p>
-
 ---
 
-This repository contains my custom Umbrel App Store. Unlike the official store, this one is entirely community-driven and independently maintained. It offers apps created and shared by the community, but it is important to note that this store is not affiliated with or supported by the official Umbrel team. All updates, management, and content in this app store are handled independently. I run this App Store just for fun.
+This repository contains **Oxygen1616's** custom Community App Store for umbrelOS. Unlike the official store, this one is entirely community-driven and independently maintained. It offers apps created and shared by the community, but it is important to note that this store is not affiliated with or supported by the official Umbrel team. All updates, management, and content in this app store are handled independently.
 
+🔀 Open to app suggestions and custom contributions!
 
-🔀 I am open to app suggestions and will do my best to implement them. Additionally, I plan to occasionally submit pull requests to the official Umbrel App repository over time.
+&nbsp;
 
-&nbsp; 
-
-#### You enjoy my work? I enjoy a beer!
-
-[![Bitcoin](https://imgur.com/rNMrbPr.png)](#) &nbsp;
-[![Lightning](https://imgur.com/0QrGiUQ.png)](https://tip.md/dennysubke) &nbsp;
-[![PayNym](https://imgur.com/5PTx1Zz.png)](https://paynym.rs/+bulkypackage58) &nbsp;
-[![Buy Me a Coffee](https://imgur.com/kUp2xPe.png)](https://buymeacoffee.com/dennysubke) &nbsp;
-[![Ko-fi](https://imgur.com/0SP9FAN.png)](https://ko-fi.com/dennysubke)
 
 ##
 
@@ -359,14 +347,28 @@ This repository contains my custom Umbrel App Store. Unlike the official store, 
 | 322 | <img height="30" src="https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-zennotes/logo.png" /> | [ZenNotes](https://github.com/ZenNotes/zennotes) | A keyboard-first Markdown workspace for notes | 7878 |
 | 323 | <img height="30" src="https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-zipline/logo.png" /> | [Zipline](https://github.com/diced/zipline) | An advanced solution for seamless and secure file sharing | 3472 |
 | 324 | <img height="30" src="https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-zoraxy/logo.png" /> | [Zoraxy Proxy Server](https://github.com/tobychui/zoraxy) | An efficient reverse proxy server with automated SSL management | 8400 |
+| 325 | <img height="30" src="https://raw.githubusercontent.com/unslothai/unsloth/main/images/unsloth%20new%20logo.png" /> | [Unsloth Studio](https://github.com/unslothai/unsloth) | 2x-5x faster LLM fine-tuning and training with 70% less VRAM | 8890 |
 
 🔄 All Apps are continually updated and new Apps are added over time.
 
 ##
 
-### ⚠️ How to add the App Store:
+### ⚠️ How to add this App Store to your Umbrel:
+
+1. Open your Umbrel Web UI (`http://umbrel.local`).
+2. Go to **App Store**.
+3. Click the **`...`** (three dots) menu in the top-right corner.
+4. Select **Community App Stores**.
+5. Paste this repository URL:
+   ```text
+   https://github.com/Oxygen1616/dennys-umbrel-app-store
+   ```
+6. Click **Add**.
+
+&nbsp;
 
 https://user-images.githubusercontent.com/10330103/197889452-e5cd7e96-3233-4a09-b475-94b754adc7a3.mp4
+
 
 &nbsp;
 
