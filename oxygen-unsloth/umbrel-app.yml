@@ -4,7 +4,7 @@ name: Unsloth Studio
 tagline: 2x-5x faster LLM fine-tuning and training with 70% less VRAM
 icon: https://raw.githubusercontent.com/unslothai/unsloth/main/images/unsloth%20sticker.png
 category: AI
-version: "1.0.1"
+version: "1.0.2"
 port: 8890
 description: >-
   Unsloth is an ultra-fast LLM fine-tuning, training, and inference platform. It accelerates training for models like Llama 3, Mistral, Gemma, Phi-4, and DeepSeek while using up to 70% less VRAM through optimized custom Triton GPU kernels.
@@ -35,8 +35,8 @@ support: https://github.com/unslothai/unsloth/issues
 gallery:
   - https://raw.githubusercontent.com/unslothai/unsloth/main/images/unsloth%20loading%20page%20render.png
 releaseNotes: >-
-  Route app icon directly to Unsloth Studio UI (port 8000), expose JupyterLab on port 8888, and configure stable default credentials (unsloth / admin).
+  Route app icon directly to Unsloth Studio UI (port 8000), expose JupyterLab on port 8888, and configure stable default credentials (unsloth / adminadmin).
 dependencies:
 path: ""
 defaultUsername: "unsloth"
-defaultPassword: "admin"
+defaultPassword: "adminadmin"

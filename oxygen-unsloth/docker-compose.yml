@@ -10,8 +10,8 @@ services:
     restart: on-failure
     ipc: host
     environment:
-      - JUPYTER_PASSWORD=admin
-      - UNSLOTH_STUDIO_PASSWORD=admin
+      - JUPYTER_PASSWORD=adminadmin
+      - UNSLOTH_STUDIO_PASSWORD=adminadmin
       - UNSLOTH_STUDIO_BOOTSTRAP_TIMEOUT=0
     ports:
       - "8888:8888"
