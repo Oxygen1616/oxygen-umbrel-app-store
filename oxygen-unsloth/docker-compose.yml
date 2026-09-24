@@ -2,7 +2,7 @@ services:
   app_proxy:
     environment:
       APP_HOST: oxygen-unsloth_web_1
-      APP_PORT: 8888
+      APP_PORT: 8000
       PROXY_AUTH_ADD: "false"
 
   web:
@@ -10,6 +10,10 @@ services:
     restart: on-failure
     ipc: host
     environment:
-      - PORT=8888
+      - JUPYTER_PASSWORD=admin
+      - UNSLOTH_STUDIO_PASSWORD=admin
+      - UNSLOTH_STUDIO_BOOTSTRAP_TIMEOUT=0
+    ports:
+      - "8888:8888"
     volumes:
       - ${APP_DATA_DIR}/data:/workspace/work
