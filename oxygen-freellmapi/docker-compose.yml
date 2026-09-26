@@ -1,0 +1,19 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-freellmapi_web_1
+      APP_PORT: 3001
+      PROXY_AUTH_ADD: "false"
+
+  web:
+    image: ghcr.io/tashfeenahmed/freellmapi:latest
+    restart: on-failure
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - HOST=0.0.0.0
+      - REQUEST_BODY_LIMIT_MB=25
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/server/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

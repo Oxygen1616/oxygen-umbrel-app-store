@@ -347,7 +347,8 @@ This repository contains **Oxygen1616's** custom Community App Store for umbrelO
 | 322 | <img height="30" src="https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-zennotes/logo.png" /> | [ZenNotes](https://github.com/ZenNotes/zennotes) | A keyboard-first Markdown workspace for notes | 7878 |
 | 323 | <img height="30" src="https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-zipline/logo.png" /> | [Zipline](https://github.com/diced/zipline) | An advanced solution for seamless and secure file sharing | 3472 |
 | 324 | <img height="30" src="https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-zoraxy/logo.png" /> | [Zoraxy Proxy Server](https://github.com/tobychui/zoraxy) | An efficient reverse proxy server with automated SSL management | 8400 |
-| 325 | <img height="30" src="https://raw.githubusercontent.com/unslothai/unsloth/main/images/unsloth%20new%20logo.png" /> | [Unsloth Studio](https://github.com/unslothai/unsloth) | 2x-5x faster LLM fine-tuning and training with 70% less VRAM | 8890 |
+| 325 | <img height="30" src="https://raw.githubusercontent.com/unslothai/unsloth/main/images/unsloth%20sticker.png" /> | [Unsloth Studio](https://github.com/unslothai/unsloth) | 2x-5x faster LLM fine-tuning and training with 70% less VRAM | 8890 |
+| 326 | <img height="30" src="https://raw.githubusercontent.com/tashfeenahmed/freellmapi/main/desktop/assets/appicon_1024.png" /> | [FreeLLMAPI](https://github.com/tashfeenahmed/freellmapi) | Unified OpenAI-compatible API aggregator for 34+ free LLM providers | 3001 |
 
 🔄 All Apps are continually updated and new Apps are added over time.
 

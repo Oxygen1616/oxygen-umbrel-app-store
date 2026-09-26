@@ -1,0 +1,42 @@
+manifestVersion: 1
+id: oxygen-freellmapi
+name: FreeLLMAPI
+tagline: Unified OpenAI-compatible API aggregator for 34+ free LLM providers
+icon: https://raw.githubusercontent.com/tashfeenahmed/freellmapi/main/desktop/assets/appicon_1024.png
+category: AI
+version: "0.12.0"
+port: 3001
+description: >-
+  FreeLLMAPI is a unified reverse proxy and aggregator that combines free tier quotas from over 34 LLM providers offering access to 600+ models under a single OpenAI-compatible /v1 endpoint.
+
+
+  Key Features:
+
+
+  🌐 Single OpenAI-Compatible Endpoint: Drop-in replacement for OpenAI endpoints in any tool (Open WebUI, LibreChat, Cursor, Continue, Obsidian, LangChain).
+
+
+  ⚡ Intelligent Smart Routing: Automatically picks the best available model, performs automatic fallback when a provider is rate-limited, and balances requests across your keys.
+
+
+  📊 Quota & Budget Tracking: Monitor token usage per key in real-time to maximize free quotas without ever hitting unexpected rate limits.
+
+
+  🔒 Local & Secure: All API keys are stored encrypted locally. Includes built-in API Playground, Analytics dashboard, and unified proxy management.
+developer: Tashfeen Ahmed
+website: https://freellmapi.co
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/tashfeenahmed/freellmapi
+support: https://github.com/tashfeenahmed/freellmapi/issues
+gallery:
+  - https://raw.githubusercontent.com/tashfeenahmed/freellmapi/main/repo-assets/github-hero.png
+  - https://raw.githubusercontent.com/tashfeenahmed/freellmapi/main/repo-assets/models.png
+  - https://raw.githubusercontent.com/tashfeenahmed/freellmapi/main/repo-assets/keys.png
+  - https://raw.githubusercontent.com/tashfeenahmed/freellmapi/main/repo-assets/playground.png
+releaseNotes: >-
+  Initial release of FreeLLMAPI for Oxygen App Store.
+dependencies:
+path: ""
+defaultUsername: ""
+defaultPassword: ""
