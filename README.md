@@ -349,6 +349,7 @@ This repository contains **Oxygen1616's** custom Community App Store for umbrelO
 | 324 | <img height="30" src="https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-zoraxy/logo.png" /> | [Zoraxy Proxy Server](https://github.com/tobychui/zoraxy) | An efficient reverse proxy server with automated SSL management | 8400 |
 | 325 | <img height="30" src="https://raw.githubusercontent.com/unslothai/unsloth/main/images/unsloth%20sticker.png" /> | [Unsloth Studio](https://github.com/unslothai/unsloth) | 2x-5x faster LLM fine-tuning and training with 70% less VRAM | 8890 |
 | 326 | <img height="30" src="https://raw.githubusercontent.com/tashfeenahmed/freellmapi/main/desktop/assets/appicon_1024.png" /> | [FreeLLMAPI](https://github.com/tashfeenahmed/freellmapi) | Unified OpenAI-compatible API aggregator for 34+ free LLM providers | 3001 |
+| 327 | <img height="30" src="https://raw.githubusercontent.com/HarnessRouter/harnessrouter/main/.github/images/logo-dark.png" /> | [HarnessRouter](https://github.com/HarnessRouter/harnessrouter) | Unified interface and infrastructure layer for AI agent harnesses | 3002 |
 
 🔄 All Apps are continually updated and new Apps are added over time.
 

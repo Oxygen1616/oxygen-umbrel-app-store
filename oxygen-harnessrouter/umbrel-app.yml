@@ -1,0 +1,43 @@
+manifestVersion: 1
+id: oxygen-harnessrouter
+name: HarnessRouter
+tagline: Unified interface and infrastructure layer for AI agent harnesses
+icon: https://raw.githubusercontent.com/HarnessRouter/harnessrouter/main/.github/images/logo-dark.png
+category: AI
+version: "0.25.15"
+port: 3002
+description: >-
+  HarnessRouter is an open-source infrastructure layer that turns existing agent harnesses (like Claude Code, Codex, Hermes, OpenCode, and others) into plug-and-play agent backends.
+
+
+  It implements the Unified Harness Protocol (UHP) and provides an OpenAI Responses-compatible API, handling persistent sessions, streaming progress, workspaces, cancellation, and structured failures.
+
+
+  Key Features:
+
+
+  🌐 Single API Integration: Manage multiple agent harnesses through a single unified endpoint without building separate backend integrations for each agent.
+
+
+  🔄 Universal Agent Switching: Switch between harnesses (Claude Code, Codex, Hermes, Gemini CLI, etc.) to optimize cost and latency per task.
+
+
+  💻 Built-in Web Console: Manage sessions, inspect agent executions, configure BYOK model providers, and generate API keys from a clean dashboard.
+
+
+  🔒 Isolated & Secure: Each agent CLI runs under its own per-session user with dedicated workspace isolation, ensuring files and credentials never leak between sessions.
+developer: HarnessRouter
+website: https://harnessrouter.ai
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/HarnessRouter/harnessrouter
+support: https://github.com/HarnessRouter/harnessrouter/issues
+gallery:
+  - https://raw.githubusercontent.com/HarnessRouter/harnessrouter/main/docs/images/01-login.png
+  - https://raw.githubusercontent.com/HarnessRouter/harnessrouter/main/docs/images/05-add-integration.png
+releaseNotes: >-
+  Initial release of HarnessRouter Community Edition for Oxygen App Store.
+dependencies: []
+path: ""
+defaultUsername: "harnessrouter"
+defaultPassword: "adminadmin"
