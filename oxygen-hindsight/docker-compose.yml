@@ -1,0 +1,16 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-hindsight_server_1
+      APP_PORT: 9999
+      PROXY_AUTH_ADD: "false"
+
+  server:
+    image: ghcr.io/vectorize-io/hindsight:latest
+    restart: on-failure
+    ports:
+      - "8889:8888"
+    volumes:
+      - ${APP_DATA_DIR}/data:/home/hindsight/.pg0
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

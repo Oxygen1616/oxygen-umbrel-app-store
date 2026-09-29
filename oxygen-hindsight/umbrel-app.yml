@@ -1,0 +1,46 @@
+manifestVersion: 1
+id: oxygen-hindsight
+name: Hindsight
+tagline: Agent memory system that enables AI agents to learn over time
+icon: https://raw.githubusercontent.com/vectorize-io/hindsight/main/hindsight-favicon.png
+category: AI
+version: "0.10.2"
+port: 9990
+description: >-
+  Hindsight™ is an agent memory system built to create smarter agents that learn over time. Most agent memory systems focus on recalling conversation history. Hindsight is focused on making agents that learn, not just remember.
+
+
+  It eliminates the shortcomings of alternative techniques such as RAG and knowledge graphs, delivering state-of-the-art performance on long-term memory tasks (tested on LongMemEval benchmark).
+
+
+  Key Features:
+
+
+  🧠 Retain, Recall, Reflect: Three distinct memory operations enabling genuine learning, belief updating, and mental models rather than just raw transcript search.
+
+
+  ⚡ High-Performance Architecture: Embedded PostgreSQL storage (pg0), low latency, and high accuracy for agent workflows.
+
+
+  🔌 25+ LLM Providers: Supports hosted providers (OpenAI, Anthropic, Gemini, Groq, DeepSeek, Bedrock, etc.) and fully local engines (Ollama, LM Studio, llama.cpp), plus OpenAI-compatible endpoints.
+
+
+  🖥️ Interactive Control Plane UI: Full web dashboard running on port 9990 to manage memory banks, inspect observations, and query agent recall in real time.
+
+
+  🛠️ Developer & Agent Friendly: Built-in REST API on port 8889, Python/TS SDKs, and Model Context Protocol (MCP) server support for AI coding assistants (Claude Code, Cursor, Windsurf).
+developer: Vectorize
+website: https://hindsight.vectorize.io
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/vectorize-io/hindsight
+support: https://github.com/vectorize-io/hindsight/issues
+gallery:
+  - https://raw.githubusercontent.com/vectorize-io/hindsight/main/hindsight-docs/static/img/hindsight-github-banner.png
+  - https://raw.githubusercontent.com/vectorize-io/hindsight/main/hindsight-docs/static/img/hindsight-benchmarks.png
+releaseNotes: >-
+  Initial release of Hindsight v0.10.2 for Oxygen App Store.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""

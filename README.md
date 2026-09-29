@@ -257,6 +257,7 @@ This repository contains **Oxygen1616's** custom Community App Store for umbrelO
 | 232 | <img height="30" src="https://raw.githubusercontent.com/HarnessRouter/harnessrouter/main/.github/images/logo-dark.png" /> | [HarnessRouter](https://github.com/HarnessRouter/harnessrouter) | Unified interface and infrastructure layer for AI agent harnesses | 3002 |
 | 233 | <img height="30" src="https://raw.githubusercontent.com/debpalash/VoiceStudio/main/docs/logo.png" /> | [VoiceStudio](https://github.com/debpalash/VoiceStudio) | Open-source voice cloning, voice design, dubbing, dictation, and transcription | 3900 |
 | 234 | <img height="30" src="https://raw.githubusercontent.com/t8y2/dbx/main/docs/logo.png" /> | [DBX](https://github.com/t8y2/dbx) | Lightweight 100+ database manager with AI assistant and MCP support | 4224 |
+| 235 | <img height="30" src="https://raw.githubusercontent.com/vectorize-io/hindsight/main/hindsight-favicon.png" /> | [Hindsight](https://github.com/vectorize-io/hindsight) | Agent memory system that enables AI agents to learn over time | 9990 |
 
 🔄 All Apps are continually updated and new Apps are added over time.
 
