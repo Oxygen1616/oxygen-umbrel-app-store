@@ -1,0 +1,42 @@
+manifestVersion: 1
+id: oxygen-voicestudio
+name: VoiceStudio
+tagline: Open-source voice cloning, voice design, dubbing, dictation, and transcription
+icon: https://raw.githubusercontent.com/debpalash/VoiceStudio/main/docs/logo.png
+category: AI
+version: "0.5.6"
+port: 3900
+description: >-
+  VoiceStudio is an open-source, fully local alternative to ElevenLabs providing voice cloning, voice design, video dubbing, dictation, transcription, and audiobook creation across 646 languages.
+
+
+  Key Features:
+
+
+  🎙️ Voice Cloning & Design: Clone any voice from a short audio sample or describe and generate unique voices from text prompts.
+
+
+  🎬 Video Dubbing & Audiobooks: Dub videos with precisely timed speech, produce long-form audiobooks, and run batch generation workflows.
+
+
+  🌍 646 Languages Supported: Powered by OmniVoice and leading local speech models for multilingual text-to-speech and transcription.
+
+
+  🔒 100% Local & Private: Runs on your own hardware without sending audio or data to external cloud services.
+developer: Palash Debnath
+website: https://voicestudio.sh
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/debpalash/VoiceStudio
+support: https://github.com/debpalash/VoiceStudio/issues
+gallery:
+  - https://raw.githubusercontent.com/debpalash/VoiceStudio/main/docs/media/electron/voice-cloning.png
+  - https://raw.githubusercontent.com/debpalash/VoiceStudio/main/docs/media/electron/dubbing.png
+  - https://raw.githubusercontent.com/debpalash/VoiceStudio/main/docs/media/electron/voice-design.png
+  - https://raw.githubusercontent.com/debpalash/VoiceStudio/main/docs/media/electron/models.png
+releaseNotes: >-
+  Initial release of VoiceStudio for Oxygen App Store.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: "adminadmin"
