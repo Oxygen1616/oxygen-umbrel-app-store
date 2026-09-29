@@ -1,0 +1,45 @@
+manifestVersion: 1
+id: oxygen-reclip
+name: ReClip
+tagline: Self-hosted video and audio downloader with a clean web UI
+icon: https://raw.githubusercontent.com/averygan/reclip/main/static/favicon.svg
+category: media
+version: "1.0.0"
+port: 8898
+description: >-
+  ReClip is a self-hosted, open-source video and audio downloader with a clean, fast web UI. Paste links from YouTube, TikTok, Instagram, Twitter/X, Twitch, and 1,000+ other supported platforms to download media as MP4 video or MP3 audio.
+
+
+  Powered by yt-dlp and ffmpeg, ReClip automatically keeps its extractors up to date on container start, ensuring smooth downloads even as upstream platforms change.
+
+
+  Key Features:
+
+
+  🎬 1,000+ Supported Sites: Download videos from YouTube, TikTok, Instagram, Twitter/X, Facebook, Twitch, and hundreds more.
+
+
+  🎵 MP4 & MP3 Support: Easily switch between downloading high-definition video or extracting clean MP3 audio.
+
+
+  📦 Bulk Downloads: Paste multiple links at once for fast batch processing with automatic deduplication.
+
+
+  ⚡ Minimalist & Lightweight: Clean, responsive interface with no bloated frameworks or heavy client build steps.
+
+
+  💾 Local Storage: All downloaded media is safely persisted in your Umbrel app data folder.
+developer: Avery Gan
+website: https://github.com/averygan/reclip
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/averygan/reclip
+support: https://github.com/averygan/reclip/issues
+gallery:
+  - https://raw.githubusercontent.com/averygan/reclip/main/assets/preview-mp3.png
+releaseNotes: >-
+  Initial release of ReClip for Oxygen App Store.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""

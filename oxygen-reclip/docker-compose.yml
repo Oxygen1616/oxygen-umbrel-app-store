@@ -1,0 +1,12 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-reclip_server_1
+      APP_PORT: 8899
+      PROXY_AUTH_ADD: "false"
+
+  server:
+    image: reclipd/reclip:latest
+    restart: on-failure
+    volumes:
+      - ${APP_DATA_DIR}/downloads:/app/downloads
