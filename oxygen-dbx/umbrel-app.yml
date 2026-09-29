@@ -1,0 +1,45 @@
+manifestVersion: 1
+id: oxygen-dbx
+name: DBX
+tagline: Lightweight 100+ database manager with AI assistant and MCP support
+icon: https://raw.githubusercontent.com/t8y2/dbx/main/docs/logo.png
+category: developer tools
+version: "0.6.28"
+port: 4224
+description: >-
+  DBX is an ultra-lightweight (25MB) open-source database client and management tool supporting over 100 database systems including MySQL, PostgreSQL, SQLite, Redis, MongoDB, ClickHouse, DuckDB, SQL Server, and Oracle.
+
+
+  It features a built-in AI SQL assistant, Model Context Protocol (MCP) server support for AI coding agents (Claude Code, Cursor, Windsurf), visual query execution plans, schema diffs, data transfer, and specialized key-value browsers.
+
+
+  Key Features:
+
+
+  🗄️ 100+ Databases in One Tool: Connect to relational, NoSQL, time-series, and analytical databases with one unified UI.
+
+
+  🤖 Built-in AI Assistant: Natural language to SQL generation, schema-aware queries, query optimization, and error explanation.
+
+
+  🔌 Model Context Protocol (MCP): Connect your AI coding agents directly to your databases securely.
+
+
+  📊 Visual Tools: Visual EXPLAIN execution plans, schema comparisons, data import/export, and instant grid editing.
+developer: DBX Team
+website: https://dbxio.com
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/t8y2/dbx
+support: https://github.com/t8y2/dbx/issues
+gallery:
+  - https://raw.githubusercontent.com/t8y2/dbx/main/docs/screenshot-light.png
+  - https://raw.githubusercontent.com/t8y2/dbx/main/docs/screenshot-dark.png
+  - https://raw.githubusercontent.com/t8y2/dbx/main/docs/screenshot-er.png
+  - https://raw.githubusercontent.com/t8y2/dbx/main/docs/screenshot-grid.png
+releaseNotes: >-
+  Initial release of DBX for Oxygen App Store.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: "adminadmin"

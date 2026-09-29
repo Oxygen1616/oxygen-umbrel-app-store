@@ -1,0 +1,18 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-dbx_server_1
+      APP_PORT: 4224
+      PROXY_AUTH_ADD: "false"
+
+  server:
+    image: t8y2/dbx:latest
+    restart: on-failure
+    environment:
+      - DBX_BACKUP_ROOT=/app/backups
+      - DBX_WEB_PASSWORD=${APP_PASSWORD:-adminadmin}
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data
+      - ${APP_DATA_DIR}/backups:/app/backups
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

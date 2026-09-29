@@ -351,6 +351,7 @@ This repository contains **Oxygen1616's** custom Community App Store for umbrelO
 | 326 | <img height="30" src="https://raw.githubusercontent.com/tashfeenahmed/freellmapi/main/desktop/assets/appicon_1024.png" /> | [FreeLLMAPI](https://github.com/tashfeenahmed/freellmapi) | Unified OpenAI-compatible API aggregator for 34+ free LLM providers | 3001 |
 | 327 | <img height="30" src="https://raw.githubusercontent.com/HarnessRouter/harnessrouter/main/.github/images/logo-dark.png" /> | [HarnessRouter](https://github.com/HarnessRouter/harnessrouter) | Unified interface and infrastructure layer for AI agent harnesses | 3002 |
 | 328 | <img height="30" src="https://raw.githubusercontent.com/debpalash/VoiceStudio/main/docs/logo.png" /> | [VoiceStudio](https://github.com/debpalash/VoiceStudio) | Open-source voice cloning, voice design, dubbing, dictation, and transcription | 3900 |
+| 329 | <img height="30" src="https://raw.githubusercontent.com/t8y2/dbx/main/docs/logo.png" /> | [DBX](https://github.com/t8y2/dbx) | Lightweight 100+ database manager with AI assistant and MCP support | 4224 |
 
 🔄 All Apps are continually updated and new Apps are added over time.
 
