@@ -4,7 +4,7 @@ name: Hindsight
 tagline: Agent memory system that enables AI agents to learn over time
 icon: https://raw.githubusercontent.com/vectorize-io/hindsight/main/hindsight-favicon.png
 category: AI
-version: "0.10.2"
+version: "0.10.2-1"
 port: 9990
 description: >-
   Hindsight™ is an agent memory system built to create smarter agents that learn over time. Most agent memory systems focus on recalling conversation history. Hindsight is focused on making agents that learn, not just remember.

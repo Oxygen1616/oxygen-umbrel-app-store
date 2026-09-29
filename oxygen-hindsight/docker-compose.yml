@@ -5,9 +5,26 @@ services:
       APP_PORT: 9999
       PROXY_AUTH_ADD: "false"
 
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /home/hindsight/.pg0
+        chown -R 1000:1000 /home/hindsight/.pg0
+        chmod -R u+rwX /home/hindsight/.pg0
+    volumes:
+      - ${APP_DATA_DIR}/data:/home/hindsight/.pg0
+
   server:
     image: ghcr.io/vectorize-io/hindsight:latest
     restart: on-failure
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
     ports:
       - "8889:8888"
     volumes:
