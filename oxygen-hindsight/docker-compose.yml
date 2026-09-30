@@ -28,8 +28,16 @@ services:
     ports:
       - "8889:8888"
     environment:
-      - HINDSIGHT_API_LLM_PROVIDER=openai
-      - HINDSIGHT_API_LLM_API_KEY=sk-placeholder-please-set-in-app-settings
+      # Set these in the Compose environment, or assign values here on Umbrel.
+      # Provider names and setup: https://hindsight.vectorize.io/developer/models
+      - HINDSIGHT_API_LLM_PROVIDER=${HINDSIGHT_API_LLM_PROVIDER:-openai}
+      - HINDSIGHT_API_LLM_API_KEY=${HINDSIGHT_API_LLM_API_KEY:-}
+      # Leave unset to use the selected provider's default model and endpoint.
+      - HINDSIGHT_API_LLM_MODEL
+      - HINDSIGHT_API_LLM_BASE_URL
+      # Custom OpenAI-compatible API: provider=openai, model=<model-id>,
+      # base URL=https://your-provider.example/v1 (include /v1 if required).
+      # Local servers: use host.docker.internal or a LAN address, not localhost.
     volumes:
       - ${APP_DATA_DIR}/data:/home/hindsight/.pg0
     extra_hosts:
