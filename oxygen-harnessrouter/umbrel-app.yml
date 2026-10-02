@@ -2,7 +2,7 @@ manifestVersion: 1
 id: oxygen-harnessrouter
 name: HarnessRouter
 tagline: Unified interface and infrastructure layer for AI agent harnesses
-icon: https://raw.githubusercontent.com/HarnessRouter/harnessrouter/main/.github/images/logo-dark.png
+icon: https://raw.githubusercontent.com/HarnessRouter/harnessrouter/main/ui/public/harnessrouter-logo.svg
 category: AI
 version: "0.25.15"
 port: 3002
