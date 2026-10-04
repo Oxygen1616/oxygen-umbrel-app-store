@@ -1,0 +1,32 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-potionui_server_1
+      APP_PORT: 26730
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /models /storage
+        chmod -R u+rwX,go+rX /models /storage
+    volumes:
+      - ${APP_DATA_DIR}/models:/models
+      - ${APP_DATA_DIR}/storage:/storage
+
+  server:
+    image: ghcr.io/potionui/potionui:latest
+    restart: on-failure
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    volumes:
+      - ${APP_DATA_DIR}/models:/app/models
+      - ${APP_DATA_DIR}/storage:/app/storage
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

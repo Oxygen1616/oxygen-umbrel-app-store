@@ -1,0 +1,48 @@
+manifestVersion: 1
+id: oxygen-potionui
+name: PotionUI
+tagline: Self-hosted generation studio for images, video, and audio with diffusion models
+icon: https://raw.githubusercontent.com/PotionUI/PotionUI/master/frontend/static/favicon.svg
+category: AI
+version: "0.0.14"
+port: 26730
+description: >-
+  PotionUI is an open-source, self-hosted generation studio designed for producing images, video, and audio using modern diffusion models on your own hardware or remote backends.
+
+
+  Instead of overwhelming node graphs or generic wrappers, PotionUI provides curated forms exposing only the specific controls each model understands—such as resolution, camera angle, and art style.
+
+
+  Key Features:
+
+
+  🎨 Multi-Modal Generation: Seamlessly create images, video, and audio side-by-side supporting SDXL, Flux, Qwen-Image, Krea-2, Wan 2.1, LTX-2, MiniMax, YuE2, and more.
+
+
+  👥 Multi-User & Admin Panel: Share your GPU infrastructure with multiple users and groups, assigning custom presets, models, and LLM configurations with granular access control.
+
+
+  🧠 Integrated AI Assistant: PotionAI assists with prompt engineering, segment rewrites, and phrasebook completions, with external control via Model Context Protocol (MCP) clients like Claude Desktop.
+
+
+  🎬 Video Director: Compose complex video shots into timed, global, and chained segments rather than struggling with one massive prompt.
+
+
+  🔌 Modular Backend Architecture: Connect directly to local NVIDIA GPUs, remote ComfyUI instances, or cloud inference workers.
+developer: PotionUI
+website: https://potionui.com
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/PotionUI/PotionUI
+support: https://github.com/PotionUI/PotionUI/issues
+gallery:
+  - https://raw.githubusercontent.com/PotionUI/PotionUI/master/docs/media/potionui-generate.png
+  - https://raw.githubusercontent.com/PotionUI/PotionUI/master/docs/media/potionui-admin-presets.png
+  - https://raw.githubusercontent.com/PotionUI/PotionUI/master/docs/media/potionui-history.png
+  - https://raw.githubusercontent.com/PotionUI/PotionUI/master/docs/media/potionui-cloud-video-director.png
+releaseNotes: >-
+  Initial release of PotionUI for Oxygen App Store. Run diffusion-based image, video, and audio generation studio with multi-user support and integrated AI assistant.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
