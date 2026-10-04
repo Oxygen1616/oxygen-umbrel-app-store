@@ -1,0 +1,47 @@
+manifestVersion: 1
+id: oxygen-opendots
+name: OpenDots
+tagline: Always-on AI coworkers that move between text, calls, and Slack
+icon: https://raw.githubusercontent.com/CopilotKit/OpenDots/main/public/favicon.svg
+category: AI
+version: "0.1.0"
+port: 4310
+description: >-
+  OpenDots is an open-source, self-hosted template by CopilotKit for always-on AI coworkers that operate across text, voice calls, and Slack. It provides persistent AI agents with their own isolated computer environments, document workspaces, and custom tool suites.
+
+
+  Unlike standard conversational chatbots that forget context between sessions, OpenDots agents maintain long-term memory, continuous intelligence threads, and persistent state across multi-turn interactions.
+
+
+  Key Features:
+
+
+  🤖 Persistent AI Coworkers: Dedicated AI agents ("Dots") tailored for specific tasks, projects, or workflows with continuous context and memory.
+
+
+  💻 Autonomous Computer Environments: Isolated containers providing agent file system, shell access, and optional sandboxed browser tools.
+
+
+  📚 Spaces & Document Libraries: Organize knowledge bases, upload reference documentation, and maintain persistent topic workspaces for your agents.
+
+
+  🔌 Multi-Model Flexibility: Seamlessly connect to local LLMs (Ollama on Umbrel via host.docker.internal) or cloud providers (OpenAI, Anthropic, CopilotKit Intelligence).
+
+
+  💬 Omnichannel Collaboration: Move effortlessly between web chat, voice conversations, and Slack channels.
+developer: CopilotKit
+website: https://github.com/CopilotKit/OpenDots
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/CopilotKit/OpenDots
+support: https://github.com/CopilotKit/OpenDots/issues
+gallery:
+  - https://raw.githubusercontent.com/CopilotKit/OpenDots/main/docs/images/chat-layout.png
+  - https://raw.githubusercontent.com/CopilotKit/OpenDots/main/docs/images/spaces-workspace.png
+  - https://raw.githubusercontent.com/CopilotKit/OpenDots/main/docs/images/spaces-library.png
+releaseNotes: >-
+  Initial release of OpenDots for Oxygen App Store. Run self-hosted persistent AI coworkers with local Ollama or OpenAI integration.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""

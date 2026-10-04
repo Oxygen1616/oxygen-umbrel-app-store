@@ -259,6 +259,7 @@ This repository contains **Oxygen1616's** custom Community App Store for umbrelO
 | 234 | <img height="30" src="https://raw.githubusercontent.com/t8y2/dbx/main/docs/logo.png" /> | [DBX](https://github.com/t8y2/dbx) | Lightweight 100+ database manager with AI assistant and MCP support | 4224 |
 | 235 | <img height="30" src="https://raw.githubusercontent.com/vectorize-io/hindsight/main/hindsight-favicon.png" /> | [Hindsight](https://github.com/vectorize-io/hindsight) | Agent memory system that enables AI agents to learn over time | 9990 |
 | 236 | <img height="30" src="https://raw.githubusercontent.com/averygan/reclip/main/static/favicon.svg" /> | [ReClip](https://github.com/averygan/reclip) | Self-hosted video and audio downloader with a clean web UI | 8898 |
+| 237 | <img height="30" src="https://raw.githubusercontent.com/CopilotKit/OpenDots/main/public/favicon.svg" /> | [OpenDots](https://github.com/CopilotKit/OpenDots) | Always-on AI coworkers that move between text, calls, and Slack | 4310 |
 
 🔄 All Apps are continually updated and new Apps are added over time.
 
