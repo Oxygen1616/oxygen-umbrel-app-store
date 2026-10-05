@@ -1,0 +1,53 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-techky1-nocode-toolskit_server_1
+      APP_PORT: 8000
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /media /hermes /tools /pipeline_defs /skills /schemas /styles
+        chmod -R u+rwX,go+rX /media /hermes /tools /pipeline_defs /skills /schemas /styles
+    volumes:
+      - ${APP_DATA_DIR}/media:/media
+      - ${APP_DATA_DIR}/hermes_data:/hermes
+      - ${APP_DATA_DIR}/tools:/tools
+      - ${APP_DATA_DIR}/pipeline_defs:/pipeline_defs
+      - ${APP_DATA_DIR}/skills:/skills
+      - ${APP_DATA_DIR}/schemas:/schemas
+      - ${APP_DATA_DIR}/styles:/styles
+
+  server:
+    image: oxygen1616/techky1-nocode-toolskit:latest
+    restart: unless-stopped
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    command: python -m uvicorn server:app --host 0.0.0.0 --port 8000
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/opt/openmontage
+      - STORAGE_DELETE_AFTER_MINUTES=1440
+      - PEXELS_API_KEY=${PEXELS_API_KEY:-}
+      - PIXABAY_API_KEY=${PIXABAY_API_KEY:-}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - HERMES_DASHBOARD_HOST=0.0.0.0
+      - HERMES_DASHBOARD_PORT=9119
+    volumes:
+      - ${APP_DATA_DIR}/media:/app/media
+      - ${APP_DATA_DIR}/hermes_data:/root/.hermes
+      - ${APP_DATA_DIR}/tools:/app/tools
+      - ${APP_DATA_DIR}/pipeline_defs:/app/pipeline_defs
+      - ${APP_DATA_DIR}/skills:/app/skills
+      - ${APP_DATA_DIR}/schemas:/app/schemas
+      - ${APP_DATA_DIR}/styles:/app/styles
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

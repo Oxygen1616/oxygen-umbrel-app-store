@@ -1,0 +1,43 @@
+manifestVersion: 1
+id: oxygen-techky1-nocode-toolskit
+name: Techky1 No-Code Toolkit
+tagline: All-in-one AI media creation studio with TTS, automated Shorts, and agent workflows
+icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-techky1-nocode-toolskit/logo.png
+category: AI
+version: "1.0.0"
+port: 8001
+description: >-
+  Techky1 No-Code Toolkit is an all-in-one AI media creation server and studio dashboard for content creators, automated short-form video generation, and AI agent workflows. Generate viral Shorts, voiceovers, and social content using local TTS engines and the LLM of your choice—with zero coding required.
+
+
+  Key Features:
+
+
+  🎬 Automated Shorts Pipeline: End-to-end video production from topic or script idea to published video. Generates scripts with LLMs, matches stock footage from Pexels/Pixabay, generates synchronized voiceovers, and burns animated karaoke or typewriter subtitles.
+
+
+  🗣️ Multi-Engine Local TTS: Kokoro TTS (24+ voices, ultra-fast), Chatterbox TTS (voice cloning from audio samples), and OmniVoice TTS (600+ languages and dialects with natural language voice design and zero-shot voice cloning).
+
+
+  🤖 Agentic Workflows & Hermes Integration: Integrated OpenMontage and Hermes Agent dashboard for multi-step reasoning, automated editing, and live stage-director agent execution.
+
+
+  📱 React Jampack Command Center: Modern, responsive dashboard featuring TTS Studio, FreeVideo Studio, Videos Library, OpenMontage, HyperFrames, File Manager, and Task Workspace.
+
+
+  📢 Postiz Social Publishing: Directly discover and publish rendered videos to YouTube, TikTok, Instagram, and Facebook on automated schedules.
+developer: Techky1
+website: https://github.com/Oxygen1616/techky1-nocode-toolskit
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/Oxygen1616/techky1-nocode-toolskit
+support: https://github.com/Oxygen1616/techky1-nocode-toolskit/issues
+gallery:
+  - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-techky1-nocode-toolskit/preview-1.png
+  - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-techky1-nocode-toolskit/preview-2.png
+releaseNotes: >-
+  Initial release of Techky1 No-Code Toolkit for Oxygen App Store. Generate short-form videos, multi-engine TTS, and automate AI agent workflows.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
