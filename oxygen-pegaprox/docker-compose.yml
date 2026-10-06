@@ -1,0 +1,54 @@
+﻿version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-pegaprox_server_1
+      APP_PORT: 5000
+      PROXY_AUTH_WHITELIST: "/api/*
+
+  server:
+    image: ghcr.io/pegaprox/pegaprox:
+    # Build locally: # build: .
+    container_name: oxygen-pegaprox_server_1
+    user: "1000:1000"
+    restart: on-failure
+    stop_grace_period: 1m
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgres://pegaprox:@postgres:5432/pegaprox
+      - SECRET_KEY=
+      - JWT_SECRET_KEY=
+      - PEGAPROX_BEHIND_PROXY: "true"
+      - PEGAPROX_TRUSTED_PROXIES: ""
+      - PEGAPROX_ALLOWED_ORIGINS: "https://:"
+      - PEGAPROX_DISABLE_AUTO_ENCRYPT: "false"
+    volumes:
+      - /data/app/pegaprox:/app/config:rw
+      - /data/app/pegaprox/logs:/app/logs:rw
+      - /data/app/pegaprox/backups:/app/backups:rw
+    ports:
+      - "5000:5000/tcp"
+      - "5001:5001/tcp" # VNC websocket
+      - "5002:5002/tcp" # SSH websocket
+
+  postgres:
+    image: postgres:15
+    user: "1000:1000"
+    restart: on-failure
+    stop_grace_period: 1m
+    environment:
+      POSTGRES_DB: pegaprox
+      POSTGRES_USER: pegaprox
+      POSTGRES_PASSWORD: 
+    volumes:
+      - /data/app/pegaprox/db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pegaprox -d pegaprox"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  /data/app/pegaprox:
