@@ -1,97 +1,42 @@
-﻿# oxygen-odysseus
+# Odysseus for Umbrel
 
-This is a community Umbrel app package for [Odysseus](https://odysseus-dev.github.io/odysseus/), a self-hosted AI workspace.
+Community package in the [Oxygen app store](https://github.com/Oxygen1616/oxygen-umbrel-app-store)
+for [Odysseus](https://github.com/odysseus-dev/odysseus).
 
-## Package Details
+- App ID: `oxygen-odysseus`
+- Package version: `1.0.2-1`
+- Upstream image: `ghcr.io/odysseus-dev/odysseus:1.0.2`, pinned by digest
+- Architectures: AMD64 and ARM64
+- Open: `http://umbrel.local:7000`
+- Initial username: `admin`; password: the app password displayed by Umbrel
 
-- **App ID**: oxygen-odysseus
-- **Version**: 1.0.0
-- **Category**: ai
-- **Port**: 7000
-- **Submitter**: Oxygen1616
+The image's entrypoint prepares storage and starts the application as UID/GID
+1000. Do not force `user: 1000:1000` in Compose: the entrypoint needs to set up
+the account and repair bind-mount permissions first.
 
-## Description
+The bundled Ollama service is reachable from Odysseus at `http://ollama:11434`.
+It uses the CPU and starts without downloaded models. Select/download a model
+in the app, or configure an external API provider or OpenAI-compatible endpoint
+in Odysseus. For a server running on the Umbrel host, use
+`http://host.docker.internal:<port>`.
 
-Odysseus is a self-hosted AI workspace for chat, agents, research, documents, email, notes, calendar, and local model workflows. It features chat with local/API models, agents with tools, deep research, document editing, email management, notes and tasks with calendar sync, and extras like image editor, themes, and web search.
+Ollama has no published host port, so it can coexist with other Ollama apps.
+Web search and other integrations may need a separately configured service
+(such as SearXNG or ChromaDB) or API credentials; they are not bundled here.
 
-### Key Features
+Data is stored under `${APP_DATA_DIR}/data`:
 
-- **Chat + Agents** — local/API models, tools, MCP, files, shell, skills, and memory
-- **Cookbook** — hardware-aware model recommendations, downloads, and serving
-- **Deep Research** — multi-step web research with source reading and report generation
-- **Compare** — blind side-by-side model testing and synthesis
-- **Documents** — writing-first editor with AI edits, suggestions, Markdown, HTML, CSV, and syntax highlighting
-- **Email** — IMAP/SMTP inbox with triage, tags, summaries, reminders, and reply drafts
-- **Notes, Tasks + Calendar** — reminders, todos, scheduled agent tasks, and CalDAV sync
-- **Extras** — gallery/image editor, themes, uploads, web search, presets, sessions, and 2FA
+| Directory | Container path | Contents |
+| --- | --- | --- |
+| `odysseus` | `/app/data` | Database, settings, documents |
+| `logs` | `/app/logs` | Logs |
+| `ssh` | `/app/.ssh` | Remote model-server SSH identities |
+| `huggingface` | `/app/.cache/huggingface` | Model cache |
+| `local` | `/app/.local` | Installed local tools and packages |
+| `ollama` | `/root/.ollama` in Ollama | Ollama models |
 
-### Ollama Integration
+The `ALLOWED_ORIGINS` setting uses Umbrel's device domain on port 7000. Add your
+origin in the app's environment settings if you access it through a different
+domain or IP address. Model caches can be large; account for them in backups.
 
-Odysseus includes native support for [Ollama](https://ollama.ai/), allowing you to run local LLMs directly. The app connects to Ollama at http://host.docker.internal:11434/v1 by default, enabling:
-
-- Use of any model installed via Ollama
-- No need for API keys for local models
-- Automatic model discovery from Ollama's registry
-
-### Custom OpenAI Endpoints
-
-Odysseus also supports custom OpenAI-compatible endpoints. Set the OPENAI_API_KEY and OPENAI_BASE_URL environment variables to point to your own OpenAI-compatible API instance.
-
-### Configuration
-
-After installation, access Odysseus at http://umbrel.local:7000.
-
-### Environment Variables
-
-- ODYSSEUS_OLLAMA_MODEL - Default Ollama model (default: gemma:2b)
-- ODYSSEUS_OPENAI_API_KEY - OpenAI API key for remote models
-- ODYSSEUS_OPENAI_BASE_URL - Custom OpenAI-compatible endpoint base URL
-- ODYSSEUS_AUTH_ENABLED - Enable authentication (default: true)
-- ODYSSEUS_LOCALHOST_BYPASS - Bypass localhost check (default: false)
-- ODYSSEUS_SECRET_KEY - Django secret key
-- ODYSSEUS_JWT_SECRET_KEY - JWT secret key
-
-### Data Persistence
-
-All user data is persisted under ${APP_DATA_DIR}/data/app/odysseus/. This includes:
-
-- Config directory with application settings
-- Logs directory
-- Backups directory
-- Ollama model data (separate volume at ${APP_DATA_DIR}/data/ollama)
-
-To relocate app data, use the Umbrel dashboard under Settings → Apps → Odysseus → Move App Data.
-
-### Backups
-
-Users can enable backups in the Umbrel dashboard. Included in backups:
-
-- data/app/odysseus/config/ - Application configuration
-- data/app/odysseus/logs/ - Application logs
-- data/app/odysseus/backups/ - User-created backups
-
-Ollama models are stored separately at ${APP_DATA_DIR}/data/ollama/ and are included in system backups.
-
-### Updates
-
-Updates are handled through the Umbrel App Store. The package update flow copies docker-compose.yml, umbrel-app.yml, exports.sh, top-level *.template files, and hooks/ scripts from the package into installed app data. User data is preserved across updates.
-
-### Supported Architectures
-
-- linux/amd64 - x86_64 PCs and servers
-- linux/arm64 - 64-bit ARM devices (Raspberry Pi 4/5, etc.)
-
-### Support
-
-- **Source**: https://github.com/odysseus-dev/odysseus
-- **Community Store**: https://github.com/Oxygen1616/oxygen-umbrel-app-store
-- **Issues**: https://github.com/odysseus-dev/odysseus/issues
-
-## License
-
-Odysseus is licensed under AGPL-3.0-or-later. See the LICENSE file for details.
-
-The Umbrel app package is a community contribution and is not officially supported by the Odysseus development team or the Umbrel company.
-
----
-*This package was created by the Oxygen1616 community and is maintained independently. It is not affiliated with or endorsed by the official Umbrel team or the Odysseus development team.*
+This package is maintained by the community, independently of Odysseus and Umbrel.

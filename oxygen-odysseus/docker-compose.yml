@@ -1,48 +1,38 @@
-﻿version: "3.7"
-
 services:
   app_proxy:
     environment:
       APP_HOST: oxygen-odysseus_server_1
       APP_PORT: 7000
-      PROXY_AUTH_WHITELIST: "/api/*
 
-  odysseus:
-    image: ghcr.io/odysseus-dev/odysseus:
-    # Build locally: # build: .
-    container_name: oxygen-odysseus_server_1
-    user: "1000:1000"
+  server:
+    image: ghcr.io/odysseus-dev/odysseus:1.0.2@sha256:90517666d59da93aa6890b4718f43b49687b3b917fc9f20cf8a22dde2b8259ae
     restart: on-failure
     stop_grace_period: 1m
     depends_on:
       - ollama
     environment:
-      - OLLAMA_HOST=http://host.docker.internal:11434
-      - OLLAMA_MODEL=
-      - OPENAI_API_KEY=
-      - OPENAI_BASE_URL=
-      - SECRET_KEY=
-      - JWT_SECRET_KEY=
-      - AUTH_ENABLED=
-      - LOCALHOST_BYPASS=
-      - PEGAPROX_DISABLE_AUTO_ENCRYPT: "false"
+      PUID: "1000"
+      PGID: "1000"
+      LLM_HOST: ollama
+      OLLAMA_BASE_URL: http://ollama:11434
+      AUTH_ENABLED: "true"
+      LOCALHOST_BYPASS: "false"
+      ODYSSEUS_ADMIN_USER: admin
+      ODYSSEUS_ADMIN_PASSWORD: ${APP_PASSWORD}
+      ALLOWED_ORIGINS: http://${DEVICE_DOMAIN_NAME}:7000
     volumes:
-      - /data/app/odysseus:/app/config:rw
-      - /data/app/odysseus/logs:/app/logs:rw
-      - /data/app/odysseus/backups:/app/backups:rw
-    ports:
-      - "7000:7000/tcp"
+      - ${APP_DATA_DIR}/data/odysseus:/app/data
+      - ${APP_DATA_DIR}/data/logs:/app/logs
+      - ${APP_DATA_DIR}/data/ssh:/app/.ssh
+      - ${APP_DATA_DIR}/data/huggingface:/app/.cache/huggingface
+      - ${APP_DATA_DIR}/data/local:/app/.local
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   ollama:
-    image: ollama/ollama:
-    platform: 
-    volumes:
-      - /data/ollama:/root/.ollama
+    image: ollama/ollama:latest
+    restart: on-failure
     environment:
-      - OLLAMA_HOST=0.0.0.0
-    ports:
-      - "11434:11434/tcp"
-
-volumes:
-  /data/app/odysseus:
-  /data/ollama:
+      OLLAMA_HOST: 0.0.0.0
+    volumes:
+      - ${APP_DATA_DIR}/data/ollama:/root/.ollama

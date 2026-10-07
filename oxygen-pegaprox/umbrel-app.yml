@@ -1,24 +1,34 @@
-﻿manifestVersion: 1
+manifestVersion: 1
 id: oxygen-pegaprox
 name: PegaProx
-tagline: Modern Multi-Cluster Management for Proxmox VE & XCP-ng
+tagline: Manage Proxmox VE and XCP-ng clusters from one dashboard
+icon: https://raw.githubusercontent.com/PegaProx/project-pegaprox/v1.2.0/images/pegaprox-logo-square-dark.png
 category: networking
-version: "1.2.0"
+version: "1.2.0-1"
+port: 5000
 description: >-
-  PegaProx is a powerful web-based management interface for Proxmox VE and XCP-ng clusters.
-  Manage multiple clusters from a single dashboard with features like live monitoring,
-  VM management, automated tasks, and more.
- developer: PegaProx Security
- website: https://pegaprox.com
- submitter: Oxygen1616
- repo: https://github.com/PegaProx/project-pegaprox
- support: https://github.com/PegaProx/project-pegaprox/issues
- gallery:
-   - https://raw.githubusercontent.com/PegaProx/project-pegaprox/main/images/pegaprox-logo-dark.png
-   - https://raw.githubusercontent.com/PegaProx/project-pegaprox/main/images/pegaprox-logo-light.png
- releaseNotes: >-
-   PegaProx 1.2.0 - a security release built on a full AI-assisted penetration test of the whole codebase, plus the tenant work that was queued behind it. SECURITY: 558 findings were triaged, every critical and high one verified against the code by hand before anything was changed, and the ones that were real were fixed with a regression test and a counter-proof apiece. One class accounted for most of them: a store that fails to load answers with an empty result, and empty was being read as the permissive answer - a tenant table that could not be read handed out every cluster, an unreadable ACL store stopped confining anybody, an unreadable schedule table let a write begin with a DELETE, and a failed settings read bound the syslog receiver's unauthenticated port on an instance that had switched it off. Those now refuse rather than guess. Log injection is neutralised at the sink instead of at seventy-five call sites, so a name carrying escape sequences can no longer repaint an operator's terminal; URLs written into logs have their credentials stripped, which matters because for a webhook the URL is the credential. SDN object ids are validated before they are used as a path segment, where '..' reached a neighbouring API object. The OIDC discovery address is pinned to the address it resolved to, and a group mapping that matches only on display name now says so. LDAP warns when neither TLS nor STARTTLS is configured - the warning used to sit inside the TLS branch, so the one setup that needed it was the one that stayed quiet. Lists that arrive in a request body are bounded, rate limiters can no longer be grown without bound by the thing they limit, and a managed node can no longer hand us output until we run out of memory. The second-factor probe fails closed on both the login and the re-authentication path, so a database hiccup no longer waves a key-only account through. BEHAVIOUR CHANGES: sixteen of them, several of which take something away from an existing setup - a node reboot now requires the node.reboot permission that was defined but never enforced, alert channels need admin.settings to change, PBS resource-wide operations require every linked cluster, ESXi delete and rename moved from vmware.vm.power to vmware.vm.manage, and a pool grant no longer opens an ESXi server. Please read the release notes before updating a multi-tenant install. TENANTS: a per-tenant disk ceiling, a per-tenant VMID slice that restore and template deployment both respect, the tenant list behind them, and self-service container creation serialised per tenant so two requests can no longer clear the same quota check. CI: the APT repository workflow can no longer be dispatched from an arbitrary branch to reach the signing key, the release version is validated before it reaches a shell, and build jobs no longer carry a token that can write to the repository. FIXES: ESXi to Proxmox migration never got past VMID allocation and had not worked since 0.9.2; drift events never reached the configured webhook channels (#815); a failed schedule read could rewrite the whole table; SQLCipher connections raised exceptions two handlers were not catching (#822); the V2P path asked a Proxmox node for a package it does not have (#824); the CVE scan names what failed and measures against the right suite (#825, #827); the console reconnect rides out more than six seconds and mints its ticket on a node that is actually up; a pool grant makes the pool's VMs visible (#793); clusters are labelled by display name everywhere (#787); last_login is recorded for OIDC and Entra logins (#794); node maintenance survives a restart when PVE HA accepted it (#720); the full Proxmox boot-order format is parsed instead of the legacy letters alone (#755); a balancing exclusion is no longer dropped when a cluster enumerates empty; a failed test failover leaves the clone stopped instead of starting it with live NICs; and the status page no longer hands database errors to the browser. Thanks to @karolina-glowinska, @Frisch12, @hugobugomugo, @si458, @mdobprv-lab, @jostrasser, @avsdev-cw, @surreal70 and everyone who filed, fixed, translated and sponsored. 💚,
- dependencies: []
- path: ""
- defaultUsername: ""
- defaultPassword: ""
+  PegaProx is a web-based management interface for Proxmox VE and XCP-ng clusters.
+  Manage multiple clusters from a single dashboard with live monitoring,
+  virtual machine management, snapshots, backups, and automated tasks.
+
+
+  Open the app to complete its initial setup. VNC and SSH consoles use ports
+  5001 and 5002. Configuration, the embedded database, encryption keys, logs,
+  and backups are persisted in the app's data directory.
+developer: PegaProx
+website: https://pegaprox.com
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/PegaProx/project-pegaprox
+support: https://github.com/PegaProx/project-pegaprox/issues
+gallery:
+  - https://raw.githubusercontent.com/PegaProx/project-pegaprox/v1.2.0/images/pegaprox-logo-dark.png
+  - https://raw.githubusercontent.com/PegaProx/project-pegaprox/v1.2.0/images/pegaprox-logo-light.png
+releaseNotes: >-
+  Fix community store discovery with valid manifest formatting, a launch port,
+  and an explicit icon. Correct the Compose configuration to use PegaProx's
+  embedded database, persistent app storage, and the published 1.2.0 image.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""

@@ -1,27 +1,37 @@
-﻿manifestVersion: 1
+manifestVersion: 1
 id: oxygen-odysseus
 name: Odysseus
-tagline: Self-Hosted AI Workspace
+tagline: Self-hosted AI workspace with local and API models
+icon: https://raw.githubusercontent.com/odysseus-dev/odysseus/main/static/icons/icon-512.png
 category: ai
-version: "1.0.0"
+version: "1.0.2-1"
+port: 7000
 description: >-
   Odysseus is a self-hosted AI workspace for chat, agents, research, documents,
-  email, notes, calendar, and local model workflows. Features include chat with
-  local/API models, agents with tools, deep research, document editing, email
-  management, notes and tasks with calendar sync, and extras like image editor,
-  themes, and web search.
- developer: Odysseus Dev
- website: https://odysseus-dev.github.io/odysseus/
- submitter: Oxygen1616
- repo: https://github.com/odysseus-dev/odysseus
- support: https://github.com/odysseus-dev/odysseus/issues
- gallery:
-   - https://odysseus-dev.github.io/odysseus/assets/branding/odysseus-wordmark.png
- releaseNotes: >-
-   Initial release of Odysseus Umbrel app. Provides a self-hosted AI workspace
-   with chat, agents, research, documents, email, notes, calendar, and local
-   model workflows. Supports Ollama integration and custom OpenAI endpoints.
- dependencies: []
- path: ""
- defaultUsername: ""
- defaultPassword: ""
+  email, notes, calendar, and local model workflows. Connect local models or
+  configure an API provider in the app.
+
+
+  This package includes a CPU-based Ollama server. Download a model before
+  using local inference, or connect to an external model server. Search and
+  other integrations may require additional services or provider credentials.
+
+
+  Sign in as admin with the password shown by Umbrel. App data, model downloads,
+  logs, and the local package cache are persisted in the app's data directory.
+developer: Odysseus Dev
+website: https://odysseus-dev.github.io/odysseus/
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/odysseus-dev/odysseus
+support: https://github.com/odysseus-dev/odysseus/issues
+gallery:
+  - https://raw.githubusercontent.com/odysseus-dev/odysseus/main/assets/branding/odysseus-wordmark.png
+releaseNotes: >-
+  Fix community store discovery with valid manifest formatting, a launch port,
+  and an explicit icon. Use the published 1.0.2 image, correct persistent storage,
+  and connect to the bundled Ollama service without host port conflicts.
+dependencies: []
+path: ""
+defaultUsername: admin
+defaultPassword: $APP_PASSWORD

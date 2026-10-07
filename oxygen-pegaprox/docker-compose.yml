@@ -1,54 +1,36 @@
-﻿version: "3.7"
-
 services:
   app_proxy:
     environment:
       APP_HOST: oxygen-pegaprox_server_1
       APP_PORT: 5000
-      PROXY_AUTH_WHITELIST: "/api/*
+
+  permissions:
+    image: ghcr.io/pegaprox/pegaprox:1.2.0@sha256:8c406ad6b2ddf9dc252e468db6b1bd730ffe11a748a16e3a86d28dc77e438536
+    user: "0:0"
+    restart: "no"
+    entrypoint: ["sh", "-c"]
+    command:
+      - chown -R pegaprox:pegaprox /app/config /app/logs /app/backups /app/.config/pegaprox
+    volumes:
+      - ${APP_DATA_DIR}/data/config:/app/config
+      - ${APP_DATA_DIR}/data/logs:/app/logs
+      - ${APP_DATA_DIR}/data/backups:/app/backups
+      - ${APP_DATA_DIR}/data/keys:/app/.config/pegaprox
 
   server:
-    image: ghcr.io/pegaprox/pegaprox:
-    # Build locally: # build: .
-    container_name: oxygen-pegaprox_server_1
-    user: "1000:1000"
+    image: ghcr.io/pegaprox/pegaprox:1.2.0@sha256:8c406ad6b2ddf9dc252e468db6b1bd730ffe11a748a16e3a86d28dc77e438536
     restart: on-failure
     stop_grace_period: 1m
     depends_on:
-      - postgres
+      permissions:
+        condition: service_completed_successfully
     environment:
-      - DATABASE_URL=postgres://pegaprox:@postgres:5432/pegaprox
-      - SECRET_KEY=
-      - JWT_SECRET_KEY=
-      - PEGAPROX_BEHIND_PROXY: "true"
-      - PEGAPROX_TRUSTED_PROXIES: ""
-      - PEGAPROX_ALLOWED_ORIGINS: "https://:"
-      - PEGAPROX_DISABLE_AUTO_ENCRYPT: "false"
+      PEGAPROX_BEHIND_PROXY: "true"
     volumes:
-      - /data/app/pegaprox:/app/config:rw
-      - /data/app/pegaprox/logs:/app/logs:rw
-      - /data/app/pegaprox/backups:/app/backups:rw
+      - ${APP_DATA_DIR}/data/config:/app/config
+      - ${APP_DATA_DIR}/data/logs:/app/logs
+      - ${APP_DATA_DIR}/data/backups:/app/backups
+      - ${APP_DATA_DIR}/data/keys:/app/.config/pegaprox
     ports:
-      - "5000:5000/tcp"
-      - "5001:5001/tcp" # VNC websocket
-      - "5002:5002/tcp" # SSH websocket
-
-  postgres:
-    image: postgres:15
-    user: "1000:1000"
-    restart: on-failure
-    stop_grace_period: 1m
-    environment:
-      POSTGRES_DB: pegaprox
-      POSTGRES_USER: pegaprox
-      POSTGRES_PASSWORD: 
-    volumes:
-      - /data/app/pegaprox/db:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U pegaprox -d pegaprox"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-volumes:
-  /data/app/pegaprox:
+      - "5001:5001" # VNC websocket
+      - "5002:5002" # SSH websocket
