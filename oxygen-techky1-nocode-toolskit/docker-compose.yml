@@ -31,7 +31,7 @@ services:
       permissions:
         condition: service_completed_successfully
     command: python -m uvicorn server:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips="*"
-    shm_size: "1gb"
+    shm_size: "2gb"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://127.0.0.1:8000/health || exit 1"]
       interval: 20s
@@ -42,6 +42,9 @@ services:
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/opt/openmontage
       - STORAGE_DELETE_AFTER_MINUTES=1440
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility,video
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
       - PEXELS_API_KEY=${PEXELS_API_KEY:-}
       - PIXABAY_API_KEY=${PIXABAY_API_KEY:-}
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
@@ -58,3 +61,10 @@ services:
       - ${APP_DATA_DIR}/styles:/app/styles
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
