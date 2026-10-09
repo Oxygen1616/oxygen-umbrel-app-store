@@ -4,7 +4,7 @@ name: Odysseus
 tagline: Self-hosted AI workspace with local and API models
 icon: https://raw.githubusercontent.com/odysseus-dev/odysseus/main/static/icons/icon-512.png
 category: ai
-version: "1.0.2-1"
+version: "1.0.3"
 port: 7000
 description: >-
   Odysseus is a self-hosted AI workspace for chat, agents, research, documents,
@@ -12,9 +12,9 @@ description: >-
   configure an API provider in the app.
 
 
-  This package includes a CPU-based Ollama server. Download a model before
-  using local inference, or connect to an external model server. Search and
-  other integrations may require additional services or provider credentials.
+  This package includes NVIDIA GPU hardware acceleration with a bundled Ollama server.
+  Download a model before using local inference, or connect to an external model server.
+  Search and other integrations may require additional services or provider credentials.
 
 
   Sign in as admin with the password shown by Umbrel. App data, model downloads,
@@ -28,9 +28,7 @@ support: https://github.com/odysseus-dev/odysseus/issues
 gallery:
   - https://raw.githubusercontent.com/odysseus-dev/odysseus/main/assets/branding/odysseus-wordmark.png
 releaseNotes: >-
-  Fix community store discovery with valid manifest formatting, a launch port,
-  and an explicit icon. Use the published 1.0.2 image, correct persistent storage,
-  and connect to the bundled Ollama service without host port conflicts.
+  v1.0.3: Enable NVIDIA GPU hardware acceleration passthrough for Odysseus and its bundled Ollama engine (using Pascal-compatible Ollama 0.5.12).
 dependencies: []
 path: ""
 defaultUsername: "admin"

@@ -20,6 +20,8 @@ services:
       ODYSSEUS_ADMIN_USER: admin
       ODYSSEUS_ADMIN_PASSWORD: ${APP_PASSWORD:-umbrel}
       ALLOWED_ORIGINS: http://${DEVICE_DOMAIN_NAME}:7000
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
     volumes:
       - ${APP_DATA_DIR}/data/odysseus:/app/data
       - ${APP_DATA_DIR}/data/logs:/app/logs
@@ -28,11 +30,27 @@ services:
       - ${APP_DATA_DIR}/data/local:/app/.local
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
   ollama:
-    image: ollama/ollama:latest
+    image: ollama/ollama:0.5.12
     restart: on-failure
     environment:
       OLLAMA_HOST: 0.0.0.0
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
     volumes:
       - ${APP_DATA_DIR}/data/ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
