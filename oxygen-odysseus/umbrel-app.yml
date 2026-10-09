@@ -33,5 +33,5 @@ releaseNotes: >-
   and connect to the bundled Ollama service without host port conflicts.
 dependencies: []
 path: ""
-defaultUsername: admin
-defaultPassword: $APP_PASSWORD
+defaultUsername: "admin"
+defaultPassword: "umbrel"
