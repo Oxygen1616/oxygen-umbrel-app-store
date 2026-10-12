@@ -4,7 +4,7 @@ name: OpenDots
 tagline: Always-on AI coworkers that move between text, calls, and Slack
 icon: https://raw.githubusercontent.com/CopilotKit/OpenDots/main/public/favicon.svg
 category: AI
-version: "0.1.0"
+version: "0.1.1"
 port: 4310
 description: >-
   OpenDots is an open-source, self-hosted template by CopilotKit for always-on AI coworkers that operate across text, voice calls, and Slack. It provides persistent AI agents with their own isolated computer environments, document workspaces, and custom tool suites.
@@ -29,6 +29,9 @@ description: >-
 
 
   💬 Omnichannel Collaboration: Move effortlessly between web chat, voice conversations, and Slack channels.
+
+
+  🔑 Sign-In Note: When prompted for the owner access token, use the default token shown in the Umbrel details: opendots-owner-token-secure-24.
 developer: CopilotKit
 website: https://github.com/CopilotKit/OpenDots
 submitter: Oxygen1616
@@ -40,8 +43,8 @@ gallery:
   - https://raw.githubusercontent.com/CopilotKit/OpenDots/main/docs/images/spaces-workspace.png
   - https://raw.githubusercontent.com/CopilotKit/OpenDots/main/docs/images/spaces-library.png
 releaseNotes: >-
-  Initial release of OpenDots for Oxygen App Store. Run self-hosted persistent AI coworkers with local Ollama or OpenAI integration.
+  v0.1.1: Configure explicit default credentials (opendots-owner / opendots-owner-token-secure-24) in Umbrel dashboard so the owner access token is readily displayed upon launch.
 dependencies: []
 path: ""
-defaultUsername: ""
-defaultPassword: ""
+defaultUsername: "opendots-owner"
+defaultPassword: "opendots-owner-token-secure-24"
