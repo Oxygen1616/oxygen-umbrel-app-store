@@ -30,7 +30,7 @@ services:
       - PORT=4310
       - DATABASE_PATH=/data/opendots.sqlite
       - OWNER_ID=opendots-owner
-      - OWNER_TOKEN=${APP_PASSWORD:-opendots-owner-token-secure-24}
+      - OWNER_TOKEN=opendots-owner-token-secure-24
       - APP_ORIGIN=http://umbrel.local:4310
       - OPENAI_BASE_URL=${OPENAI_BASE_URL:-http://host.docker.internal:11434/v1}
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
