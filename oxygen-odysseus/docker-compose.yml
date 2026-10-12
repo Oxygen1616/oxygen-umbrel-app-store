@@ -4,12 +4,45 @@ services:
       APP_HOST: oxygen-odysseus_server_1
       APP_PORT: 7000
 
+  init:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /app/data /app/logs /app/ssh /app/huggingface /app/local
+        if [ ! -s /app/data/auth.json ]; then
+          cat << 'EOF' > /app/data/auth.json
+        {
+          "users": {
+            "admin": {
+              "password_hash": "$$2a$$12$$lH0sgVQwFaz6lofaMurS0.H9dXQpVBPqkRs/KTFGxfQ.uEKl9bDLi",
+              "is_admin": true
+            }
+          }
+        }
+        EOF
+        fi
+        chown -R 1000:1000 /app/data /app/logs /app/ssh /app/huggingface /app/local
+        chmod 600 /app/data/auth.json 2>/dev/null || true
+    volumes:
+      - ${APP_DATA_DIR}/data/odysseus:/app/data
+      - ${APP_DATA_DIR}/data/logs:/app/logs
+      - ${APP_DATA_DIR}/data/ssh:/app/ssh
+      - ${APP_DATA_DIR}/data/huggingface:/app/huggingface
+      - ${APP_DATA_DIR}/data/local:/app/local
+
   server:
     image: ghcr.io/odysseus-dev/odysseus:1.0.2@sha256:90517666d59da93aa6890b4718f43b49687b3b917fc9f20cf8a22dde2b8259ae
     restart: on-failure
     stop_grace_period: 1m
     depends_on:
-      - ollama
+      init:
+        condition: service_completed_successfully
+      ollama:
+        condition: service_started
     environment:
       PUID: "1000"
       PGID: "1000"

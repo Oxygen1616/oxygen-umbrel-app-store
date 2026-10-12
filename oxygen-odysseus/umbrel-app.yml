@@ -4,7 +4,7 @@ name: Odysseus
 tagline: Self-hosted AI workspace with local and API models
 icon: https://raw.githubusercontent.com/odysseus-dev/odysseus/main/static/icons/icon-512.png
 category: ai
-version: "1.0.3"
+version: "1.0.4"
 port: 7000
 description: >-
   Odysseus is a self-hosted AI workspace for chat, agents, research, documents,
@@ -28,7 +28,7 @@ support: https://github.com/odysseus-dev/odysseus/issues
 gallery:
   - https://raw.githubusercontent.com/odysseus-dev/odysseus/main/assets/branding/odysseus-wordmark.png
 releaseNotes: >-
-  v1.0.3: Enable NVIDIA GPU hardware acceleration passthrough for Odysseus and its bundled Ollama engine (using Pascal-compatible Ollama 0.5.12).
+  v1.0.4: Add automatic pre-start init service to seed valid admin/umbrel credentials and ensure directories and permissions are automatically established without manual intervention.
 dependencies: []
 path: ""
 defaultUsername: "admin"
