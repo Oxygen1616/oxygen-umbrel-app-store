@@ -4,7 +4,7 @@ name: VoiceStudio
 tagline: Open-source voice cloning, voice design, dubbing, dictation, and transcription
 icon: https://raw.githubusercontent.com/debpalash/VoiceStudio/main/docs/logo.png
 category: AI
-version: "0.5.6"
+version: "0.5.7"
 port: 3900
 description: >-
   VoiceStudio is an open-source, fully local alternative to ElevenLabs providing voice cloning, voice design, video dubbing, dictation, transcription, and audiobook creation across 646 languages.
@@ -35,7 +35,7 @@ gallery:
   - https://raw.githubusercontent.com/debpalash/VoiceStudio/main/docs/media/electron/voice-design.png
   - https://raw.githubusercontent.com/debpalash/VoiceStudio/main/docs/media/electron/models.png
 releaseNotes: >-
-  Initial release of VoiceStudio for Oxygen App Store.
+  v0.5.7: Added NVIDIA environment variables (NVIDIA_VISIBLE_DEVICES and NVIDIA_DRIVER_CAPABILITIES) for automatic GPU hardware acceleration passthrough.
 dependencies: []
 path: ""
 defaultUsername: ""
