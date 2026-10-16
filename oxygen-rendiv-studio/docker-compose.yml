@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-rendiv-studio_server_1
+      APP_PORT: 3000
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /workspace
+        chmod -R 777 /workspace
+    volumes:
+      - ${APP_DATA_DIR}/projects:/workspace
+
+  server:
+    image: ghcr.io/thecodacus/rendiv-studio:latest
+    restart: on-failure
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    shm_size: "2gb"
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    volumes:
+      - ${APP_DATA_DIR}/projects:/workspace
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

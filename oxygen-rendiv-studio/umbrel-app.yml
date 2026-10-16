@@ -1,0 +1,42 @@
+manifestVersion: 1
+id: oxygen-rendiv-studio
+name: Rendiv Studio
+tagline: Code-first video editor built for AI agents with studio timeline & rendering
+icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-rendiv-studio/logo.svg
+category: AI
+version: "1.0.0"
+port: 3000
+description: >-
+  Rendiv Studio is an open-source, code-first video editor and headless rendering framework built specifically for AI agents, LLM pipelines, and automated video production.
+
+
+  Every video composition is written in React and TypeScript as a pure, deterministic function of time. AI agents (like Claude Code, Codex, Hermes, or Agent Zero) can programmatically generate, edit, and iterate on compositions from natural language prompts with zero manual keyframing.
+
+
+  Key Features:
+
+
+  🎬 Interactive Browser Studio: Scrubber, live preview, timeline editor with multi-track z-ordering, and hot reload.
+
+
+  🤖 Preloaded AI Agent Skills: Built-in Claude Code, Codex, and rendiv-video skills ready to compose videos.
+
+
+  ⚡ Parallel Headless Rendering: Uses Playwright and FFmpeg to render MP4, WebM, and GIF files at scale.
+
+
+  🔌 Agent-Accessible REST/WebSocket API: Direct API access on port 3000 without proxy authentication hurdles, allowing local agents and scripts on your Umbrel to trigger renders and manage projects.
+developer: thecodacus
+website: https://github.com/thecodacus/rendiv
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/thecodacus/rendiv
+support: https://github.com/thecodacus/rendiv/issues
+gallery:
+  - https://repository-images.githubusercontent.com/1162934393/1a9cce0f-2f6e-4337-90d7-41b7ca32d03d
+releaseNotes: >-
+  Initial release of Rendiv Studio with multi-project workspace support, Playwright, FFmpeg, and agent skills preloaded.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
