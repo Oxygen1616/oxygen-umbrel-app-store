@@ -1,0 +1,51 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-omniroute_server_1
+      APP_PORT: 20128
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /data /redis
+        chown -R 1000:1000 /data
+        chmod -R 777 /data /redis
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_DATA_DIR}/redis:/redis
+
+  server:
+    image: diegosouzapw/omniroute:latest
+    restart: on-failure
+    stop_grace_period: 40s
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+    environment:
+      - PORT=20128
+      - HOSTNAME=0.0.0.0
+      - DATA_DIR=/app/data
+      - REDIS_URL=redis://oxygen-omniroute_redis_1:6379
+      - OMNIROUTE_MEMORY_MB=2048
+      - NODE_OPTIONS=--max-old-space-size=2048
+      - REQUIRE_API_KEY=false
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  redis:
+    image: redis:7-alpine
+    restart: on-failure
+    volumes:
+      - ${APP_DATA_DIR}/redis:/data

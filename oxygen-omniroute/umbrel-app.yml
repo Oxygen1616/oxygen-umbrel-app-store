@@ -1,0 +1,45 @@
+manifestVersion: 1
+id: oxygen-omniroute
+name: OmniRoute
+tagline: Universal AI routing gateway & dashboard with auto-failover, token compression, and MCP
+icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-omniroute/logo.svg
+category: AI
+version: "3.8.51"
+port: 20128
+description: >-
+  OmniRoute is an open-source, local-first AI routing gateway and dashboard that unifies 350+ AI providers (including 150+ with free tiers) into a single, high-performance OpenAI-compatible endpoint (/v1/*).
+
+
+  Designed for coding assistants, CLI agents, and local workflows (Claude Code, Cursor, Codex, OpenClaw, Hermes Agent), OmniRoute gives you complete control over your LLM traffic with auto-fallback, quota tracking, circuit breakers, and intelligent load balancing.
+
+
+  Key Features:
+
+
+  🌐 Universal OpenAI API Gateway: Route requests to Claude, GPT-4/o, Gemini, DeepSeek, Grok, Kimi, local Ollama, and hundreds more through a single unified /v1 endpoint.
+
+
+  🗜️ Token Compression: Built-in RTK + Caveman compression engines save 15-95% on prompt tokens before sending to upstreams.
+
+
+  🛡️ Resilient Routing & Fallback: Quota-aware auto-fallback, expiry-first account selection, circuit breakers, and rate-limiting sidecar.
+
+
+  🔌 MCP & Agent Ready: Integrated Model Context Protocol (MCP) server, A2A server, and WebSocket bridge.
+
+
+  📊 Clean Local Dashboard: Real-time visual metrics, latency monitoring, model routing rules, and credential vault.
+developer: Diego Souza
+website: https://omniroute.online
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/diegosouzapw/OmniRoute
+support: https://github.com/diegosouzapw/OmniRoute/issues
+gallery:
+  - https://raw.githubusercontent.com/diegosouzapw/OmniRoute/main/public/favicon.svg
+releaseNotes: >-
+  Initial release of OmniRoute for umbrelOS with unified /v1 endpoint, Redis sidecar, and pre-configured local network routing.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
