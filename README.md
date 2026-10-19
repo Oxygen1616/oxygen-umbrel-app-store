@@ -264,6 +264,7 @@ This repository contains **Oxygen1616's** custom Community App Store for umbrelO
 | 239 | <img height="30" src="https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-techky1-nocode-toolskit/logo.png" /> | [Techky1 No-Code Toolkit](https://github.com/Oxygen1616/techky1-nocode-toolskit) | All-in-one AI media creation studio with TTS, automated Shorts, and agent workflows | 8001 |
 | 240 | <img height="30" src="https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-rendiv-studio/logo.svg" /> | [Rendiv Studio](https://github.com/thecodacus/rendiv) | Code-first video editor built for AI agents with studio timeline & rendering | 3000 |
 | 241 | <img height="30" src="https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-omniroute/logo.svg" /> | [OmniRoute](https://github.com/diegosouzapw/OmniRoute) | Universal AI routing gateway & dashboard with auto-failover, token compression, and MCP | 20128 |
+| 242 | <img height="30" src="https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-rakazo/logo.svg" /> | [Rakazo](https://github.com/elie222/rakazo) | Open-source self-hosted AI teammates and persistent assistants with local sandboxes | 5175 |
 
 🔄 All Apps are continually updated and new Apps are added over time.
 

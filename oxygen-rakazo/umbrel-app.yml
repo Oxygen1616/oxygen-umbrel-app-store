@@ -1,0 +1,45 @@
+manifestVersion: 1
+id: oxygen-rakazo
+name: Rakazo
+tagline: Open-source self-hosted AI teammates and persistent assistants with local sandboxes
+icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-rakazo/logo.svg
+category: AI
+version: "0.1.0"
+port: 5175
+description: >-
+  Rakazo is an open-source, self-hosted AI agent platform for persistent teammates and autonomous assistants that you run on your own infrastructure.
+
+
+  Unlike standard stateless chatbots, Rakazo provides persistent bots with isolated workspaces, routines, long-term memory, and full Docker computer sandboxes to execute code and automate tasks.
+
+
+  Key Features:
+
+
+  🤖 Persistent AI Teammates: Create bots with continuous memory, conversation histories, custom system instructions, and specialized tools.
+
+
+  💻 Isolated Computer Sandboxes: Bots run commands, execute scripts, and inspect files inside secure Docker sandboxes managed by a local supervisor.
+
+
+  🔌 Bring Your Own Model: Connect to OpenAI, Anthropic, OpenRouter, or local models via Ollama and OmniRoute with encrypted API key management.
+
+
+  🌐 Cross-Platform Sync: Access your agents through the browser UI, Electron desktop app, or native iOS/Android mobile apps.
+
+
+  🛡️ Private & Self-Hosted: Fully local PostgreSQL backend, encrypted secret storage, and no vendor lock-in.
+developer: Elie Steinbock
+website: https://rakazo.com
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/elie222/rakazo
+support: https://github.com/elie222/rakazo/issues
+gallery:
+  - https://raw.githubusercontent.com/elie222/rakazo/main/docs/readme-hero.png
+releaseNotes: >-
+  Initial release of Rakazo for Oxygen App Store. Self-hosted AI teammates with persistent memory, Docker computer sandboxes, and multi-model support.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
