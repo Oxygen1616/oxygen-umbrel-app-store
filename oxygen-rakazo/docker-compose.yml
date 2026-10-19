@@ -73,10 +73,10 @@ services:
       ENCRYPTION_KEY: 7d8f3a21b4e90c6518a2d4e7f0b93c816a5e2f10d7c4b9e382a1f0d5c6b7e892
       SCREEN_PROXY_SECRET: 9a2b4c6e8f103d52718395a0c2e4f6b81d3e5a7c9f02b4d6e8103c5a7f92e4b6
       SANDBOX_SUPERVISOR_TOKEN: 3f8a1c9e5b2d7048a1c3e5f7b9d024681a3c5e7f9b0d2f4a6c8e0b2d4f6a8c0e
-      BETTER_AUTH_URL: http://127.0.0.1:5175
-      WEB_ORIGIN: http://127.0.0.1:5175
-      API_URL: http://127.0.0.1:5175
-      RAKAZO_HOST: localhost
+      BETTER_AUTH_URL: http://umbrel.local:5175
+      WEB_ORIGIN: http://umbrel.local:5175
+      API_URL: http://umbrel.local:5175
+      RAKAZO_HOST: umbrel.local
       DATABASE_URL: postgres://rakazo:rakazo_db_pass_9f8e7d6c5b4a@postgres:5432/rakazo
       DATA_DIR: /data
       SANDBOX_SUPERVISOR_URL: http://supervisor:7091
@@ -132,6 +132,8 @@ services:
       API_PROXY_TARGET: http://api:3100
       SCREEN_PROXY_SECRET: 9a2b4c6e8f103d52718395a0c2e4f6b81d3e5a7c9f02b4d6e8103c5a7f92e4b6
       RAKAZO_IMAGE_TAG: edge
+      RAKAZO_HOST: umbrel.local
+      RAKAZO_ALLOWED_HOSTS: "umbrel.local,umbrel,192.168.1.15,localhost,127.0.0.1,.local"
     depends_on:
       api:
         condition: service_started
