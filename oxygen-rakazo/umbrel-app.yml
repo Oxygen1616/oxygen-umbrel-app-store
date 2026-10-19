@@ -4,7 +4,7 @@ name: Rakazo
 tagline: Open-source self-hosted AI teammates and persistent assistants with local sandboxes
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-rakazo/logo.svg
 category: AI
-version: "0.1.0"
+version: "0.1.1"
 port: 5175
 description: >-
   Rakazo is an open-source, self-hosted AI agent platform for persistent teammates and autonomous assistants that you run on your own infrastructure.
