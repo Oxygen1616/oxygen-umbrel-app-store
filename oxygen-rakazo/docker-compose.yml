@@ -32,8 +32,10 @@ services:
       - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
 
   supervisor:
-    image: ghcr.io/elie222/rakazo/supervisor:edge
+    image: ghcr.io/elie222/rakazo/app:edge
     restart: on-failure
+    command: ["pnpm", "--filter", "@rakazo/sandbox-supervisor", "start"]
+    user: root
     environment:
       MAX_UPLOAD_SIZE_MB: 10
       DATA_DIR: /data
