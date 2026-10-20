@@ -18,11 +18,11 @@ description: >-
      Authorization: Bearer <your password>
 
   3. Claude Code, Codex, Cursor, Gemini CLI, OpenCode, OpenClaw and Hermes Agent are supported. Each agent is registered with the ai-memory CLI, which needs to run on the machine where the agent runs. The CLI is installed with: curl -fsSL https://github.com/akitaonrails/ai-memory/releases/latest/download/install.sh | sh
-     Then run: ai-memory install-mcp --client <name> --url http://umbrel.local:49374/mcp --auth-token <your password>
+     Then run: ai-memory install-mcp --client <name> --server-url http://umbrel.local:49374/mcp --auth-token <your password> --apply (without --apply it only prints the config)
 
   4. Other Umbrel apps that speak MCP over HTTP can use the same URL and token. Apps that take an OpenAI-compatible LLM endpoint, such as Ollama, can be used by AI Memory for summaries (see the README).
 
-  5. Check that it works: open http://umbrel.local:49374/mcp in a browser. You should see an authentication error, not a page. The error means the server is up and enforcing the token.
+  5. Check that it works: curl http://umbrel.local:49374/mcp without a token should be refused, and the same request with -H "Authorization: Bearer <your password>" should get past the auth check.
 
 
   Your data lives in the app's data directory. Use the upstream ai-memory backup command to take consistent snapshots, rather than copying the live database file.

@@ -15,7 +15,7 @@ Runs [ai-memory](https://github.com/akitaonrails/ai-memory) 3.1.1 from the publi
 ## Connect a client
 
 ```bash
-ai-memory install-mcp --client claude-code --url http://umbrel.local:49374/mcp --auth-token <password>
+ai-memory install-mcp --client claude-code --server-url http://umbrel.local:49374/mcp --auth-token <password> --apply
 ```
 
 Supported clients are listed in the upstream support matrix. For Hermes Agent and
