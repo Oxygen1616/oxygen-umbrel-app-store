@@ -27,5 +27,17 @@ services:
         condition: service_completed_successfully
     environment:
       - RUST_LOG=ai_memory=info,ai_memory_store=info,ai_memory_wiki=info,ai_memory_mcp=info,tracing_appender=warn
+      # Bearer token every client must send as "Authorization: Bearer <token>".
+      # Umbrel generates APP_PASSWORD per install and shows it as the app's password.
+      # Without it the server would accept unauthenticated requests on the LAN.
+      - AI_MEMORY_AUTH_TOKEN=${APP_PASSWORD}
+      # Host headers accepted by the DNS-rebinding guard. Umbrel's own domain plus
+      # localhost, and the container name so other apps' proxies can reach it.
+      - AI_MEMORY_ALLOWED_HOSTS=${DEVICE_DOMAIN_NAME},localhost,127.0.0.1,oxygen-ai-memory_server_1
+      # Optional: consolidation uses a rule-based summary unless an LLM provider is set.
+      # To use a local Ollama, uncomment and set the port to your Ollama app's port:
+      # - AI_MEMORY_LLM_PROVIDER=openai-compat
+      # - AI_MEMORY_LLM_BASE_URL=http://${DEVICE_DOMAIN_NAME}:11434/v1
+      # - AI_MEMORY_LLM_MODEL=qwen3:8b
     volumes:
       - ${APP_DATA_DIR}/data:/data

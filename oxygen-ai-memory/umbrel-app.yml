@@ -1,18 +1,33 @@
 manifestVersion: 1
 id: oxygen-ai-memory
 name: AI Memory
-tagline: Long-term memory for agent coding CLIs
+tagline: Shared long-term memory for your AI coding agents
 icon: https://raw.githubusercontent.com/akitaonrails/ai-memory/main/docs/logo.png
 category: AI
 version: "3.1.1"
 port: 49374
 description: >-
-  AI Memory is a long-term memory service for coding agent CLIs. It helps hand off context between different agent vendors and keeps state across sessions.
+  AI Memory keeps long-term memory for AI coding agents and lets them hand off context to each other. Notes from one session, or from one agent such as Claude Code, can be recalled later by another agent such as OpenClaw or Hermes Agent. Memory is stored as readable pages in this app's data directory, not in a vendor cloud.
 
 
-  The app exposes an MCP HTTP endpoint at /mcp. Point Claude Code or any MCP HTTP client at it, and state is kept in the app's data directory.
+  HOW TO USE
+
+  1. Open AI Memory from Umbrel. Copy the password shown on the app page. This is the bearer token.
+
+  2. Connect an agent. The MCP endpoint is http://umbrel.local:49374/mcp. Send the token in an Authorization header, for example:
+     Authorization: Bearer <your password>
+
+  3. Claude Code, Codex, Cursor, Gemini CLI, OpenCode, OpenClaw and Hermes Agent are supported. Each agent is registered with the ai-memory CLI, which needs to run on the machine where the agent runs. The CLI is installed with: curl -fsSL https://github.com/akitaonrails/ai-memory/releases/latest/download/install.sh | sh
+     Then run: ai-memory install-mcp --client <name> --url http://umbrel.local:49374/mcp --auth-token <your password>
+
+  4. Other Umbrel apps that speak MCP over HTTP can use the same URL and token. Apps that take an OpenAI-compatible LLM endpoint, such as Ollama, can be used by AI Memory for summaries (see the README).
+
+  5. Check that it works: open http://umbrel.local:49374/mcp in a browser. You should see an authentication error, not a page. The error means the server is up and enforcing the token.
+
+
+  Your data lives in the app's data directory. Use the upstream ai-memory backup command to take consistent snapshots, rather than copying the live database file.
 developer: akitaonrails
-website: https://github.com/akitaonrails/ai-memory
+website: https://aimemory.sh
 submitter: Oxygen1616
 submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
 repo: https://github.com/akitaonrails/ai-memory
@@ -20,8 +35,8 @@ support: https://github.com/akitaonrails/ai-memory/issues
 gallery:
   - https://raw.githubusercontent.com/akitaonrails/ai-memory/main/docs/logo-light.png
 releaseNotes: >-
-  Initial Umbrel packaging of ai-memory 3.1.1 using the public Docker Hub image.
+  Umbrel packaging of ai-memory 3.1.1 from the public Docker Hub image. The bearer token is set from the app password, and the Host allowlist includes the Umbrel domain. Optional LLM provider configuration is documented in the compose file.
 dependencies: []
 path: "/mcp"
 defaultUsername: ""
-defaultPassword: ""
+defaultPassword: ${APP_PASSWORD}
