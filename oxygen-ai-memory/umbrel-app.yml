@@ -1,0 +1,27 @@
+manifestVersion: 1
+id: oxygen-ai-memory
+name: AI Memory
+tagline: Long-term memory for agent coding CLIs
+icon: https://raw.githubusercontent.com/akitaonrails/ai-memory/main/docs/logo.png
+category: AI
+version: "3.1.1"
+port: 49374
+description: >-
+  AI Memory is a long-term memory service for coding agent CLIs. It helps hand off context between different agent vendors and keeps state across sessions.
+
+
+  The app exposes an MCP HTTP endpoint at /mcp. Point Claude Code or any MCP HTTP client at it, and state is kept in the app's data directory.
+developer: akitaonrails
+website: https://github.com/akitaonrails/ai-memory
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/akitaonrails/ai-memory
+support: https://github.com/akitaonrails/ai-memory/issues
+gallery:
+  - https://raw.githubusercontent.com/akitaonrails/ai-memory/main/docs/logo-light.png
+releaseNotes: >-
+  Initial Umbrel packaging of ai-memory 3.1.1 using the public Docker Hub image.
+dependencies: []
+path: "/mcp"
+defaultUsername: ""
+defaultPassword: ""

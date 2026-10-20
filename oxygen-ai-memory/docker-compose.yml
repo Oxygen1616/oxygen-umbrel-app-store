@@ -1,0 +1,31 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-ai-memory_server_1
+      APP_PORT: 49374
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /data
+        chown -R 1000:1000 /data
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+
+  server:
+    image: akitaonrails/ai-memory:3.1.1
+    restart: on-failure
+    user: "1000:1000"
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    environment:
+      - RUST_LOG=ai_memory=info,ai_memory_store=info,ai_memory_wiki=info,ai_memory_mcp=info,tracing_appender=warn
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
