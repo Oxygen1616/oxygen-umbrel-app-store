@@ -1,21 +1,20 @@
 # AI Memory for umbrelOS
 
-Runs [ai-memory](https://github.com/akitaonrails/ai-memory) 3.1.1 from the public
-`akitaonrails/ai-memory:3.1.1` Docker Hub image (amd64).
+Runs [ai-memory](https://github.com/akitaonrails/ai-memory) from the public
+`akitaonrails/ai-memory:3.1.2` Docker Hub image.
 
 ## Access
 
-- MCP endpoint: `http://umbrel.local:49374/mcp`
+- MCP endpoint: `http://umbrel.local:8003/mcp`
 - Auth: every request needs `Authorization: Bearer <password>`. The password is
   `APP_PASSWORD`, generated per install and shown on the Umbrel app page.
-- Host allowlist: `${DEVICE_DOMAIN_NAME}`, `localhost`, `127.0.0.1` and the
-  container name `oxygen-ai-memory_server_1`. Requests with other Host headers
-  are rejected by ai-memory.
+- Host allowlist: `${DEVICE_DOMAIN_NAME}`, `localhost`, `127.0.0.1`, `umbrel.local`, and the
+  container name `oxygen-ai-memory_server_1`.
 
 ## Connect a client
 
 ```bash
-ai-memory install-mcp --client claude-code --server-url http://umbrel.local:49374/mcp --auth-token <password> --apply
+ai-memory install-mcp --client claude-code --server-url http://umbrel.local:8003/mcp --auth-token <password> --apply
 ```
 
 Supported clients are listed in the upstream support matrix. For Hermes Agent and

@@ -4,8 +4,8 @@ name: AI Memory
 tagline: Shared long-term memory for your AI coding agents
 icon: https://raw.githubusercontent.com/akitaonrails/ai-memory/main/docs/logo.png
 category: AI
-version: "3.1.1"
-port: 49374
+version: "3.1.2"
+port: 8003
 description: >-
   AI Memory keeps long-term memory for AI coding agents and lets them hand off context to each other. Notes from one session, or from one agent such as Claude Code, can be recalled later by another agent such as OpenClaw or Hermes Agent. Memory is stored as readable pages in this app's data directory, not in a vendor cloud.
 
@@ -14,15 +14,18 @@ description: >-
 
   1. Open AI Memory from Umbrel. Copy the password shown on the app page. This is the bearer token.
 
-  2. Connect an agent. The MCP endpoint is http://umbrel.local:49374/mcp. Send the token in an Authorization header, for example:
+
+  2. Connect an agent. The MCP endpoint is http://umbrel.local:8003/mcp. Send the token in an Authorization header, for example:
      Authorization: Bearer <your password>
 
+
   3. Claude Code, Codex, Cursor, Gemini CLI, OpenCode, OpenClaw and Hermes Agent are supported. Each agent is registered with the ai-memory CLI, which needs to run on the machine where the agent runs. The CLI is installed with: curl -fsSL https://github.com/akitaonrails/ai-memory/releases/latest/download/install.sh | sh
-     Then run: ai-memory install-mcp --client <name> --server-url http://umbrel.local:49374/mcp --auth-token <your password> --apply (without --apply it only prints the config)
+     Then run: ai-memory install-mcp --client <name> --server-url http://umbrel.local:8003/mcp --auth-token <your password> --apply (without --apply it only prints the config)
+
 
   4. Other Umbrel apps that speak MCP over HTTP can use the same URL and token. Apps that take an OpenAI-compatible LLM endpoint, such as Ollama, can be used by AI Memory for summaries (see the README).
 
-  5. Check that it works: curl http://umbrel.local:49374/mcp without a token should be refused, and the same request with -H "Authorization: Bearer <your password>" should get past the auth check.
+  5. Check that it works: curl http://umbrel.local:8003/mcp without a token should be refused, and the same request with -H "Authorization: Bearer <your password>" should get past the auth check.
 
 
   Your data lives in the app's data directory. Use the upstream ai-memory backup command to take consistent snapshots, rather than copying the live database file.
@@ -35,7 +38,7 @@ support: https://github.com/akitaonrails/ai-memory/issues
 gallery:
   - https://raw.githubusercontent.com/akitaonrails/ai-memory/main/docs/logo-light.png
 releaseNotes: >-
-  Umbrel packaging of ai-memory 3.1.1 from the public Docker Hub image. The bearer token is set from the app password, and the Host allowlist includes the Umbrel domain. Optional LLM provider configuration is documented in the compose file.
+  v3.1.2: Fixed host port to 8003 (resolving Umbrel machine port reservation error) and upgraded image to ai-memory 3.1.2. Added umbrel.local to Host allowlist.
 dependencies: []
 path: "/mcp"
 defaultUsername: ""
