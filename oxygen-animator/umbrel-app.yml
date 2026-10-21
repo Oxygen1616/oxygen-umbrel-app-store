@@ -4,7 +4,7 @@ name: Animator
 tagline: Type an idea, get a narrated hand-drawn whiteboard explainer video
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-animator/logo.png
 category: AI
-version: "1.0.0"
+version: "1.0.1"
 port: 8002
 description: >-
   Animator turns any concept or prompt into a complete, narrated hand-drawn whiteboard explainer video. One prompt in, an animated video out. The engine writes the script, draws each scene's icons, synthesizes synchronized voiceover narration, detects icon boundaries, and renders the stroke-by-stroke drawing animation in parallel.
@@ -63,7 +63,7 @@ support: https://github.com/Oxygen1616/Animator/issues
 gallery:
   - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-animator/logo.png
 releaseNotes: >-
-  v1.0.0: Initial Umbrel community app store release with agent-ready REST API, studio dashboard, local rendering engine, and local Supabase integration support.
+  v1.0.1: Upgraded engine to Gemini 3.8 Flash for script storyboarding and integrated dedicated multi-modal support for Gemini 2.5 Flash Preview TTS narration audio and Gemini 3.1 Flash Image whiteboard doodle generation.
 dependencies: []
 path: ""
 defaultUsername: ""
