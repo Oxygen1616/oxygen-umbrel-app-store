@@ -266,7 +266,7 @@ Configure via Umbrel App Settings or environment file:
 | Variable | Default | Purpose |
 | :--- | :--- | :--- |
 | `GEMINI_API_KEY` | *(None)* | Default Google AI Studio key for all requests (avoids having agents send key in payload) |
-| `GEMINI_MODEL` | `gemini-2.5-flash` | Gemini text model used for storyboarding |
+| `GEMINI_MODEL` | `gemini-3.8-flash` | Gemini text model used for storyboarding |
 | `ANIMATOR_OUTPUT_DIR` | `/app/outputs` | Output path inside container for rendered MP4 files |
 | `SUPABASE_URL` | `http://host.docker.internal:58000` | Local or remote Supabase API gateway URL |
 | `SUPABASE_SECRET_KEY`| *(None)* | Supabase `service_role` key (bypasses RLS to manage credits & storage) |
