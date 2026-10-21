@@ -11,7 +11,7 @@ services:
 
   studio:
     # https://github.com/supabase/supabase/pkgs/container/studio/versions
-    image: ghcr.io/supabase/studio:2025.05.21-sha-c9ee6bc@sha256:b398a3dec4d6cfada86d1a939cb0ea3ec35a759046b540fe763be5257c2ba348
+    image: supabase/studio:2026.10.12-sha-3699278
     restart: on-failure
     healthcheck:
       test:
@@ -53,6 +53,8 @@ services:
     # https://hub.docker.com/_/kong/tags
     image: kong:2.8.1@sha256:1b53405d8680a09d6f44494b7990bf7da2ea43f84a258c59717d4539abf09f6d
     restart: on-failure
+    ports:
+      - 58000:8000
     volumes:
       # https://github.com/supabase/supabase/issues/12661
       - ${APP_DATA_DIR}/volumes/api/kong.yml:/home/kong/temp.yml:ro,z
@@ -76,7 +78,7 @@ services:
 
   auth:
     # https://github.com/supabase/auth/pkgs/container/gotrue/versions
-    image: ghcr.io/supabase/gotrue:v2.172.1@sha256:b0dd7aa28dd1f9a8bd31f136c8b912661f701d9b863171e5843cb08f18f49de4
+    image: supabase/gotrue:v2.197.0
     restart: on-failure
     healthcheck:
       test:
@@ -137,29 +139,10 @@ services:
 
       GOTRUE_EXTERNAL_PHONE_ENABLED: ${ENABLE_PHONE_SIGNUP}
       GOTRUE_SMS_AUTOCONFIRM: ${ENABLE_PHONE_AUTOCONFIRM}
-      # Uncomment to enable custom access token hook. Please see: https://supabase.com/docs/guides/auth/auth-hooks for full list of hooks and additional details about custom_access_token_hook
-
-      # GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_ENABLED: "true"
-      # GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_URI: "pg-functions://postgres/public/custom_access_token_hook"
-      # GOTRUE_HOOK_CUSTOM_ACCESS_TOKEN_SECRETS: "<standard-base64-secret>"
-
-      # GOTRUE_HOOK_MFA_VERIFICATION_ATTEMPT_ENABLED: "true"
-      # GOTRUE_HOOK_MFA_VERIFICATION_ATTEMPT_URI: "pg-functions://postgres/public/mfa_verification_attempt"
-
-      # GOTRUE_HOOK_PASSWORD_VERIFICATION_ATTEMPT_ENABLED: "true"
-      # GOTRUE_HOOK_PASSWORD_VERIFICATION_ATTEMPT_URI: "pg-functions://postgres/public/password_verification_attempt"
-
-      # GOTRUE_HOOK_SEND_SMS_ENABLED: "false"
-      # GOTRUE_HOOK_SEND_SMS_URI: "pg-functions://postgres/public/custom_access_token_hook"
-      # GOTRUE_HOOK_SEND_SMS_SECRETS: "v1,whsec_VGhpcyBpcyBhbiBleGFtcGxlIG9mIGEgc2hvcnRlciBCYXNlNjQgc3RyaW5n"
-
-      # GOTRUE_HOOK_SEND_EMAIL_ENABLED: "false"
-      # GOTRUE_HOOK_SEND_EMAIL_URI: "http://host.docker.internal:54321/functions/v1/email_sender"
-      # GOTRUE_HOOK_SEND_EMAIL_SECRETS: "v1,whsec_VGhpcyBpcyBhbiBleGFtcGxlIG9mIGEgc2hvcnRlciBCYXNlNjQgc3RyaW5n"
 
   rest:
     # https://hub.docker.com/r/postgrest/postgrest/tags
-    image: postgrest/postgrest:v12.2.12@sha256:5f4ce744539bbba786b4e24dbbd95bdb2a956dcf568c5374995a0ff4a68f5bd2
+    image: postgrest/postgrest:v14.18
     restart: on-failure
     depends_on:
       db:
@@ -178,11 +161,8 @@ services:
     command: ["postgrest"]
 
   realtime:
-    # Note: tenant id may not work as intended due to below
-    # This container name looks inconsistent but is correct because realtime constructs tenant id by parsing the subdomain
-    # container_name: realtime-dev.supabase-realtime
     # https://github.com/supabase/realtime/pkgs/container/realtime/versions
-    image: ghcr.io/supabase/realtime:v2.34.47@sha256:4d2460cb6eb081b7cfec0e6b0af57f547497f60cf897621555303992d299f6e8
+    image: supabase/realtime:v2.143.3
     restart: on-failure
     depends_on:
       db:
@@ -226,7 +206,7 @@ services:
 
   storage:
     # https://github.com/supabase/storage/pkgs/container/storage-api/versions
-    image: ghcr.io/supabase/storage-api:v1.22.17@sha256:44ab8bb94101ca2914e689d77fa662f68897ef3bb27aa34c3af6c5f2c0c7b6c5
+    image: supabase/storage-api:v1.81.0
     restart: on-failure
     volumes:
       - ${APP_DATA_DIR}/volumes/storage:/var/lib/storage:z
@@ -261,7 +241,6 @@ services:
       STORAGE_BACKEND: file
       FILE_STORAGE_BACKEND_PATH: /var/lib/storage
       TENANT_ID: stub
-      # TODO: https://github.com/supabase/storage-api/issues/55
       REGION: stub
       GLOBAL_S3_BUCKET: stub
       ENABLE_IMAGE_TRANSFORMATION: "true"
@@ -269,7 +248,7 @@ services:
 
   imgproxy:
     # https://hub.docker.com/r/darthsim/imgproxy/tags
-    image: darthsim/imgproxy:v3.8.0@sha256:0facd355d50f3be665ebe674486f2b2e9cdaebd3f74404acd9b7fece2f661435
+    image: darthsim/imgproxy:v3.31.4
     restart: on-failure
     volumes:
       - ${APP_DATA_DIR}/volumes/storage:/var/lib/storage:z
@@ -286,7 +265,7 @@ services:
 
   meta:
     # https://github.com/supabase/postgres-meta/pkgs/container/postgres-meta/versions
-    image: ghcr.io/supabase/postgres-meta:v0.89.0@sha256:8f7f0090850690847d9e1fc30b75511eeb6cac0c63317ec593a5dd384af2ae76
+    image: supabase/postgres-meta:v0.100.0
     restart: on-failure
     depends_on:
       db:
@@ -304,7 +283,7 @@ services:
 
   functions:
     # https://github.com/supabase/edge-runtime/pkgs/container/edge-runtime/versions
-    image: ghcr.io/supabase/edge-runtime:v1.67.4@sha256:358930e39ff36e0130c3afe3808a5c8f8322f7ff9c42624406dacce859ed0e24
+    image: supabase/edge-runtime:v1.77.4
     restart: on-failure
     volumes:
       - ${APP_DATA_DIR}/volumes/functions:/home/deno/functions:Z
@@ -317,22 +296,15 @@ services:
       SUPABASE_ANON_KEY: ${ANON_KEY}
       SUPABASE_SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
       SUPABASE_DB_URL: postgresql://postgres:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-      # TODO: Allow configuring VERIFY_JWT per function. This PR might help: https://github.com/supabase/cli/pull/786
       VERIFY_JWT: "${FUNCTIONS_VERIFY_JWT}"
     command: ["start", "--main-service", "/home/deno/functions/main"]
 
   analytics:
     # https://hub.docker.com/r/supabase/logflare/tags
-    image: supabase/logflare:1.12.0@sha256:84d0cda731e1fe43c24531003660c7f5e82c460b80b48493041701381ec0eeee
+    image: supabase/logflare:1.50.15
     restart: on-failure
     ports:
       - 54000:4000
-    # Uncomment to use Big Query backend for analytics
-    # volumes:
-    #   - type: bind
-    #     source: ${PWD}/gcloud.json
-    #     target: /opt/app/rel/logflare/bin/gcloud.json
-    #     read_only: true
     healthcheck:
       test: ["CMD", "curl", "http://localhost:4000/health"]
       timeout: 5s
@@ -354,19 +326,14 @@ services:
       LOGFLARE_SINGLE_TENANT: "true"
       LOGFLARE_SUPABASE_MODE: "true"
       LOGFLARE_MIN_CLUSTER_SIZE: 1
-
-      # Comment variables to use Big Query backend for analytics
       POSTGRES_BACKEND_URL: postgresql://supabase_admin:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/_supabase
       POSTGRES_BACKEND_SCHEMA: _analytics
       LOGFLARE_FEATURE_FLAG_OVERRIDE: multibackend=true
-      # Uncomment to use Big Query backend for analytics
-      # GOOGLE_PROJECT_ID: ${GOOGLE_PROJECT_ID}
-      # GOOGLE_PROJECT_NUMBER: ${GOOGLE_PROJECT_NUMBER}
 
   # Comment out everything below this point if you are using an external Postgres database
   db:
     # https://github.com/supabase/postgres/pkgs/container/postgres/versions
-    image: ghcr.io/supabase/postgres:15.8.1.060@sha256:0e2279598bc0224fb5960c3a61eb23270cd60119427f3a7bdec86ba282600dcc
+    image: supabase/postgres:15.8.1.085
     restart: on-failure
     volumes:
       - ${APP_DATA_DIR}/volumes/db/realtime.sql:/docker-entrypoint-initdb.d/migrations/99-realtime.sql:Z
@@ -409,12 +376,12 @@ services:
         "-c",
         "config_file=/etc/postgresql/postgresql.conf",
         "-c",
-        "log_min_messages=fatal", # prevents Realtime polling queries from appearing in logs
+        "log_min_messages=fatal",
       ]
 
   vector:
     # https://hub.docker.com/r/timberio/vector/tags
-    image: timberio/vector:0.28.1-alpine@sha256:4bc04aca94a44f04b427a490f346e7397ef7ce61fe589d718f744f7d92cb5c80
+    image: timberio/vector:0.53.0-alpine
     restart: on-failure
     volumes:
       - ${APP_DATA_DIR}/volumes/logs/vector.yml:/etc/vector/vector.yml:ro,z
@@ -438,10 +405,9 @@ services:
     security_opt:
       - "label=disable"
 
-  # Update the DATABASE_URL if you are using an external Postgres database
   supavisor:
     # https://github.com/supabase/supavisor/pkgs/container/supavisor/versions
-    image: ghcr.io/supabase/supavisor:2.5.1@sha256:d41621d44d728740c886bc90016df019351b4ecea54ce138340f02fedd57af3a
+    image: supabase/supavisor:2.9.13
     restart: on-failure
     volumes:
       - ${APP_DATA_DIR}/volumes/pooler/pooler.exs:/etc/pooler/pooler.exs:ro,z

@@ -22,6 +22,49 @@ Animator turns any prompt or topic into an animated explainer video:
 
 ---
 
+## Connecting Animator to Local Supabase on umbrelOS
+
+Animator supports two operational modes:
+1. **Direct Agent Mode (Default):** Generates videos directly via `/api/generate` without requiring user accounts, external tokens, or database dependencies. MP4 files are stored in `${APP_DATA_DIR}/outputs`.
+2. **Local Supabase Mode:** Connects to the local `Supabase` app on umbrelOS for user management, credit accounting, persistent PostgreSQL job records, and Supabase Storage bucket uploads.
+
+### Step 1: Install Supabase on umbrelOS
+Install **Supabase** (`oxygen-supabase`) from your Umbrel Community App Store.
+
+Once running:
+* **Studio UI:** `http://umbrel.local:53000`
+* **Kong API Gateway:** `http://umbrel.local:58000`
+
+### Step 2: Initialize the Animator Schema
+1. Open Supabase Studio in your browser: `http://umbrel.local:53000`
+2. Navigate to the **SQL Editor** tab.
+3. Copy and paste the contents of [`supabase-schema.sql`](file:///c:/Users/Kasutaja/Desktop/umbrelos/oxygen-umbrel-app-store/oxygen-animator/supabase-schema.sql) into the editor.
+4. Click **Run**. This automatically creates:
+   - `public.profiles` table (with starting credit balances).
+   - `public.videos` table and `video_status` enum.
+   - `public.spend_credits` and `public.refund_credits` atomic database functions.
+   - `videos` storage bucket in Supabase Storage with Row Level Security.
+
+### Step 3: Get Your Supabase Secret Key
+Open your Umbrel file manager or terminal and read the service role key from `apps/oxygen-supabase/exports.sh` (or from Supabase Studio -> **Project Settings** -> **API**):
+
+```bash
+# Look for SERVICE_ROLE_KEY
+cat ~/umbrel/app-data/oxygen-supabase/exports.sh | grep SERVICE_ROLE_KEY
+```
+
+### Step 4: Configure Animator Environment
+In Animator's Umbrel App settings or `docker-compose.yml`, supply:
+
+```env
+SUPABASE_URL=http://host.docker.internal:58000
+SUPABASE_SECRET_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+> **Note:** If communicating from container to container, `host.docker.internal:58000` reaches Kong on the Umbrel host.
+
+---
+
 ## Agent Access & API Guide
 
 Any AI agent running on umbrelOS (e.g. **Hermes Agent**, **OpenClaw**, **Agent Zero**) or external scripts can generate whiteboard videos automatically via HTTP.
@@ -196,7 +239,6 @@ def render_whiteboard_explainer(prompt: str, voice: str = "Kore") -> str:
     :param voice: Voice for narration (Kore, Puck, Fenrir, Aoede, Zephyr, Leda).
     :return: Full URL to download or watch the generated MP4 explainer video.
     """
-    # Use internal container hostname if on same docker network, otherwise umbrel.local
     base_url = "http://umbrel.local:8002"
     
     res = requests.post(f"{base_url}/api/generate", json={"prompt": prompt, "voice": voice}).json()
@@ -226,5 +268,8 @@ Configure via Umbrel App Settings or environment file:
 | `GEMINI_API_KEY` | *(None)* | Default Google AI Studio key for all requests (avoids having agents send key in payload) |
 | `GEMINI_MODEL` | `gemini-2.5-flash` | Gemini text model used for storyboarding |
 | `ANIMATOR_OUTPUT_DIR` | `/app/outputs` | Output path inside container for rendered MP4 files |
+| `SUPABASE_URL` | `http://host.docker.internal:58000` | Local or remote Supabase API gateway URL |
+| `SUPABASE_SECRET_KEY`| *(None)* | Supabase `service_role` key (bypasses RLS to manage credits & storage) |
+| `API_ALLOWED_ORIGINS`| `*` | Allowed CORS origins |
 
 All rendered videos are persisted in the Umbrel app data folder (`${APP_DATA_DIR}/outputs`).

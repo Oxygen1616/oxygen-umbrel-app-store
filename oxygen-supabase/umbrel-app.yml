@@ -4,7 +4,7 @@ category: developer tools
 name: Supabase
 icon: https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-supabase/logo.png
 tagline: An open source Firebase alternative
-version: "2025.05.21"
+version: "2026.10.16"
 port: 53000
 description: >-
   🐊 Supabase is an open-source backend-as-a-service platform that provides developers with a powerful and scalable infrastructure for building modern web and mobile applications. It offers a suite of tools that combine the convenience of a traditional backend with the flexibility and control of an open-source stack. Built on top of PostgreSQL, Supabase adds real-time capabilities, instant APIs, and user authentication without requiring developers to write complex backend logic.
@@ -25,8 +25,9 @@ description: >-
   Overall, Supabase empowers developers to build production-ready applications faster by abstracting away the complexity of backend development while preserving the flexibility to customize and scale as needed.
 
 
-  ⚠️ Make sure to go through setup steps after installing Supabase:
-  https://github.com/dennysubke/dennys-umbrel-app-store/blob/master/oxygen-supabase/README.md
+  🔌 Connect other Umbrel apps & AI agents (like Animator):
+  API Gateway: http://umbrel.local:58000
+  Studio Dashboard: http://umbrel.local:53000
 developer: Supabase
 website: https://supabase.com
 submitter: Starfreck
@@ -41,10 +42,14 @@ gallery:
   - https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-supabase/5.jpg
   - https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-supabase/6.jpg
 releaseNotes: >-
-  This update brings a wave of new tutorials and tools, including a reusable Team component built with Next.js and Shadcn, a Grocery Tracker app using Vue and Supabase, and the new SupaWP plugin for seamless WordPress integration. You’ll also find deep dives into multi-tenancy with Clerk, building AI agents powered by n8n and Supabase, setting up custom SMTP for authentication, and using Supabase MCP in VSCode, Cursor, and Agno. 
- 
- 
-  On the platform side, Supabase now supports project-scoped roles for all Team plans, has released a new SOC 2 report, and published comprehensive documentation outlining its security practices.
+  Updated to upstream Supabase 2026.10 release stack:
+  • Studio 2026.10.12 with enhanced SQL editor, schema visualization, and table manager.
+  • GoTrue Auth v2.197.0 with session security hardening and token management.
+  • PostgREST v14.18 with performance and filter improvements.
+  • Realtime v2.143.3 with improved connection resilience and low-latency broadcast.
+  • Storage API v1.81.0 with fast chunked uploads and S3 interoperability.
+  • Supavisor pooler v2.9.13 and Edge Runtime v1.77.4.
+  • Direct Kong Gateway port (58000) exposed for seamless connections from Umbrel apps (like Animator) and local AI agents.
 path: ""
 defaultUsername: "umbrel"
 defaultPassword: "umbrel"

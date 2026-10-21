@@ -31,6 +31,9 @@ services:
       - ANIMATOR_OUTPUT_DIR=/app/outputs
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
       - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}
+      - SUPABASE_URL=${SUPABASE_URL:-http://host.docker.internal:58000}
+      - SUPABASE_SECRET_KEY=${SUPABASE_SECRET_KEY:-}
+      - API_ALLOWED_ORIGINS=${API_ALLOWED_ORIGINS:-*}
     volumes:
       - ${APP_DATA_DIR}/outputs:/app/outputs
     extra_hosts:

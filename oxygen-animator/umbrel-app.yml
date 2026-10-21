@@ -22,6 +22,9 @@ description: >-
   🤖 Built for AI Agents on umbrelOS: Accessible over local REST API by Hermes Agent, OpenClaw, Agent Zero, or custom automation scripts. Agents can trigger video generation asynchronously, poll status, and download rendered MP4 explainer videos directly.
 
 
+  🐊 Local Supabase Integration: Seamlessly connects to the local Supabase app on Umbrel (port 58000) for persistent video metadata, multi-user accounts, credit balance tracking, and Supabase Storage bucket uploads.
+
+
   🌐 Built-in Web Studio: Clean browser UI for manual generation, voice selection, quality adjustments, and video playback with one-click download.
 
 
@@ -60,7 +63,7 @@ support: https://github.com/Oxygen1616/Animator/issues
 gallery:
   - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-animator/logo.png
 releaseNotes: >-
-  v1.0.0: Initial Umbrel community app store release with agent-ready REST API, studio dashboard, and local rendering engine.
+  v1.0.0: Initial Umbrel community app store release with agent-ready REST API, studio dashboard, local rendering engine, and local Supabase integration support.
 dependencies: []
 path: ""
 defaultUsername: ""
