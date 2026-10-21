@@ -1,0 +1,67 @@
+manifestVersion: 1
+id: oxygen-animator
+name: Animator
+tagline: Type an idea, get a narrated hand-drawn whiteboard explainer video
+icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-animator/logo.png
+category: AI
+version: "1.0.0"
+port: 8002
+description: >-
+  Animator turns any concept or prompt into a complete, narrated hand-drawn whiteboard explainer video. One prompt in, an animated video out. The engine writes the script, draws each scene's icons, synthesizes synchronized voiceover narration, detects icon boundaries, and renders the stroke-by-stroke drawing animation in parallel.
+
+
+  Key Features:
+
+
+  🎨 End-to-End AI Whiteboard Pipeline: From idea to finished MP4 in ~1 minute. Gemini writes the storyboard beats, generates 16:9 whiteboard illustration frames, records natural Gemini TTS voiceover, and animates drawings synchronized with spoken sentences.
+
+
+  ✍️ High-Fidelity Stroke Engine: Runs entirely on CPU with FFmpeg. Writes text stroke by stroke, traces outlines from authentic endpoints, fills shapes with natural brush strokes, and draws branching line art.
+
+
+  🤖 Built for AI Agents on umbrelOS: Accessible over local REST API by Hermes Agent, OpenClaw, Agent Zero, or custom automation scripts. Agents can trigger video generation asynchronously, poll status, and download rendered MP4 explainer videos directly.
+
+
+  🌐 Built-in Web Studio: Clean browser UI for manual generation, voice selection, quality adjustments, and video playback with one-click download.
+
+
+  HOW AGENTS CAN ACCESS ANIMATOR ON UMBRELOS:
+
+
+  1. Local Network Endpoint: http://umbrel.local:8002/api/generate
+
+  2. Docker Internal Network: http://oxygen-animator_server_1:8000/api/generate
+
+
+  3. Trigger Video Generation:
+
+     POST /api/generate
+
+     Content-Type: application/json
+
+     {
+       "prompt": "How photosynthesis works",
+       "voice": "Kore",
+       "quality": "medium"
+     }
+
+
+  4. Poll Status & Download:
+
+     GET /api/status/{job_id}
+
+     Returns {"status": "ready", "video_url": "/api/videos/{job_id}.mp4"} when complete.
+developer: Ashish Jamarkattel
+website: https://github.com/ashishjamarkattel/Animator
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/Oxygen1616/Animator
+support: https://github.com/Oxygen1616/Animator/issues
+gallery:
+  - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-animator/logo.png
+releaseNotes: >-
+  v1.0.0: Initial Umbrel community app store release with agent-ready REST API, studio dashboard, and local rendering engine.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""

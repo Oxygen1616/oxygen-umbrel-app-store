@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-animator_server_1
+      APP_PORT: 8000
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /outputs
+        chmod -R 777 /outputs
+    volumes:
+      - ${APP_DATA_DIR}/outputs:/outputs
+
+  server:
+    image: ghcr.io/oxygen1616/animator:latest
+    restart: unless-stopped
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ANIMATOR_OUTPUT_DIR=/app/outputs
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}
+    volumes:
+      - ${APP_DATA_DIR}/outputs:/app/outputs
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
