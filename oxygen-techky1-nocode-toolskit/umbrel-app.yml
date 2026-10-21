@@ -4,7 +4,7 @@ name: Techky1 No-Code Toolkit
 tagline: All-in-one AI media creation studio with TTS, automated Shorts, and agent workflows
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-techky1-nocode-toolskit/logo.png
 category: AI
-version: "1.0.6"
+version: "1.0.7"
 port: 8001
 description: >-
   Techky1 No-Code Toolkit is an all-in-one AI media creation server and studio dashboard for content creators, automated short-form video generation, and AI agent workflows. Generate viral Shorts, voiceovers, and social content using local TTS engines and the LLM of your choice—with zero coding required.
@@ -36,7 +36,7 @@ gallery:
   - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-techky1-nocode-toolskit/preview-1.png
   - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-techky1-nocode-toolskit/preview-2.png
 releaseNotes: >-
-  v1.0.6: Fix whiteboard animation endpoint get_config_val resolution and update dependencies.
+  v1.0.7: Add Murmur chat service on port 3000, restore native file manager, improve whiteboard animation padding and start delay, purge deprecated integrations.
 dependencies: []
 path: ""
 defaultUsername: ""
