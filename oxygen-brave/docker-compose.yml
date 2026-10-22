@@ -11,7 +11,6 @@ services:
     restart: on-failure
     ports:
       - 3935:3001
-      - 9222:9222
     healthcheck:
       test: timeout 10s bash -c ':> /dev/tcp/127.0.0.1/3000' || exit 1
       interval: 10s
