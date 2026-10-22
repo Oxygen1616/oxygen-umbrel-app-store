@@ -4,7 +4,7 @@ name: Flow MCP
 tagline: AI Video Automation Engine for Google Flow
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-flow-mcp/logo.png
 category: AI
-version: "0.2.3"
+version: "0.2.4"
 port: 8787
 description: >-
   Flow MCP is an automation engine and MCP server for Google Flow. It automates generation of AI video shots, character edits, narration audio, video assembly, and animated subtitles directly from prompts or API requests.
@@ -34,4 +34,4 @@ dependencies:
   - oxygen-browserless
 path: "/"
 defaultUsername: ""
-defaultPassword: ${APP_PASSWORD}
+defaultPassword: ""
