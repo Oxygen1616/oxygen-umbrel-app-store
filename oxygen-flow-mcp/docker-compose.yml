@@ -33,6 +33,8 @@ services:
       - FLOW_MCP_HOME=/data/.flow-mcp
       - FLOW_MCP_ALLOW_LAN_STUDIO=true
       - FLOW_MCP_ALLOW_HOSTS=*
+      # Stable API token for n8n and other clients; shown as the app password in Umbrel.
+      - FLOW_MCP_TOKEN=${APP_PASSWORD}
     # Chrome's DevTools refuses Host headers that are not an IP or localhost, so
     # resolve the Brave container to an IP and use its DevTools relay on 9223.
     command:
