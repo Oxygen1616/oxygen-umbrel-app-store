@@ -4,7 +4,7 @@ name: Flow MCP
 tagline: AI Video Automation Engine for Google Flow
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-flow-mcp/logo.png
 category: AI
-version: "0.2.5"
+version: "0.2.6"
 port: 8787
 description: >-
   Flow MCP is an automation engine and MCP server for Google Flow. It automates generation of AI video shots, character edits, narration audio, video assembly, and animated subtitles directly from prompts or API requests.
@@ -20,6 +20,7 @@ description: >-
      - Flow Studio Web UI: http://umbrel.local:8787
      - REST API: POST /api/project, POST /api/generate, POST /api/assemble, POST /api/captions
      - MCP Tools for n8n, Claude Code, and other AI agents.
+   - MCP over HTTP for other apps on your Umbrel (Hermes Agent, Murmur): http://<umbrel-ip>:8787/mcp with the header "Authorization: Bearer <token>". The token is the one n8n uses.
 developer: GTAI-1
 website: https://github.com/Oxygen1616/flow-mcp
 submitter: Oxygen1616
