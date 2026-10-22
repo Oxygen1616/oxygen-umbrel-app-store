@@ -4,7 +4,7 @@ name: Brave
 tagline: A browser that puts you first
 icon: https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/logo.png
 category: networking
-version: "1.79.130"
+version: "1.79.131"
 port: 3934
 description: >-
   🦁 Brave is a modern web browser designed to give users full control over their online experience by placing privacy, security, and speed at the forefront. Unlike traditional browsers that often expose users to tracking technologies and aggressive advertising networks, Brave is built to shield its users from the moment they start browsing. It blocks third-party ads, trackers, and cross-site cookies by default, significantly reducing data collection and page load times. This streamlined browsing experience not only improves performance but also enhances user safety by minimizing exposure to malicious scripts and hidden surveillance techniques.
