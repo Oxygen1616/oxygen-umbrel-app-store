@@ -22,6 +22,8 @@ services:
     shm_size: "1gb"
     volumes:
       - ${APP_DATA_DIR}/data:/config:rw
+      # Flow MCP tells Brave to save downloads here and watches the same folder, so it must be the same path in both.
+      - ${UMBREL_ROOT}/app-data/oxygen-flow-mcp/data/.flow-mcp/downloads:/data/.flow-mcp/downloads
     environment:
       PUID: 1000
       PGID: 1000
