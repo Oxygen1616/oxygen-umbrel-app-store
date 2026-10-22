@@ -33,7 +33,21 @@ services:
       - FLOW_MCP_HOME=/data/.flow-mcp
       - FLOW_MCP_ALLOW_LAN_STUDIO=true
       - FLOW_MCP_ALLOW_HOSTS=*
-      - FLOW_MCP_CDP_URL=http://host.docker.internal:9222
+    # Chrome's DevTools refuses Host headers that are not an IP or localhost, so
+    # resolve the Brave container to an IP and use its DevTools relay on 9223.
+    command:
+      - sh
+      - -c
+      - |
+        for i in $$(seq 1 60); do
+          BRAVE_IP=$$(getent hosts oxygen-brave_web_1 | awk '{print $$1}')
+          [ -n "$$BRAVE_IP" ] && break
+          sleep 2
+        done
+        if [ -z "$$BRAVE_IP" ]; then echo "flow-mcp: could not resolve oxygen-brave_web_1" >&2; exit 1; fi
+        export FLOW_MCP_CDP_URL="http://$${BRAVE_IP}:9223"
+        echo "flow-mcp: using Brave DevTools at $$FLOW_MCP_CDP_URL"
+        exec node dist/index.js
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

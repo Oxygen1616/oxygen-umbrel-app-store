@@ -26,3 +26,14 @@ services:
       PUID: 1000
       PGID: 1000
       CHROME_CLI: "--remote-debugging-port=9222 --remote-debugging-address=0.0.0.0 --user-data-dir=/config"
+
+  # Chromium ignores --remote-debugging-address outside headless mode, so DevTools only
+  # listens on 127.0.0.1 inside the web container. This relay shares that network
+  # namespace and forwards 9223 to it, so Flow MCP can reach DevTools over Umbrel's
+  # internal Docker network. No port is published to the LAN.
+  cdp_relay:
+    image: alpine/socat:1.8.0.3@sha256:a114a8c813b25db7fd25e8bc521acfe04b39eeeb9772e61520c91ebf6fdbd401
+    restart: on-failure
+    network_mode: service:web
+    depends_on: [web]
+    command: TCP-LISTEN:9223,fork,reuseaddr TCP:127.0.0.1:9222
