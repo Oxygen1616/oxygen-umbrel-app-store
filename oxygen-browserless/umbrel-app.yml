@@ -4,7 +4,7 @@ name: Browserless
 tagline: A powerful browser automation service
 icon: https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-browserless/logo.png
 category: developer tools
-version: "2.33.0"
+version: "2.57.2"
 port: 3353
 description: >-
   Browserless is a powerful platform that offers headless browser automation in the cloud or through self-hosted environments. It enables developers to run Chrome, Firefox, or WebKit remotely using familiar tools like Puppeteer and Playwright, without the need to maintain their own infrastructure. This significantly reduces setup time and allows teams to focus on building their applications instead of managing low-level browser processes.
@@ -32,8 +32,8 @@ gallery:
   - https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-browserless/3.jpg
   - https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-browserless/4.jpg
 releaseNotes: >-
-  Version 2.33.0 includes dependency updates and fixes an issue with pages created by Playwright’s context object hanging. It upgrades puppeteer-core to 24.12.1, updates playwright-core to 1.54.1, drops support for Playwright 1.49, and adds support for the latest versions of Chromium, Chrome, Firefox, WebKit, and Edge.
-dependencies:
+  v2.57.2: Upgrades Chromium and Playwright engine to v1.63, updates Node.js runtime to 24.22.1, optimizes concurrent session management, and makes CDP browser shutdown reentrant.
+dependencies: []
 path: "/docs"
 defaultUsername: ""
 defaultPassword: ""
