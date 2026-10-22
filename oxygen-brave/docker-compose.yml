@@ -11,6 +11,7 @@ services:
     restart: on-failure
     ports:
       - 3935:3001
+      - 9222:9222
     healthcheck:
       test: timeout 10s bash -c ':> /dev/tcp/127.0.0.1/3000' || exit 1
       interval: 10s
@@ -23,5 +24,6 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data:/config:rw
     environment:
-     PUID: 1000
-     PGID: 1000
+      PUID: 1000
+      PGID: 1000
+      CHROME_CLI: "--remote-debugging-port=9222 --remote-debugging-address=0.0.0.0 --user-data-dir=/config"

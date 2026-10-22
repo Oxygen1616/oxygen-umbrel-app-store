@@ -33,7 +33,7 @@ services:
       - FLOW_MCP_HOME=/data/.flow-mcp
       - FLOW_MCP_ALLOW_LAN_STUDIO=true
       - FLOW_MCP_ALLOW_HOSTS=*
-      - FLOW_MCP_CDP_URL=ws://host.docker.internal:3353/chromium
+      - FLOW_MCP_CDP_URL=http://host.docker.internal:9222
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
