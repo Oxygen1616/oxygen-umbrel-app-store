@@ -1,0 +1,37 @@
+manifestVersion: 1
+id: oxygen-flow-mcp
+name: Flow MCP
+tagline: AI Video Automation Engine for Google Flow
+icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-flow-mcp/logo.png
+category: AI
+version: "0.2.0"
+port: 8787
+description: >-
+  Flow MCP is an automation engine and MCP server for Google Flow. It automates generation of AI video shots, character edits, narration audio, video assembly, and animated subtitles directly from prompts or API requests.
+
+
+  HOW TO USE
+
+  1. Ensure Browserless (oxygen-browserless) is installed and running on your Umbrel.
+
+  2. Open Brave (oxygen-brave) on your Umbrel and log into your Google Account at https://labs.google/fx/tools/flow once so your session cookies are saved.
+
+  3. Flow MCP connects to Browserless and exposes:
+     - Flow Studio Web UI: http://umbrel.local:8787
+     - REST API: POST /api/project, POST /api/generate, POST /api/assemble, POST /api/captions
+     - MCP Tools for n8n, Claude Code, and other AI agents.
+developer: GTAI-1
+website: https://github.com/Oxygen1616/flow-mcp
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/Oxygen1616/flow-mcp
+support: https://github.com/Oxygen1616/flow-mcp/issues
+gallery:
+  - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-flow-mcp/logo.png
+releaseNotes: >-
+  v0.2.0: Initial umbrelOS release with remote Browserless CDP support and Flow Studio UI.
+dependencies:
+  - oxygen-browserless
+path: "/"
+defaultUsername: ""
+defaultPassword: ""

@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-flow-mcp_server_1
+      APP_PORT: 8787
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /data
+        chmod -R u+rwX,go+rX /data
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+
+  server:
+    image: ghcr.io/oxygen1616/flow-mcp:latest
+    restart: on-failure
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    environment:
+      - NODE_ENV=production
+      - FLOW_MCP_PORT=8787
+      - FLOW_MCP_BIND=0.0.0.0
+      - FLOW_MCP_HOME=/data/.flow-mcp
+      - FLOW_MCP_CDP_URL=ws://host.docker.internal:3353/chromium
+      - FLOW_MCP_ALLOW_HOSTS=umbrel.local:8787,192.168.1.15:8787,localhost:8787,127.0.0.1:8787,oxygen-flow-mcp_server_1:8787
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
