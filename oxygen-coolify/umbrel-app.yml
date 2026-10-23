@@ -4,7 +4,7 @@ name: Coolify
 tagline: A lightweight platform to deploy apps easily
 icon: https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-coolify/logo.png
 category: developer tools
-version: "4.1.2"
+version: "4.1.2-1"
 port: 8527
 description: >-
   🧊 Coolify is a modern platform designed to simplify the deployment and management of web applications. It provides an intuitive interface that allows developers to launch and maintain projects with minimal configuration. By automating complex DevOps processes, it eliminates the need for manual server setup, making application delivery faster and more reliable.
