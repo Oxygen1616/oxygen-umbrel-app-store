@@ -1,0 +1,45 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-openbot_web_1
+      APP_PORT: 80
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /data/openbot /data/www
+        chmod -R u+rwX,go+rX /data
+        chown -R 1000:1000 /data/openbot
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+
+  openbot:
+    image: ghcr.io/nightly-labs/openbot:latest
+    restart: unless-stopped
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    security_opt:
+      - seccomp=./seccomp.json
+      - no-new-privileges:true
+    shm_size: "1g"
+    stop_grace_period: 60s
+    volumes:
+      - ${APP_DATA_DIR}/data/openbot:/data
+
+  web:
+    image: nginx:alpine@sha256:b3c656d55d7ad751196f21b7fd2e8d4da9cb430e32f646adcf92441b72f82b14
+    restart: on-failure
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    volumes:
+      - ${APP_DATA_DIR}/data/www:/usr/share/nginx/html:ro

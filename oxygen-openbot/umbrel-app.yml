@@ -1,0 +1,46 @@
+manifestVersion: 1
+id: oxygen-openbot
+name: OpenBot
+tagline: Local-first workspace for persistent AI teammates and multi-agent coordination
+icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-openbot/logo.png
+category: AI
+version: "0.54.0"
+port: 8090
+description: >-
+  OpenBot is a local-first workspace and self-hosted server for persistent AI teammates. It coordinates multi-agent workflows across Claude Code, Codex, Grok, OpenCode, Hermes Agent, and custom tools with native Model Context Protocol (MCP) and Agent Client Protocol (ACP) support.
+
+
+  OpenBot stores all conversations, workspace data, code history, and agent state locally on your Umbrel node, keeping your data sovereign and private.
+
+
+  HOW TO USE
+
+  1. Install OpenBot from the Oxygen App Store.
+
+  2. Open the OpenBot Web Dashboard on your Umbrel (port 8090) to view connection commands and server status.
+
+  3. Connect your server to your OpenBot account:
+     Run in your terminal / SSH:
+     docker exec -it oxygen-openbot_openbot_1 openbot login
+     Follow the on-screen prompt to authenticate via email code or server claim.
+
+  4. Connect the mobile app:
+     Run in your terminal:
+     docker exec -it oxygen-openbot_openbot_1 openbot mobile-connect
+     Scan the generated QR code with the OpenBot iOS or Android app.
+
+  5. Open https://openbot.run/app in your browser, or open the OpenBot desktop app on your computer, to access your agents running directly on your self-hosted Umbrel server.
+developer: Nightly Labs
+website: https://openbot.run
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/nightly-labs/openbot
+support: https://github.com/nightly-labs/openbot/issues
+gallery:
+  - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-openbot/logo.png
+releaseNotes: >-
+  v0.54.0: Initial release of OpenBot for Umbrel OS. Includes persistent workspace data volume, Electron user namespace seccomp profile, and Web Management Portal.
+dependencies: []
+path: "/"
+defaultUsername: ""
+defaultPassword: ""
