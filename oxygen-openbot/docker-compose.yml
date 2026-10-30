@@ -24,13 +24,10 @@ services:
   openbot:
     image: ghcr.io/nightly-labs/openbot:latest
     restart: unless-stopped
+    privileged: true
     depends_on:
       permissions:
         condition: service_completed_successfully
-    cap_add:
-      - SYS_ADMIN
-    security_opt:
-      - seccomp:unconfined
     shm_size: "1g"
     stop_grace_period: 60s
     volumes:
