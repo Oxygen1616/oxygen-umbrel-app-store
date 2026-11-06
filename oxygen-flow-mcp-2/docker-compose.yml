@@ -36,7 +36,7 @@ services:
       # Same volume as the downloads folder, so finished files are moved with a plain rename and survive restarts.
       - FLOW_MCP_OUTPUT=/data/out
       - FLOW_MCP_ALLOW_LAN_STUDIO=true
-      - FLOW_MCP_ALLOW_HOSTS=*
+      - FLOW_MCP_ALLOW_HOSTS=umbrel.local:8788,umbrel.local,192.168.1.15:8788,192.168.1.15,localhost:8788,localhost,oxygen-flow-mcp-2_server_1:8788,oxygen-flow-mcp-2_server_1
       # Stable API token for n8n and other clients; shown as the app password in Umbrel.
       - FLOW_MCP_TOKEN=${APP_PASSWORD}
     # Chrome's DevTools refuses Host headers that are not an IP or localhost, so
