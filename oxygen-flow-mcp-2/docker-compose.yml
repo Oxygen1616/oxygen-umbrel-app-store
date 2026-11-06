@@ -1,0 +1,60 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-flow-mcp-2_server_1
+      APP_PORT: 8788
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /data/.flow-mcp/downloads /data/out
+        chmod -R u+rwX,go+rX /data
+        # Brave 2 (uid 1000) saves Flow downloads straight into this shared folder.
+        chown 1000:1000 /data/.flow-mcp/downloads
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+
+  server:
+    image: ghcr.io/oxygen1616/flow-mcp:latest
+    restart: on-failure
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    environment:
+      - NODE_ENV=production
+      - FLOW_MCP_PORT=8788
+      - FLOW_MCP_BIND=0.0.0.0
+      - FLOW_MCP_HOME=/data/.flow-mcp
+      # Same volume as the downloads folder, so finished files are moved with a plain rename and survive restarts.
+      - FLOW_MCP_OUTPUT=/data/out
+      - FLOW_MCP_ALLOW_LAN_STUDIO=true
+      - FLOW_MCP_ALLOW_HOSTS=*
+      # Stable API token for n8n and other clients; shown as the app password in Umbrel.
+      - FLOW_MCP_TOKEN=${APP_PASSWORD}
+    # Chrome's DevTools refuses Host headers that are not an IP or localhost, so
+    # resolve the Brave 2 container to an IP and use its DevTools relay on 9224.
+    command:
+      - sh
+      - -c
+      - |
+        for i in $$(seq 1 60); do
+          BRAVE_IP=$$(getent hosts oxygen-brave-2_web_1 | awk '{print $$1}')
+          [ -n "$$BRAVE_IP" ] && break
+          sleep 2
+        done
+        if [ -z "$$BRAVE_IP" ]; then echo "flow-mcp-2: could not resolve oxygen-brave-2_web_1" >&2; exit 1; fi
+        export FLOW_MCP_CDP_URL="http://$${BRAVE_IP}:9224"
+        echo "flow-mcp-2: using Brave 2 DevTools at $$FLOW_MCP_CDP_URL"
+        exec node dist/index.js
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ${APP_DATA_DIR}/data:/data

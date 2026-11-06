@@ -1,0 +1,36 @@
+manifestVersion: 1
+id: oxygen-brave-2
+name: Brave 2
+tagline: Second isolated Brave instance for Google Flow
+icon: https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/logo.png
+category: networking
+version: "1.79.132"
+port: 3936
+description: >-
+  🦁 Brave 2 is a dedicated, secondary Brave browser instance designed to run alongside your primary Brave browser for Google Flow automation. It maintains its own isolated browser profile, allowing you to sign into a second Google account with separate session cookies and storage.
+
+
+  Built on the Chromium engine, it includes remote debugging preconfigured for Flow MCP 2.
+
+
+  ⚙️ The application is available at https://umbrel.local:3937. 
+
+
+  Since a self-signed SSL certificate is used, your browser will show a security warning when accessing the page for the first time. You need to manually accept it to continue.
+developer: Brave Software
+website: https://brave.com/
+submitter: Oxygen1616
+submission: https://github.com/getumbrel/umbrel-apps/pull/
+repo: https://github.com/linuxserver/docker-brave
+support: https://github.com/linuxserver/docker-brave/issues
+gallery:
+  - https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/1.jpg
+  - https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/2.jpg
+  - https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/3.jpg
+  - https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/4.jpg
+releaseNotes: >-
+  Dedicated secondary Brave instance for Flow MCP 2 with independent profile and port 3937/9224 bindings.
+dependencies: []
+path: "https://umbrel.local:3937"
+defaultUsername: ""
+defaultPassword: ""

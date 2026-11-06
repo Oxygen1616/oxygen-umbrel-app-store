@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-brave-2_web_1
+      APP_PORT: 3000
+
+  web:
+    image: ghcr.io/linuxserver/brave:1.79.126@sha256:82448700fd7125d71740d08350caaa58275cf8dcc556203c34fb715855b5db22
+    restart: on-failure
+    ports:
+      - 3937:3001
+    healthcheck:
+      test: timeout 10s bash -c ':> /dev/tcp/127.0.0.1/3000' || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 90s
+    security_opt:
+      - no-new-privileges:true
+    shm_size: "1gb"
+    volumes:
+      - ${APP_DATA_DIR}/data:/config:rw
+      # Flow MCP 2 tells Brave 2 to save downloads here and watches the same folder
+      - ${UMBREL_ROOT}/app-data/oxygen-flow-mcp-2/data/.flow-mcp/downloads:/data/.flow-mcp/downloads
+    environment:
+      PUID: 1000
+      PGID: 1000
+      BRAVE_CLI: "--remote-debugging-port=9222 --user-data-dir=/config/flow-profile https://labs.google/fx/tools/flow"
+
+  cdp_relay:
+    image: alpine/socat:1.8.0.3@sha256:a114a8c813b25db7fd25e8bc521acfe04b39eeeb9772e61520c91ebf6fdbd401
+    restart: on-failure
+    network_mode: service:web
+    depends_on: [web]
+    command: TCP-LISTEN:9224,fork,reuseaddr TCP:127.0.0.1:9222
