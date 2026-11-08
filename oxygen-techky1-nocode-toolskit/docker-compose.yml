@@ -45,6 +45,7 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility,video
       - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+      - FORCE_CPU=${FORCE_CPU:-false}
       - PEXELS_API_KEY=${PEXELS_API_KEY:-}
       - PIXABAY_API_KEY=${PIXABAY_API_KEY:-}
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
