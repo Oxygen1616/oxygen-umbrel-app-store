@@ -4,7 +4,7 @@ name: Brave
 tagline: A browser that puts you first
 icon: https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/logo.png
 category: networking
-version: "1.79.132"
+version: "1.79.133"
 port: 3934
 description: >-
   🦁 Brave is a modern web browser designed to give users full control over their online experience by placing privacy, security, and speed at the forefront. Unlike traditional browsers that often expose users to tracking technologies and aggressive advertising networks, Brave is built to shield its users from the moment they start browsing. It blocks third-party ads, trackers, and cross-site cookies by default, significantly reducing data collection and page load times. This streamlined browsing experience not only improves performance but also enhances user safety by minimizing exposure to malicious scripts and hidden surveillance techniques.
@@ -38,7 +38,7 @@ gallery:
   - https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/3.jpg
   - https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/4.jpg
 releaseNotes: >-
-  This version addresses multiple stability issues, including crashes related to the shields panel and Google sign-in navigation. It also resolves a problem with importing from Trezor wallets when Trezor Connect is outdated. Additionally, Chromium has been updated to version 137.0.7151.119.
+  Automatically clears stale Chromium SingletonLock files on container restart and pins container hostname so Brave never refuses to launch after an Umbrel reboot or container recreation.
 dependencies:
 path: "https://umbrel.local:3935"
 defaultUsername: ""

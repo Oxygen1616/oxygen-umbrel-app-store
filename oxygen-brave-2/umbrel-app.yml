@@ -4,7 +4,7 @@ name: Brave 2
 tagline: Second isolated Brave instance for Google Flow
 icon: https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/logo.png
 category: networking
-version: "1.79.132"
+version: "1.79.133"
 port: 3936
 description: >-
   🦁 Brave 2 is a dedicated, secondary Brave browser instance designed to run alongside your primary Brave browser for Google Flow automation. It maintains its own isolated browser profile, allowing you to sign into a second Google account with separate session cookies and storage.
@@ -29,7 +29,7 @@ gallery:
   - https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/3.jpg
   - https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/4.jpg
 releaseNotes: >-
-  Dedicated secondary Brave instance for Flow MCP 2 with independent profile and port 3937/9224 bindings.
+  Automatically clears stale Chromium SingletonLock files on container restart and pins container hostname so Brave 2 never refuses to launch after an Umbrel reboot or container recreation.
 dependencies: []
 path: "https://umbrel.local:3937"
 defaultUsername: ""

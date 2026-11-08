@@ -6,9 +6,30 @@ services:
       APP_HOST: oxygen-brave-2_web_1
       APP_PORT: 3000
 
+  init:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        rm -f /config/flow-profile/Singleton* /config/.config/BraveSoftware/Brave-Browser/Singleton* /config/core.*
+        if [ -f /config/.config/openbox/autostart ] && ! grep -q "Singleton" /config/.config/openbox/autostart; then
+          sed -i '1i rm -f /config/flow-profile/Singleton* /config/.config/BraveSoftware/Brave-Browser/Singleton* /config/core.*' /config/.config/openbox/autostart
+        fi
+    volumes:
+      - ${APP_DATA_DIR}/data:/config:rw
+
   web:
     image: ghcr.io/linuxserver/brave:1.79.126@sha256:82448700fd7125d71740d08350caaa58275cf8dcc556203c34fb715855b5db22
+    hostname: oxygen-brave-2
     restart: on-failure
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    ulimits:
+      core: 0
     ports:
       - 3937:3001
     healthcheck:
