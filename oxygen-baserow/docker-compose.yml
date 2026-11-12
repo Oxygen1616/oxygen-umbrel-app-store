@@ -18,27 +18,22 @@ services:
         mkdir -p /baserow/data/env
         cat << 'EOF' > /baserow/data/env/00-umbrel.sh
         #!/bin/bash
-        # Allow any hostname/IP (including Docker container names with underscores like oxygen-baserow_web_1,
+        # Allow any hostname/IP (including Docker container names like oxygen-baserow_web_1,
         # LAN IP 192.168.1.15, umbrel.local, and Tailscale IP) to reach Django (/api/*, /mcp/*, /ws/*) and /media/*
         if [ -f /baserow/caddy/Caddyfile ]; then
           cat << 'CADDY_EOF' > /baserow/caddy/Caddyfile
         {
-            {$BASEROW_CADDY_GLOBAL_CONF}
         }
 
-        {$BASEROW_CADDY_ADDRESSES} {
-            @backend_routes path /api/* /ws/* /mcp /mcp/* /assistant/* /_health/* {$BASEROW_CADDY_BACKEND_EXTRA_ROUTES:}
+        :80 {
+            @backend_routes path /api/* /ws/* /mcp /mcp/* /assistant/* /_health/*
             handle @backend_routes {
-                reverse_proxy {$PRIVATE_BACKEND_URL:localhost:8000} {
+                reverse_proxy localhost:8000 {
                     header_up Host umbrel.local:8590
                 }
             }
 
             handle_path /media/* {
-                @downloads {
-                    query dl=*
-                }
-                header @downloads Content-Disposition "attachment; filename={query.dl}"
                 header X-Content-Type-Options "nosniff"
                 header Content-Security-Policy "sandbox; default-src 'none'; script-src 'none'; object-src 'none'; base-uri 'none'"
                 header Access-Control-Allow-Origin "*"
@@ -46,90 +41,87 @@ services:
                 header Access-Control-Allow-Headers "*"
                 header Access-Control-Expose-Headers "Content-Length, Content-Type"
                 file_server {
-                    root {$MEDIA_ROOT:/baserow/media/}
+                    root /baserow/media/
                 }
             }
 
             handle_path /static/* {
                 file_server {
-                    root {$STATIC_ROOT:/baserow/static/}
+                    root /baserow/static/
                 }
             }
 
-            reverse_proxy {$PRIVATE_WEB_FRONTEND_URL:localhost:3000}
+            reverse_proxy localhost:3000
         }
         CADDY_EOF
         fi
 
         # Dynamically adapt Nuxt SSR publicBackendUrl & publicWebFrontendUrl to the browser's Host header
         if [ -f /baserow/web-frontend/env-remap.mjs ]; then
-          sed -i '/\/\/ UMBREL_MULTI_ORIGIN_PATCH/,$d' /baserow/web-frontend/env-remap.mjs
-          cat << 'JS_EOF' >> /baserow/web-frontend/env-remap.mjs
-
-        // UMBREL_MULTI_ORIGIN_PATCH
-        import http from 'node:http';
-        const _defaultOrigin = (process.env.PUBLIC_BACKEND_URL || process.env.BASEROW_PUBLIC_URL || 'http://umbrel.local:8590').replace(/\/$/, '');
-        let _defaultHost = 'umbrel.local:8590';
-        try { _defaultHost = new URL(_defaultOrigin).host; } catch (e) {}
-
-        const _origEmit = http.Server.prototype.emit;
-        http.Server.prototype.emit = function (event, req, res, ...args) {
-          if (event === 'request' && req && req.headers && req.headers.host && res) {
-            const realHost = (req.headers['x-forwarded-host'] || req.headers.host).split(',')[0].trim();
-            const proto = (req.headers['x-forwarded-proto'] || 'http').split(',')[0].trim();
-            const realOrigin = `${proto}://${realHost}`;
-            if (realOrigin !== _defaultOrigin && !req.url?.startsWith('/_nuxt/')) {
-              delete req.headers['accept-encoding'];
-              req.headers.host = _defaultHost;
-              const chunks = [];
-              const _origWrite = res.write;
-              const _origEnd = res.end;
-              const _origWriteHead = res.writeHead;
-              res.writeHead = function (statusCode, statusMessage, headers) {
-                this.statusCode = statusCode;
-                let hdrs = headers;
-                if (typeof statusMessage === 'object' && statusMessage !== null) {
-                  hdrs = statusMessage;
-                } else if (typeof statusMessage === 'string') {
-                  this.statusMessage = statusMessage;
-                }
-                if (hdrs) {
-                  for (const [k, v] of Object.entries(hdrs)) {
-                    if (v !== undefined) this.setHeader(k, v);
-                  }
-                }
-                return this;
-              };
-              res.write = function (chunk, encoding, cb) {
-                if (chunk) {
-                  chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk), typeof encoding === 'string' ? encoding : 'utf8'));
-                }
-                if (typeof encoding === 'function') encoding();
-                else if (typeof cb === 'function') cb();
-                return true;
-              };
-              res.end = function (chunk, encoding, cb) {
-                const callback = typeof chunk === 'function' ? chunk : (typeof encoding === 'function' ? encoding : cb);
-                if (chunk && typeof chunk !== 'function') {
-                  chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk), typeof encoding === 'string' ? encoding : 'utf8'));
-                }
-                let outBuf = Buffer.concat(chunks);
-                const ct = String(this.getHeader('content-type') || '');
-                if (ct.includes('text/html') || ct.includes('application/json')) {
-                  const replaced = outBuf.toString('utf8').split(_defaultOrigin).join(realOrigin);
-                  outBuf = Buffer.from(replaced, 'utf8');
-                }
-                if (this.hasHeader('content-length')) {
-                  this.setHeader('content-length', outBuf.length);
-                }
-                _origWriteHead.call(this, this.statusCode);
-                return _origEnd.call(this, outBuf, callback);
-              };
-            }
-          }
-          return _origEmit.call(this, event, req, res, ...args);
-        };
-        JS_EOF
+          node -e '
+            const fs = require("node:fs");
+            const p = "/baserow/web-frontend/env-remap.mjs";
+            let src = fs.readFileSync(p, "utf8");
+            const marker = "// UMBREL_MULTI_ORIGIN_PATCH";
+            const idx = src.indexOf(marker);
+            if (idx !== -1) src = src.slice(0, idx);
+            const patch = [
+              marker,
+              "import http from \"node:http\";",
+              "let _defaultOrigin = (process.env.PUBLIC_BACKEND_URL || process.env.BASEROW_PUBLIC_URL || \"http://umbrel.local:8590\");",
+              "while (_defaultOrigin.endsWith(\"/\")) _defaultOrigin = _defaultOrigin.slice(0, -1);",
+              "let _defaultHost = \"umbrel.local:8590\";",
+              "try { _defaultHost = new URL(_defaultOrigin).host; } catch (e) {}",
+              "const _origEmit = http.Server.prototype.emit;",
+              "http.Server.prototype.emit = function (event, req, res, ...args) {",
+              "  if (event === \"request\" && req && req.headers && req.headers.host && res) {",
+              "    const realHost = (req.headers[\"x-forwarded-host\"] || req.headers.host).split(\",\")[0].trim();",
+              "    const proto = (req.headers[\"x-forwarded-proto\"] || \"http\").split(\",\")[0].trim();",
+              "    const realOrigin = proto + \"://\" + realHost;",
+              "    if (realOrigin !== _defaultOrigin && !(req.url && req.url.startsWith(\"/_nuxt/\"))) {",
+              "      delete req.headers[\"accept-encoding\"];",
+              "      req.headers.host = _defaultHost;",
+              "      const chunks = [];",
+              "      const _origEnd = res.end;",
+              "      const _origWriteHead = res.writeHead;",
+              "      res.writeHead = function (statusCode, statusMessage, headers) {",
+              "        this.statusCode = statusCode;",
+              "        let hdrs = headers;",
+              "        if (typeof statusMessage === \"object\" && statusMessage !== null) hdrs = statusMessage;",
+              "        else if (typeof statusMessage === \"string\") this.statusMessage = statusMessage;",
+              "        if (hdrs) {",
+              "          for (const [k, v] of Object.entries(hdrs)) {",
+              "            if (v !== undefined) this.setHeader(k, v);",
+              "          }",
+              "        }",
+              "        return this;",
+              "      };",
+              "      res.write = function (chunk, encoding, cb) {",
+              "        if (chunk) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk), typeof encoding === \"string\" ? encoding : \"utf8\"));",
+              "        if (typeof encoding === \"function\") encoding();",
+              "        else if (typeof cb === \"function\") cb();",
+              "        return true;",
+              "      };",
+              "      res.end = function (chunk, encoding, cb) {",
+              "        const callback = typeof chunk === \"function\" ? chunk : (typeof encoding === \"function\" ? encoding : cb);",
+              "        if (chunk && typeof chunk !== \"function\") chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk), typeof encoding === \"string\" ? encoding : \"utf8\"));",
+              "        let outBuf = Buffer.concat(chunks);",
+              "        const ct = String(this.getHeader(\"content-type\") || \"\");",
+              "        if (ct.includes(\"text/html\") || ct.includes(\"application/json\")) {",
+              "          const replaced = outBuf.toString(\"utf8\").split(_defaultOrigin).join(realOrigin);",
+              "          outBuf = Buffer.from(replaced, \"utf8\");",
+              "        }",
+              "        if (this.hasHeader(\"content-length\")) this.setHeader(\"content-length\", outBuf.length);",
+              "        _origWriteHead.call(this, this.statusCode);",
+              "        return _origEnd.call(this, outBuf, callback);",
+              "      };",
+              "    }",
+              "  }",
+              "  return _origEmit.call(this, event, req, res, ...args);",
+              "};"
+            ].join("\n");
+            fs.writeFileSync(p, src.trimEnd() + "\n\n" + patch + "\n", "utf8");
+          '
         fi
         EOF
         chmod +x /baserow/data/env/00-umbrel.sh

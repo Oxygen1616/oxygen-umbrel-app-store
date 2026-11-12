@@ -2,9 +2,9 @@ manifestVersion: 1
 id: oxygen-baserow
 name: Baserow
 tagline: Open-source no-code database, application builder, and AI/MCP data backend
-icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-baserow/logo.png
+icon: https://avatars.githubusercontent.com/u/68540644?s=512&v=4
 category: files & productivity
-version: "2.4.4"
+version: "2.4.5"
 port: 8590
 description: >-
   Baserow is an open-source no-code platform that combines an Airtable-style relational database, a visual Application Builder, workflow automations, and a native Model Context Protocol (MCP) server into a single self-hosted suite.
@@ -14,7 +14,7 @@ description: >-
 
   📊 Relational No-Code Databases: Create tables, views (Grid, Kanban, Calendar, Timeline, Form, Gallery), formulas, lookups, and linked records without writing SQL.
 
-  🤖 Built-in MCP Server for AI Agents (Hermes, Murmur, OpenClaw, Claude): Expose any workspace to AI agents via Streamable HTTP (`POST /mcp`) or SSE (`GET /mcp/<key>/sse`) so agents can list databases, inspect table schemas, and create/update/query rows autonomously.
+  🤖 Built-in MCP Server for AI Agents (Hermes, Murmur, OpenClaw, Claude): Expose any workspace to AI agents via SSE (`GET /mcp/<key>/sse`) so agents can list databases, inspect table schemas, and create/update/query rows autonomously.
 
   🔗 Instant REST API & Webhooks: Every table automatically generates documented REST endpoints (`/api/database/rows/table/{table_id}/`) and private-network-enabled webhooks for n8n, NoCode ToolsKit, and custom scripts.
 
@@ -31,10 +31,8 @@ description: >-
   2. Built-in MCP Server (for Hermes Agent, Murmur, OpenClaw, Claude):
      - In Baserow, click your user menu (top-left) -> Settings -> MCP Server -> Create MCP Endpoint, and copy your `<MCP_KEY>`.
      - Internal Docker URL (recommended for Hermes / Murmur on Umbrel):
-       • Streamable HTTP: `http://oxygen-baserow_web_1/mcp` with header `Authorization: Bearer <MCP_KEY>`
        • SSE Endpoint: `http://oxygen-baserow_web_1/mcp/<MCP_KEY>/sse`
      - Host / LAN URL:
-       • Streamable HTTP: `http://192.168.1.15:8590/mcp` (header `Authorization: Bearer <MCP_KEY>`)
        • SSE Endpoint: `http://192.168.1.15:8590/mcp/<MCP_KEY>/sse`
 
   3. REST API (for n8n Baserow node, HTTP Request nodes, & scripts):
@@ -48,9 +46,9 @@ submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
 repo: https://github.com/baserow/baserow
 support: https://github.com/baserow/baserow/issues
 gallery:
-  - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-baserow/logo.png
+  - https://avatars.githubusercontent.com/u/68540644?s=512&v=4
 releaseNotes: >-
-  Baserow 2.4.2 packaged for Umbrel with unauthenticated internal/LAN proxy access (`PROXY_AUTH_ADD=false`), host-agnostic Caddy routing (`/api/*`, `/mcp*`, `/ws/*`, `/media/*`), dynamic multi-origin Nuxt SSR support (LAN IP, umbrel.local, Tailscale IP), and private-network webhooks/integrations enabled for Hermes Agent, Murmur, and n8n.
+  Baserow 2.4.2 packaged for Umbrel with official Baserow logo, unauthenticated internal/LAN proxy access (`PROXY_AUTH_ADD=false`), host-agnostic Caddy routing (`/api/*`, `/mcp*`, `/ws/*`, `/media/*`), dynamic multi-origin Nuxt SSR support (LAN IP, umbrel.local, Tailscale IP), and private-network webhooks/integrations enabled for Hermes Agent, Murmur, and n8n.
 dependencies: []
 path: ""
 defaultUsername: ""
