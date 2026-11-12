@@ -4,7 +4,7 @@ name: Baserow
 tagline: Open-source no-code database, application builder, and AI/MCP data backend
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-baserow/logo.png
 category: files & productivity
-version: "2.4.2"
+version: "2.4.3"
 port: 8590
 description: >-
   Baserow is an open-source no-code platform that combines an Airtable-style relational database, a visual Application Builder, workflow automations, and a native Model Context Protocol (MCP) server into a single self-hosted suite.

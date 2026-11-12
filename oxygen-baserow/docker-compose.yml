@@ -18,11 +18,47 @@ services:
         mkdir -p /baserow/data/env
         cat << 'EOF' > /baserow/data/env/00-umbrel.sh
         #!/bin/bash
-        # Allow any hostname/IP (Docker container names, LAN IP, umbrel.local, Tailscale IP)
-        # to access /api/*, /mcp, /mcp/*, /ws/*, /oauth/*, and /media/* through internal Caddy
+        # Allow any hostname/IP (including Docker container names with underscores like oxygen-baserow_web_1,
+        # LAN IP 192.168.1.15, umbrel.local, and Tailscale IP) to reach Django (/api/*, /mcp/*, /ws/*) and /media/*
         if [ -f /baserow/caddy/Caddyfile ]; then
-          sed -i 's/expression `{env\.BASEROW_PUBLIC_URL}.*/path */g' /baserow/caddy/Caddyfile
-          sed -i 's/expression `{env\.PUBLIC_BACKEND_URL}.*/path */g' /baserow/caddy/Caddyfile
+          cat << 'CADDY_EOF' > /baserow/caddy/Caddyfile
+        {
+            {$BASEROW_CADDY_GLOBAL_CONF}
+        }
+
+        {$BASEROW_CADDY_ADDRESSES} {
+            @backend_routes path /api/* /ws/* /mcp /mcp/* /assistant/* /_health/* {$BASEROW_CADDY_BACKEND_EXTRA_ROUTES:}
+            handle @backend_routes {
+                reverse_proxy {$PRIVATE_BACKEND_URL:localhost:8000} {
+                    header_up Host umbrel.local:8590
+                }
+            }
+
+            handle_path /media/* {
+                @downloads {
+                    query dl=*
+                }
+                header @downloads Content-Disposition "attachment; filename={query.dl}"
+                header X-Content-Type-Options "nosniff"
+                header Content-Security-Policy "sandbox; default-src 'none'; script-src 'none'; object-src 'none'; base-uri 'none'"
+                header Access-Control-Allow-Origin "*"
+                header Access-Control-Allow-Methods "GET, HEAD, OPTIONS"
+                header Access-Control-Allow-Headers "*"
+                header Access-Control-Expose-Headers "Content-Length, Content-Type"
+                file_server {
+                    root {$MEDIA_ROOT:/baserow/media/}
+                }
+            }
+
+            handle_path /static/* {
+                file_server {
+                    root {$STATIC_ROOT:/baserow/static/}
+                }
+            }
+
+            reverse_proxy {$PRIVATE_WEB_FRONTEND_URL:localhost:3000}
+        }
+        CADDY_EOF
         fi
 
         # Dynamically adapt Nuxt SSR publicBackendUrl & publicWebFrontendUrl to the browser's Host header
@@ -111,8 +147,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
-      BASEROW_PUBLIC_URL: "http://${DEVICE_DOMAIN_NAME}:8590"
-      BASEROW_EXTRA_PUBLIC_URLS: "http://umbrel.local:8590,http://umbrel:8590,http://192.168.1.15:8590,http://100.126.75.31:8590,http://localhost:8590,http://127.0.0.1:8590,http://host.docker.internal:8590,http://oxygen-baserow_web_1:80,http://oxygen-baserow_web_1:8590,http://oxygen-baserow:80,http://oxygen-baserow:8590"
+      BASEROW_PUBLIC_URL: "http://umbrel.local:8590"
+      BASEROW_EXTRA_PUBLIC_URLS: "http://umbrel.local:8590,http://umbrel:8590,http://192.168.1.15:8590,http://100.126.75.31:8590,http://localhost:8590,http://127.0.0.1:8590,http://host.docker.internal:8590,http://oxygen-baserow:80,http://oxygen-baserow:8590"
       BASEROW_EXTRA_ALLOWED_HOSTS: "*"
       BASEROW_DISABLE_PUBLIC_URL_CHECK: "true"
       BASEROW_CADDY_ADDRESSES: ":80"
