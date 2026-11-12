@@ -62,12 +62,13 @@ services:
         fi
 
         # Dynamically adapt Nuxt SSR publicBackendUrl & publicWebFrontendUrl to the browser's Host header
-        if [ -f /baserow/web-frontend/env-remap.mjs ] && ! grep -q "UMBREL_MULTI_ORIGIN_PATCH" /baserow/web-frontend/env-remap.mjs; then
+        if [ -f /baserow/web-frontend/env-remap.mjs ]; then
+          sed -i '/\/\/ UMBREL_MULTI_ORIGIN_PATCH/,$d' /baserow/web-frontend/env-remap.mjs
           cat << 'JS_EOF' >> /baserow/web-frontend/env-remap.mjs
 
         // UMBREL_MULTI_ORIGIN_PATCH
         import http from 'node:http';
-        const _defaultOrigin = (process.env.BASEROW_PUBLIC_URL || 'http://umbrel.local:8590').replace(/\/$/, '');
+        const _defaultOrigin = (process.env.PUBLIC_BACKEND_URL || process.env.BASEROW_PUBLIC_URL || 'http://umbrel.local:8590').replace(/\/$/, '');
         let _defaultHost = 'umbrel.local:8590';
         try { _defaultHost = new URL(_defaultOrigin).host; } catch (e) {}
 
