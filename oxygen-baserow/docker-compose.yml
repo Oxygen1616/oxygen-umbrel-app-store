@@ -1,0 +1,123 @@
+version: '3.7'
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-baserow_web_1
+      APP_PORT: 80
+      PROXY_AUTH_ADD: "false"
+
+  init:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /baserow/data/env
+        cat << 'EOF' > /baserow/data/env/00-umbrel.sh
+        #!/bin/bash
+        # Allow any hostname/IP (Docker container names, LAN IP, umbrel.local, Tailscale IP)
+        # to access /api/*, /mcp, /mcp/*, /ws/*, /oauth/*, and /media/* through internal Caddy
+        if [ -f /baserow/caddy/Caddyfile ]; then
+          sed -i 's/expression `{env\.BASEROW_PUBLIC_URL}.*/path */g' /baserow/caddy/Caddyfile
+          sed -i 's/expression `{env\.PUBLIC_BACKEND_URL}.*/path */g' /baserow/caddy/Caddyfile
+        fi
+
+        # Dynamically adapt Nuxt SSR publicBackendUrl & publicWebFrontendUrl to the browser's Host header
+        if [ -f /baserow/web-frontend/env-remap.mjs ] && ! grep -q "UMBREL_MULTI_ORIGIN_PATCH" /baserow/web-frontend/env-remap.mjs; then
+          cat << 'JS_EOF' >> /baserow/web-frontend/env-remap.mjs
+
+        // UMBREL_MULTI_ORIGIN_PATCH
+        import http from 'node:http';
+        const _defaultOrigin = (process.env.BASEROW_PUBLIC_URL || 'http://umbrel.local:8590').replace(/\/$/, '');
+        let _defaultHost = 'umbrel.local:8590';
+        try { _defaultHost = new URL(_defaultOrigin).host; } catch (e) {}
+
+        const _origEmit = http.Server.prototype.emit;
+        http.Server.prototype.emit = function (event, req, res, ...args) {
+          if (event === 'request' && req && req.headers && req.headers.host && res) {
+            const realHost = (req.headers['x-forwarded-host'] || req.headers.host).split(',')[0].trim();
+            const proto = (req.headers['x-forwarded-proto'] || 'http').split(',')[0].trim();
+            const realOrigin = `${proto}://${realHost}`;
+            if (realOrigin !== _defaultOrigin && !req.url?.startsWith('/_nuxt/')) {
+              delete req.headers['accept-encoding'];
+              req.headers.host = _defaultHost;
+              const chunks = [];
+              const _origWrite = res.write;
+              const _origEnd = res.end;
+              const _origWriteHead = res.writeHead;
+              res.writeHead = function (statusCode, statusMessage, headers) {
+                this.statusCode = statusCode;
+                let hdrs = headers;
+                if (typeof statusMessage === 'object' && statusMessage !== null) {
+                  hdrs = statusMessage;
+                } else if (typeof statusMessage === 'string') {
+                  this.statusMessage = statusMessage;
+                }
+                if (hdrs) {
+                  for (const [k, v] of Object.entries(hdrs)) {
+                    if (v !== undefined) this.setHeader(k, v);
+                  }
+                }
+                return this;
+              };
+              res.write = function (chunk, encoding, cb) {
+                if (chunk) {
+                  chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk), typeof encoding === 'string' ? encoding : 'utf8'));
+                }
+                if (typeof encoding === 'function') encoding();
+                else if (typeof cb === 'function') cb();
+                return true;
+              };
+              res.end = function (chunk, encoding, cb) {
+                const callback = typeof chunk === 'function' ? chunk : (typeof encoding === 'function' ? encoding : cb);
+                if (chunk && typeof chunk !== 'function') {
+                  chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk), typeof encoding === 'string' ? encoding : 'utf8'));
+                }
+                let outBuf = Buffer.concat(chunks);
+                const ct = String(this.getHeader('content-type') || '');
+                if (ct.includes('text/html') || ct.includes('application/json')) {
+                  const replaced = outBuf.toString('utf8').split(_defaultOrigin).join(realOrigin);
+                  outBuf = Buffer.from(replaced, 'utf8');
+                }
+                if (this.hasHeader('content-length')) {
+                  this.setHeader('content-length', outBuf.length);
+                }
+                _origWriteHead.call(this, this.statusCode);
+                return _origEnd.call(this, outBuf, callback);
+              };
+            }
+          }
+          return _origEmit.call(this, event, req, res, ...args);
+        };
+        JS_EOF
+        fi
+        EOF
+        chmod +x /baserow/data/env/00-umbrel.sh
+    volumes:
+      - ${APP_DATA_DIR}/data:/baserow/data:rw
+
+  web:
+    image: baserow/baserow:2.4.2@sha256:630bf7a9baa31523a3a55a595a61416f20c1761c1e0ee62d4f0f9ae47ff23ee2
+    hostname: oxygen-baserow
+    restart: on-failure
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    ports:
+      - "8590:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      BASEROW_PUBLIC_URL: "http://${DEVICE_DOMAIN_NAME}:8590"
+      BASEROW_EXTRA_PUBLIC_URLS: "http://umbrel.local:8590,http://umbrel:8590,http://192.168.1.15:8590,http://100.126.75.31:8590,http://localhost:8590,http://127.0.0.1:8590,http://host.docker.internal:8590,http://oxygen-baserow_web_1:80,http://oxygen-baserow_web_1:8590,http://oxygen-baserow:80,http://oxygen-baserow:8590"
+      BASEROW_EXTRA_ALLOWED_HOSTS: "*"
+      BASEROW_DISABLE_PUBLIC_URL_CHECK: "true"
+      BASEROW_CADDY_ADDRESSES: ":80"
+      BASEROW_WEBHOOKS_ALLOW_PRIVATE_ADDRESS: "true"
+      BASEROW_INTEGRATIONS_ALLOW_PRIVATE_ADDRESS: "true"
+      BASEROW_DATA_SYNC_ALLOW_PRIVATE_ADDRESS: "true"
+    volumes:
+      - ${APP_DATA_DIR}/data:/baserow/data:rw
