@@ -4,7 +4,7 @@ name: OmniRoute
 tagline: Universal AI routing gateway & dashboard with auto-failover, token compression, and MCP
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-omniroute/logo.svg
 category: AI
-version: "3.8.51"
+version: "3.8.54"
 port: 20128
 description: >-
   OmniRoute is an open-source, local-first AI routing gateway and dashboard that unifies 350+ AI providers (including 150+ with free tiers) into a single, high-performance OpenAI-compatible endpoint (/v1/*).
@@ -38,7 +38,7 @@ support: https://github.com/diegosouzapw/OmniRoute/issues
 gallery:
   - https://raw.githubusercontent.com/diegosouzapw/OmniRoute/main/public/favicon.svg
 releaseNotes: >-
-  Initial release of OmniRoute for umbrelOS with unified /v1 endpoint, Redis sidecar, and pre-configured local network routing.
+  Update OmniRoute to v3.8.54. This release expands the provider and model catalog, improves quota-aware routing and failover, adds dashboard and model-health improvements, and includes the latest upstream fixes. The Umbrel package continues to use the published diegosouzapw/omniroute:latest image with its Redis sidecar and persistent app data.
 dependencies: []
 path: ""
 defaultUsername: ""
