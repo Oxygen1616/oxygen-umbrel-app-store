@@ -48,7 +48,7 @@ services:
     environment:
       PUID: 1000
       PGID: 1000
-      BRAVE_CLI: "--remote-debugging-port=9222 --user-data-dir=/config/flow-profile https://labs.google/fx/tools/flow"
+      BRAVE_CLI: "--remote-debugging-port=9222 --user-data-dir=/config/flow-profile --disable-brave-extension --disable-extensions --disable-blink-features=AutomationControlled https://labs.google/fx/tools/flow"
 
   cdp_relay:
     image: alpine/socat:1.8.0.3@sha256:a114a8c813b25db7fd25e8bc521acfe04b39eeeb9772e61520c91ebf6fdbd401

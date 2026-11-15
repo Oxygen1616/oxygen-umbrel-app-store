@@ -4,7 +4,7 @@ name: Brave 2
 tagline: Second isolated Brave instance for Google Flow
 icon: https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-brave/logo.png
 category: networking
-version: "1.79.133"
+version: "1.79.134"
 port: 3936
 description: >-
   🦁 Brave 2 is a dedicated, secondary Brave browser instance designed to run alongside your primary Brave browser for Google Flow automation. It maintains its own isolated browser profile, allowing you to sign into a second Google account with separate session cookies and storage.

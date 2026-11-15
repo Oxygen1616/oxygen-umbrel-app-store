@@ -52,7 +52,7 @@ services:
       # Chromium 136+ ignores --remote-debugging-port on the default profile folder, so
       # the DevTools-enabled session uses its own profile. DevTools stays on 127.0.0.1
       # and is only reachable through cdp_relay on the internal network.
-      BRAVE_CLI: "--remote-debugging-port=9222 --user-data-dir=/config/flow-profile https://labs.google/fx/tools/flow"
+      BRAVE_CLI: "--remote-debugging-port=9222 --user-data-dir=/config/flow-profile --disable-brave-extension --disable-extensions --disable-blink-features=AutomationControlled https://labs.google/fx/tools/flow"
 
   # Chromium ignores --remote-debugging-address outside headless mode, so DevTools only
   # listens on 127.0.0.1 inside the web container. This relay shares that network
