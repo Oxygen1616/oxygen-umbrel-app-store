@@ -4,7 +4,7 @@ name: Flow MCP 2
 tagline: AI Video Automation Engine for Google Flow (Instance 2)
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-flow-mcp/logo.png
 category: AI
-version: "0.2.9"
+version: "0.2.10"
 port: 8788
 description: >-
   Flow MCP 2 is an automation engine and MCP server for Google Flow (Instance 2). It automates generation of AI video shots, character edits, narration audio, video assembly, and animated subtitles directly from prompts or API requests.
@@ -30,7 +30,7 @@ support: https://github.com/Oxygen1616/flow-mcp/issues
 gallery:
   - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-flow-mcp/logo.png
 releaseNotes: >-
-  v0.2.7: Second instance support connected to oxygen-brave-2.
+  v0.2.10: Agent image batches are now gathered into a Flow collection and downloaded as a single ZIP of originals, flow_download supports `collection` to fetch an entire collection in one ZIP, agent batches support `references` and `scene_references`, and scenes sharing long style boilerplate match reliably by filtering shared words.
 dependencies:
   - oxygen-brave-2
 path: "/"
