@@ -1,0 +1,7 @@
+[2026-10-22T16:58:16.293Z] start: host=claude-code, reason=session_end, project=C:/Users/Kasutaja/Desktop/umbrelos/oxygen-umbrel-app-store
+[2026-10-22T16:58:16.311Z] journal: 1 entries across 1 sessions
+[2026-10-22T16:58:16.386Z] tier-promotion: db open skipped (Cannot find package 'better-sqlite3' imported from C:\Users\Kasutaja\.ijfw\mcp-server\src\memory\fts5.js)
+[2026-10-22T16:58:16.404Z] wiki-compile: db open skipped (Cannot find package 'better-sqlite3' imported from C:\Users\Kasutaja\.ijfw\mcp-server\src\memory\fts5.js)
+[2026-10-22T16:58:16.465Z] profile_derive: merged delta (style=1 feedback=0 inferences=0)
+[2026-10-22T16:58:16.484Z] mark-completed: ok
+[2026-10-22T16:58:16.499Z] end: completed=5 failed=0

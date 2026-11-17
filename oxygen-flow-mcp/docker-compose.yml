@@ -23,7 +23,7 @@ services:
       - ${APP_DATA_DIR}/data:/data
 
   server:
-    image: ghcr.io/oxygen1616/flow-mcp:sha-7d8c892
+    image: ghcr.io/oxygen1616/flow-mcp:sha-abd479c
     restart: on-failure
     depends_on:
       permissions:
