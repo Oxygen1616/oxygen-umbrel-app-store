@@ -15,8 +15,14 @@ services:
       - -c
       - |
         rm -f /config/flow-profile/Singleton* /config/.config/BraveSoftware/Brave-Browser/Singleton* /config/core.*
-        if [ -f /config/.config/openbox/autostart ] && ! grep -q "Singleton" /config/.config/openbox/autostart; then
-          sed -i '1i rm -f /config/flow-profile/Singleton* /config/.config/BraveSoftware/Brave-Browser/Singleton* /config/core.*' /config/.config/openbox/autostart
+        if [ -f /config/.config/openbox/autostart ]; then
+          if ! grep -q "Singleton" /config/.config/openbox/autostart; then
+            sed -i '1i rm -f /config/flow-profile/Singleton* /config/.config/BraveSoftware/Brave-Browser/Singleton* /config/core.*' /config/.config/openbox/autostart
+          fi
+          sed -i 's/--disable-blink-features=AutomationControlled//g' /config/.config/openbox/autostart
+          if ! grep -q "BraveFarbling" /config/.config/openbox/autostart; then
+            sed -i 's|--user-data-dir=/config/flow-profile|--user-data-dir=/config/flow-profile --disable-brave-extension --disable-extensions --disable-features=BraveShields,BraveAdblock,BraveFarbling,BraveSpeedreader|g' /config/.config/openbox/autostart
+          fi
         fi
     volumes:
       - ${APP_DATA_DIR}/data:/config:rw
@@ -48,7 +54,7 @@ services:
     environment:
       PUID: 1000
       PGID: 1000
-      BRAVE_CLI: "--remote-debugging-port=9222 --user-data-dir=/config/flow-profile --disable-brave-extension --disable-extensions --disable-blink-features=AutomationControlled https://labs.google/fx/tools/flow"
+      BRAVE_CLI: "--remote-debugging-port=9222 --user-data-dir=/config/flow-profile --disable-brave-extension --disable-extensions --disable-features=BraveShields,BraveAdblock,BraveFarbling,BraveSpeedreader https://labs.google/fx/tools/flow"
 
   cdp_relay:
     image: alpine/socat:1.8.0.3@sha256:a114a8c813b25db7fd25e8bc521acfe04b39eeeb9772e61520c91ebf6fdbd401

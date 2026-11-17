@@ -15,8 +15,14 @@ services:
       - -c
       - |
         rm -f /config/flow-profile/Singleton* /config/.config/BraveSoftware/Brave-Browser/Singleton* /config/core.*
-        if [ -f /config/.config/openbox/autostart ] && ! grep -q "Singleton" /config/.config/openbox/autostart; then
-          sed -i '1i rm -f /config/flow-profile/Singleton* /config/.config/BraveSoftware/Brave-Browser/Singleton* /config/core.*' /config/.config/openbox/autostart
+        if [ -f /config/.config/openbox/autostart ]; then
+          if ! grep -q "Singleton" /config/.config/openbox/autostart; then
+            sed -i '1i rm -f /config/flow-profile/Singleton* /config/.config/BraveSoftware/Brave-Browser/Singleton* /config/core.*' /config/.config/openbox/autostart
+          fi
+          sed -i 's/--disable-blink-features=AutomationControlled//g' /config/.config/openbox/autostart
+          if ! grep -q "BraveFarbling" /config/.config/openbox/autostart; then
+            sed -i 's|--user-data-dir=/config/flow-profile|--user-data-dir=/config/flow-profile --disable-brave-extension --disable-extensions --disable-features=BraveShields,BraveAdblock,BraveFarbling,BraveSpeedreader|g' /config/.config/openbox/autostart
+          fi
         fi
     volumes:
       - ${APP_DATA_DIR}/data:/config:rw
@@ -52,7 +58,7 @@ services:
       # Chromium 136+ ignores --remote-debugging-port on the default profile folder, so
       # the DevTools-enabled session uses its own profile. DevTools stays on 127.0.0.1
       # and is only reachable through cdp_relay on the internal network.
-      BRAVE_CLI: "--remote-debugging-port=9222 --user-data-dir=/config/flow-profile --disable-brave-extension --disable-extensions --disable-blink-features=AutomationControlled https://labs.google/fx/tools/flow"
+      BRAVE_CLI: "--remote-debugging-port=9222 --user-data-dir=/config/flow-profile --disable-brave-extension --disable-extensions --disable-features=BraveShields,BraveAdblock,BraveFarbling,BraveSpeedreader https://labs.google/fx/tools/flow"
 
   # Chromium ignores --remote-debugging-address outside headless mode, so DevTools only
   # listens on 127.0.0.1 inside the web container. This relay shares that network
