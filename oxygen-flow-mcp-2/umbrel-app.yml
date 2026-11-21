@@ -4,7 +4,7 @@ name: Flow MCP 2
 tagline: AI Video Automation Engine for Google Flow (Instance 2)
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-flow-mcp/logo.png
 category: AI
-version: "0.2.15"
+version: "0.2.16"
 port: 8788
 description: >-
   Flow MCP 2 is an automation engine, REST API, and Model Context Protocol (MCP) server for Google Flow (Instance 2). It automates the full video creation lifecycle: prompt-driven image and video shot generation, character creation and consistency edits, Gemini neural TTS voiceovers, multi-scene timeline assembly with audio ducking, and dynamic animated subtitles.
@@ -17,7 +17,7 @@ description: >-
 
   1. Ensure Brave 2 (oxygen-brave-2) is installed and running on your Umbrel.
 
-  2. Open the Brave 2 web interface at https://umbrel.local:3936 (or http://<umbrel-ip>:3935). Accept the self-signed SSL certificate if prompted.
+  2. Open the Brave 2 web interface at https://umbrel.local:3937 (or http://<umbrel-ip>:3936). Accept the self-signed SSL certificate if prompted.
 
   3. In Brave 2, visit https://labs.google/fx/tools/flow and sign in with your second Google Account.
 
@@ -71,11 +71,13 @@ description: >-
 
   - Reconnecting after reboot: If Umbrel or Brave 2 restarts, Flow MCP 2 automatically reconnects to Brave 2. Ensure the Brave 2 container is running.
 
-  - Session Expiration: If generations fail or time out, open Brave 2 (port 3936) to verify that your Google account is still actively logged in.
+  - Session Expiration: If generations fail or time out, open Brave 2 (https://umbrel.local:3937) to verify that your Google account is still actively logged in.
 
   - Flow Agent Reset: If a multi-image batch job was interrupted and Flow remained in "Agent" mode ("Describe your goal"), Flow MCP v0.2.12+ will automatically detect and reset this before standard generation. You can also manually click the "Flow Agent" toggle button inside Brave 2.
 
-  - Agent settings aspect ratio: Google renamed the controls inside Flow Agent settings in November 2026. From v0.2.14 a batch no longer stops when the aspect-ratio button cannot be found; the ratio is also written into every agent prompt, so images keep the shape you asked for.
+  - Agent settings: Google redesigned Flow Agent settings in November 2026 (aspect ratio and number of outputs moved to an "Image defaults" page). From v0.2.16 batches set 1 output and your aspect ratio there; if a control cannot be found the batch carries on, because the ratio is also written into every agent prompt.
+
+  - Window size: the Brave 2 window takes the size of the last screen that viewed it. Below desktop width Google Flow hides the Flow Agent button, so from v0.2.16 Flow MCP lays the Flow tab out at desktop size by itself. Viewing Brave 2 from a phone is fine.
 
   - Not using Browserless: Flow MCP 2 drives Flow in Brave 2 only. Browserless is not needed and can be uninstalled if nothing else uses it.
 developer: GTAI-1
@@ -87,7 +89,7 @@ support: https://github.com/Oxygen1616/flow-mcp/issues
 gallery:
   - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-flow-mcp/logo.png
 releaseNotes: >-
-  v0.2.15: Adds a live-page inspection tool used to map Flow UI changes. v0.2.14: Uses Brave instead of Browserless (the dependency and all instructions now say so). Agent batches no longer fail when Flow's renamed Agent settings hide the 16:9 aspect button. Setup, API token, upgrading and troubleshooting notes rewritten in more detail.
+  v0.2.16: Agent batches work with Flow's redesigned Agent settings (Image defaults sub-page, no Save button) and when the Brave window is phone-sized (Flow hides the Flow Agent button below desktop width). v0.2.15: live-page inspection tool. v0.2.14: Uses Brave instead of Browserless (the dependency and all instructions now say so). Agent batches no longer fail when Flow's renamed Agent settings hide the 16:9 aspect button. Setup, API token, upgrading and troubleshooting notes rewritten in more detail.
 dependencies:
   - oxygen-brave-2
 path: "/"
