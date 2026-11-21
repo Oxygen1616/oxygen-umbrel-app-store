@@ -54,5 +54,21 @@ services:
           npm install -g --prefix /data/bin openmausbot@0.1.175
         fi
 
+        # Auto-mint pairing code on startup and log prominently
+        (
+          for i in $$(seq 1 30); do
+            sleep 2
+            if curl -sf http://127.0.0.1:8799/api/health >/dev/null 2>&1; then
+              break
+            fi
+          done
+          echo ""
+          echo "================================================================"
+          echo ">>> OPENMAUSBOT PAIRING CODE (ACTIVE FOR 24 HOURS):"
+          /data/bin/bin/openmausbot pair --ttl 24h | tee /data/openmausbot/current_pairing.txt
+          echo "================================================================"
+          echo ""
+        ) &
+
         echo "Starting OpenMausBot server on port 8799..."
         exec /data/bin/bin/openmausbot serve --lan --port 8799 --data-dir /data/openmausbot --no-open
