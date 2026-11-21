@@ -4,7 +4,7 @@ name: Flow MCP
 tagline: AI Video Automation Engine for Google Flow
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-flow-mcp/logo.png
 category: AI
-version: "0.2.16"
+version: "0.2.17"
 port: 8787
 description: >-
   Flow MCP is an automation engine, REST API, and Model Context Protocol (MCP) server for Google Flow (https://labs.google/fx/tools/flow). It automates the full video creation lifecycle: prompt-driven image and video shot generation, character creation and consistency edits, Gemini neural TTS voiceovers, multi-scene timeline assembly with audio ducking, and dynamic animated subtitles.
@@ -89,7 +89,7 @@ support: https://github.com/Oxygen1616/flow-mcp/issues
 gallery:
   - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-flow-mcp/logo.png
 releaseNotes: >-
-  v0.2.16: Agent batches work with Flow's redesigned Agent settings (Image defaults sub-page, no Save button) and when the Brave window is phone-sized (Flow hides the Flow Agent button below desktop width). v0.2.15: live-page inspection tool. v0.2.14: Uses Brave instead of Browserless (the dependency and all instructions now say so). Agent batches no longer fail when Flow's renamed Agent settings hide the 16:9 aspect button. Setup, API token, upgrading and troubleshooting notes rewritten in more detail.
+  v0.2.17: Supports the new Flow Agent side panel (chat panel that replaces the composer while Agent is on). v0.2.16: Agent batches work with Flow's redesigned Agent settings (Image defaults sub-page, no Save button) and when the Brave window is phone-sized (Flow hides the Flow Agent button below desktop width). v0.2.15: live-page inspection tool. v0.2.14: Uses Brave instead of Browserless (the dependency and all instructions now say so). Agent batches no longer fail when Flow's renamed Agent settings hide the 16:9 aspect button. Setup, API token, upgrading and troubleshooting notes rewritten in more detail.
 dependencies:
   - oxygen-brave
 path: "/"
