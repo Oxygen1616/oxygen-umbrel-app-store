@@ -4,23 +4,80 @@ name: Flow MCP
 tagline: AI Video Automation Engine for Google Flow
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-flow-mcp/logo.png
 category: AI
-version: "0.2.12"
+version: "0.2.14"
 port: 8787
 description: >-
-  Flow MCP is an automation engine and MCP server for Google Flow. It automates generation of AI video shots, character edits, narration audio, video assembly, and animated subtitles directly from prompts or API requests.
+  Flow MCP is an automation engine, REST API, and Model Context Protocol (MCP) server for Google Flow (https://labs.google/fx/tools/flow). It automates the full video creation lifecycle: prompt-driven image and video shot generation, character creation and consistency edits, Gemini neural TTS voiceovers, multi-scene timeline assembly with audio ducking, and dynamic animated subtitles.
 
 
-  HOW TO USE
+  Flow MCP runs locally on your Umbrel and connects directly to Brave (oxygen-brave) via Chrome DevTools Protocol (CDP), using your own Google account's Flow credits (free daily allowance or a paid Google AI plan) without needing third-party proxy services.
 
-  1. Ensure Browserless (oxygen-browserless) is installed and running on your Umbrel.
 
-  2. Open Brave (oxygen-brave) on your Umbrel and log into your Google Account at https://labs.google/fx/tools/flow once so your session cookies are saved.
+  🚀 PREREQUISITES & FIRST-TIME SETUP
 
-  3. Flow MCP connects to Browserless and exposes:
-     - Flow Studio Web UI: http://umbrel.local:8787
-     - REST API: POST /api/project, POST /api/generate, POST /api/assemble, POST /api/captions
-     - MCP Tools for n8n, Claude Code, and other AI agents.
-   - MCP over HTTP for other apps on your Umbrel (Hermes Agent, Murmur): http://<umbrel-ip>:8787/mcp with the header "Authorization: Bearer <token>". The token is the one n8n uses.
+  1. Install and start Brave (oxygen-brave) from the Umbrel App Store.
+
+  2. Open Brave via the Umbrel dashboard or browse to https://umbrel.local:3935 (or http://<umbrel-ip>:3934). Accept the self-signed SSL certificate if prompted.
+
+  3. In Brave, visit https://labs.google/fx/tools/flow and sign in with your Google Account.
+
+  4. Create a new project or open an existing project in Google Flow so that the canvas workspace is open and visible.
+
+  5. Install and launch Flow MCP. It will automatically connect to Brave's DevTools relay on port 9223. Keep Brave running in the background.
+
+
+  🎨 FLOW STUDIO WEB UI
+
+  Access the visual dashboard at http://umbrel.local:8787 (or http://<umbrel-ip>:8787):
+
+  - Cast & Characters: Create, edit, and maintain character appearance consistency across scenes.
+
+  - Key Frames & Shots: Generate free keyframes, animate between first and last frames, and render cinematic shots.
+
+  - Voiceover & Narration: Generate high-fidelity narration with Google Gemini neural voices (add a free key from Google AI Studio in Studio settings) or system voices.
+
+  - Cut & Assembly: Stitch scenes into a final video, add background music, configure clip volume, and apply automatic audio ducking.
+
+  - Animated Captions: Transcribe audio locally and burn styled, word-by-word kinetic subtitles (Shorts / Reels / TikTok style) onto video.
+
+
+  🔌 REST API ENDPOINTS
+
+  - POST /api/project: Select, list, or verify the active Google Flow project.
+
+  - POST /api/generate: Queue scene generation (prompts, aspect ratio, duration, frames, or batch jobs).
+
+  - POST /api/narrate & POST /api/narrate_batch: Generate Gemini TTS voice audio tracks.
+
+  - POST /api/assemble: Join video shots, voice tracks, and audio into a final rendered MP4.
+
+  - POST /api/captions: Burn dynamic, styled subtitles directly into the video file.
+
+
+  🤖 AI AGENT INTEGRATION (MCP)
+
+  Flow MCP provides native Model Context Protocol support for n8n, Claude Code, Antigravity, Codex, Hermes Agent, and Murmur:
+
+  - Endpoint: http://<umbrel-ip>:8787/mcp
+
+  - Authentication: Send the header "Authorization: Bearer <token>", where <token> is the FLOW_MCP_TOKEN value (the environment variable of that name in the Flow MCP app settings on Umbrel). It is the same token n8n uses. Without it every API and MCP call returns "Missing or wrong token."
+
+  - Key tools include: flow_status, flow_generate, flow_agent_images, flow_narrate, flow_assemble, flow_captions, flow_character, flow_assets, and flow_download.
+
+
+  🔄 UPGRADING & MAINTENANCE
+
+  - Upgrading: When an update is published, simply click Update on the Flow MCP tile in the Umbrel App Store. Your generated videos (/data/out) and project settings (/data/.flow-mcp) are stored on persistent volumes and survive all updates.
+
+  - Reconnecting after reboot: If Umbrel or Brave restarts, Flow MCP automatically reconnects to Brave. Ensure the Brave container is running.
+
+  - Session Expiration: If generations fail or time out, open Brave (port 3935) to verify that your Google account is still actively logged in.
+
+  - Flow Agent Reset: If a multi-image batch job was interrupted and Flow remained in "Agent" mode ("Describe your goal"), Flow MCP v0.2.12+ will automatically detect and reset this before standard generation. You can also manually click the "Flow Agent" toggle button inside Brave.
+
+  - Agent settings aspect ratio: Google renamed the controls inside Flow Agent settings in November 2026. From v0.2.14 a batch no longer stops when the aspect-ratio button cannot be found; the ratio is also written into every agent prompt, so images keep the shape you asked for.
+
+  - Not using Browserless: Flow MCP drives Flow in Brave only. Browserless is not needed and can be uninstalled if nothing else uses it.
 developer: GTAI-1
 website: https://github.com/Oxygen1616/flow-mcp
 submitter: Oxygen1616
@@ -30,9 +87,9 @@ support: https://github.com/Oxygen1616/flow-mcp/issues
 gallery:
   - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-flow-mcp/logo.png
 releaseNotes: >-
-  v0.2.12: Restores image, thumbnail, and Agent batch generation after Google's Flow UI update by supporting the new Flow Agent toggle, spark/spark_off states, and renamed Settings controls. Also prevents interrupted Agent jobs from leaving standard generation locked in Agent mode.
+  v0.2.14: Uses Brave instead of Browserless (the dependency and all instructions now say so). Agent batches no longer fail when Flow's renamed Agent settings hide the 16:9 aspect button. Setup, API token, upgrading and troubleshooting notes rewritten in more detail.
 dependencies:
-  - oxygen-browserless
+  - oxygen-brave
 path: "/"
 defaultUsername: ""
 defaultPassword: ""
