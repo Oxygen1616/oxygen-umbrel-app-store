@@ -1,0 +1,58 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-openmausbot_server_1
+      APP_PORT: 8799
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /data/openmausbot /data/bin
+        chmod -R u+rwX,go+rX /data
+        chown -R 1000:1000 /data
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+
+  server:
+    image: node:24-bookworm-slim
+    restart: unless-stopped
+    init: true
+    shm_size: "1g"
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    environment:
+      - HOME=/data/openmausbot
+      - OMB_PORT=8799
+      - OMB_DATA_DIR=/data/openmausbot
+      - OMB_SERVER_NAME=OpenMausBot-Umbrel
+      - NPM_CONFIG_PREFIX=/data/bin
+      - PATH=/data/bin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    command:
+      - /bin/bash
+      - -ec
+      - |
+        # Ensure system tools for agent CLIs
+        if ! command -v git >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; then
+          echo "Installing system packages..."
+          apt-get update && apt-get install -y --no-install-recommends git curl ca-certificates && rm -rf /var/lib/apt/lists/*
+        fi
+
+        # Persistently install openmausbot CLI if not already installed
+        if [ ! -f /data/bin/bin/openmausbot ]; then
+          echo "Installing OpenMausBot from npm..."
+          npm install -g --prefix /data/bin openmausbot@0.1.175
+        fi
+
+        echo "Starting OpenMausBot server on port 8799..."
+        exec /data/bin/bin/openmausbot serve --lan --port 8799 --data-dir /data/openmausbot --no-open
