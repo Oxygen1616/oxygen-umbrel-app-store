@@ -55,8 +55,8 @@ services:
           npm install -g --prefix /data/bin openmausbot@0.1.175
         fi
 
-        # Support deterministic initial pairing code on fresh install for Umbrel credential modal
-        node -e 'const fs=require("fs"),f="/data/bin/lib/node_modules/openmausbot/dist-server/index.js";if(fs.existsSync(f)){let s=fs.readFileSync(f,"utf8");const target="code=generatePairingCode()";const patch="code=(process.env.OMB_DEFAULT_PAIRING_CODE&&this.sessions.length===0&&!this.pairings.length)?process.env.OMB_DEFAULT_PAIRING_CODE:generatePairingCode()";if(s.includes(target)&&!s.includes("OMB_DEFAULT_PAIRING_CODE")){fs.writeFileSync(f,s.replace(target,patch));}}'
+        # Support deterministic initial pairing code on startup for Umbrel credential modal
+        node -e 'const fs=require("fs"),f="/data/bin/lib/node_modules/openmausbot/dist-server/index.js";if(fs.existsSync(f)){let s=fs.readFileSync(f,"utf8");const re=/code=(?:\([^)]*OMB_DEFAULT_PAIRING_CODE[^)]*\)\?process\.env\.OMB_DEFAULT_PAIRING_CODE:)?generatePairingCode\(\)/;const patch="code=(process.env.OMB_DEFAULT_PAIRING_CODE&&!this.pairings.some(p=>!p.browser))?process.env.OMB_DEFAULT_PAIRING_CODE:generatePairingCode()";if(re.test(s)){fs.writeFileSync(f,s.replace(re,patch));}}'
 
         # Auto-mint pairing code on startup and log prominently
         (
