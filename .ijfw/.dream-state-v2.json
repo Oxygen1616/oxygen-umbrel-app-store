@@ -1,37 +1,37 @@
 {
   "version": 1,
-  "last_run_at": 1794061615155,
-  "runs_total": 3,
+  "last_run_at": 1795264170705,
+  "runs_total": 4,
   "stages": {
     "journal_summary": {
       "status": "completed",
-      "started_at": 1794061614959,
-      "completed_at": 1794061614969,
-      "entries": 1,
-      "sessions": 1
+      "started_at": 1795264170436,
+      "completed_at": 1795264170450,
+      "entries": 2,
+      "sessions": 2
     },
     "tier_promotion": {
       "status": "skipped",
-      "started_at": 1794061614979,
-      "completed_at": 1794061615033,
+      "started_at": 1795264170466,
+      "completed_at": 1795264170566,
       "skipped": "no-op"
     },
     "wiki-compile": {
       "status": "skipped",
-      "started_at": 1794061615041,
-      "completed_at": 1794061615051,
+      "started_at": 1795264170582,
+      "completed_at": 1795264170597,
       "skipped": "db-unavailable"
     },
     "profile_derive": {
-      "status": "completed",
-      "started_at": 1794061615062,
-      "completed_at": 1794061615113,
-      "ok": true
+      "status": "skipped",
+      "started_at": 1795264170614,
+      "completed_at": 1795264170659,
+      "skipped": "cursor-up-to-date"
     },
     "mark_completed_legacy": {
       "status": "completed",
-      "started_at": 1794061615126,
-      "completed_at": 1794061615142,
+      "started_at": 1795264170675,
+      "completed_at": 1795264170691,
       "ok": true
     }
   }

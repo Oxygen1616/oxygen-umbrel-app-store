@@ -4,7 +4,7 @@ name: YouTube Pro
 tagline: Research, understand, write, and package YouTube videos with Gemini AI
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-youtubepro/logo.png
 category: AI
-version: "1.0.0"
+version: "1.0.1"
 port: 8795
 description: >-
   YouTube Pro is an evidence-grounded, local-first workspace for YouTube research, idea generation, script writing with teleprompter, and AI thumbnail creation.
