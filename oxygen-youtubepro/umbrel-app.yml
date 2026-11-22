@@ -1,0 +1,56 @@
+manifestVersion: 1
+id: oxygen-youtubepro
+name: YouTube Pro
+tagline: Research, understand, write, and package YouTube videos with Gemini AI
+icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-youtubepro/logo.png
+category: AI
+version: "1.0.0"
+port: 8795
+description: >-
+  YouTube Pro is an evidence-grounded, local-first workspace for YouTube research, idea generation, script writing with teleprompter, and AI thumbnail creation.
+
+
+  It combines public YouTube Data API v3 metadata with Google Gemini analysis to turn topics into data-backed video strategies and production-ready packages.
+
+
+  FEATURES
+
+
+  • Research Analytics: Search topics, inspect publication patterns, compare video momentum, and review public data coverage.
+
+  • Source Videos Grid: Explore every video in the research snapshot with views, tags, comments, likes, and channel metrics.
+
+  • AI Insights: Gemini analyzes real snapshot evidence to generate audience questions, opportunity themes, and recommended moves.
+
+  • Grounded Ideas: Turn evidence into targeted video concepts with validated hooks and angles.
+
+  • Script Writer & Teleprompter: Draft scripts from selected ideas, regenerate sections with bounded context, and read scripts using a built-in customizable teleprompter.
+
+  • Thumbnail Creator: Generate 16:9 thumbnails from outcome promises and references using Gemini imaging models.
+
+
+  HOW TO CONFIGURE
+
+  1. Open YouTube Pro from your Umbrel app drawer.
+
+  2. Navigate to Settings inside the app or configure via Umbrel App Settings.
+
+  3. Enter your YouTube Data API v3 key and Google Gemini API key.
+developer: Agrici Daniel
+website: https://github.com/AgriciDaniel/youtubepro
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/AgriciDaniel/youtubepro
+support: https://github.com/AgriciDaniel/youtubepro/issues
+gallery:
+  - https://raw.githubusercontent.com/AgriciDaniel/youtubepro/main/docs/images/research-analytics.png
+  - https://raw.githubusercontent.com/AgriciDaniel/youtubepro/main/docs/images/research-source-videos.png
+  - https://raw.githubusercontent.com/AgriciDaniel/youtubepro/main/docs/images/research-ai-insights.png
+  - https://raw.githubusercontent.com/AgriciDaniel/youtubepro/main/docs/images/script-teleprompter.png
+  - https://raw.githubusercontent.com/AgriciDaniel/youtubepro/main/docs/images/thumbnail-creator.png
+releaseNotes: >-
+  v1.0.0: Initial release of YouTube Pro for Umbrel OS. Local-first YouTube research, script teleprompter, and AI thumbnail generation.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
