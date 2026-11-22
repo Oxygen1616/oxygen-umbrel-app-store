@@ -15,7 +15,7 @@ services:
       - sh
       - -c
       - |
-        mkdir -p /data/app
+        mkdir -p /data
         chmod -R 777 /data
     volumes:
       - ${APP_DATA_DIR}/data:/data
@@ -47,10 +47,13 @@ services:
         if [ ! -f /data/app/dist/index.cjs ]; then
           echo "Setting up YouTube Pro for the first time..."
           apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
-          git clone --depth 1 https://github.com/AgriciDaniel/youtubepro.git /data/app
+          if [ ! -f /data/app/package.json ]; then
+            rm -rf /data/app
+            git clone --depth 1 https://github.com/AgriciDaniel/youtubepro.git /data/app
+          fi
           cd /data/app
-          node -e "const fs=require('fs');const f='server/settings.ts';fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace('export function isLocalSettingsRequest(req: Request): boolean {','export function isLocalSettingsRequest(req: Request): boolean {\n  if (process.env.ALLOW_REMOTE_SETTINGS) return true;'));"
-          npm install
+          node -e "const fs=require('fs');const f='server/settings.ts';if(fs.existsSync(f)){fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace('export function isLocalSettingsRequest(req: Request): boolean {','export function isLocalSettingsRequest(req: Request): boolean {\n  if (process.env.ALLOW_REMOTE_SETTINGS) return true;'));}"
+          npm install --include=dev
           npm run build
         fi
 
