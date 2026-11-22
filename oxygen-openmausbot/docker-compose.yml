@@ -34,6 +34,7 @@ services:
       - OMB_PORT=8799
       - OMB_DATA_DIR=/data/openmausbot
       - OMB_SERVER_NAME=OpenMausBot-Umbrel
+      - OMB_DEFAULT_PAIRING_CODE=UMBRMAUS8799
       - NPM_CONFIG_PREFIX=/data/bin
       - PATH=/data/bin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
@@ -54,6 +55,9 @@ services:
           npm install -g --prefix /data/bin openmausbot@0.1.175
         fi
 
+        # Support deterministic initial pairing code on fresh install for Umbrel credential modal
+        node -e 'const fs=require("fs"),f="/data/bin/lib/node_modules/openmausbot/dist-server/index.js";if(fs.existsSync(f)){let s=fs.readFileSync(f,"utf8");const target="code=generatePairingCode()";const patch="code=(process.env.OMB_DEFAULT_PAIRING_CODE&&this.sessions.length===0&&!this.pairings.length)?process.env.OMB_DEFAULT_PAIRING_CODE:generatePairingCode()";if(s.includes(target)&&!s.includes("OMB_DEFAULT_PAIRING_CODE")){fs.writeFileSync(f,s.replace(target,patch));}}'
+
         # Auto-mint pairing code on startup and log prominently
         (
           for i in $$(seq 1 30); do
@@ -71,4 +75,4 @@ services:
         ) &
 
         echo "Starting OpenMausBot server on port 8799..."
-        exec /data/bin/bin/openmausbot serve --lan --port 8799 --data-dir /data/openmausbot --no-open
+        exec /data/bin/bin/openmausbot serve --lan --port 8799 --data-dir /data/openmausbot --no-open --no-pair

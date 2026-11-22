@@ -4,7 +4,7 @@ name: OpenMausBot
 tagline: Open-source Grok Bot alternative with persistent AI teammates and local workspaces
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-openmausbot/logo.png
 category: AI
-version: "0.1.175-1"
+version: "0.1.175-2"
 port: 8799
 description: >-
   OpenMausBot (also known as MausBot, formerly OpenGrokBot) is an open-source alternative to Grok Bot, Meta Muse, OpenAI dots, and Cue by Manus. It provides your own self-hosted team of AI bots inside a modern, local-first chat workspace.
@@ -20,17 +20,15 @@ description: >-
 
   1. Install OpenMausBot from the Oxygen App Store.
 
-  2. Open OpenMausBot on your Umbrel (port 8799) to view the web interface and pairing status.
+  2. Launch OpenMausBot from your Umbrel app drawer and copy the Pairing Code shown in the credentials dialog.
 
-  3. Connect the Desktop App or Phone:
-     Run in your Umbrel terminal / SSH:
+  3. Paste the pairing code on the OpenMausBot connection screen and click Connect.
+
+  4. To pair additional devices (Desktop App or Phone) later, use Settings → Phone & devices inside OpenMausBot, or run:
      docker exec -it oxygen-openmausbot_server_1 /data/bin/bin/openmausbot pair
-     Paste the generated pairing link into your desktop app or scan the QR code with your mobile camera.
 
-  4. Configure AI Engine Keys (e.g., Claude, OpenAI, or local models):
-     Run in your terminal:
+  5. Configure AI Engine Keys (e.g., Claude, OpenAI, or local models) from the Settings screen or via:
      docker exec -it oxygen-openmausbot_server_1 /data/bin/bin/openmausbot engine set claude --key-env ANTHROPIC_API_KEY
-     or configure providers directly from the Settings screen.
 developer: Milind Soni
 website: https://openmausbot.com
 submitter: Oxygen1616
@@ -40,8 +38,8 @@ support: https://github.com/milind-soni/OpenMausBot/issues
 gallery:
   - https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-openmausbot/logo.png
 releaseNotes: >-
-  v0.1.175: Initial release of OpenMausBot for Umbrel OS. Open-source Grok Bot alternative featuring persistent local-first agent workspaces, multi-bot orchestration, and web pairing.
+  v0.1.175-2: Added umbrelOS credential modal support with copyable initial pairing code on first launch.
 dependencies: []
 path: ""
-defaultUsername: ""
-defaultPassword: ""
+defaultUsername: "none (use pairing code below)"
+defaultPassword: "UMBR-MAUS-8799"
