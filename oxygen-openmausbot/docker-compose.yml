@@ -74,5 +74,8 @@ services:
           echo ""
         ) &
 
+        # Clear stale container lease file left across container recreations or host reboots
+        rm -f /data/openmausbot/openmausbot-server.lease
+
         echo "Starting OpenMausBot server on port 8799..."
         exec /data/bin/bin/openmausbot serve --lan --port 8799 --data-dir /data/openmausbot --no-open --no-pair

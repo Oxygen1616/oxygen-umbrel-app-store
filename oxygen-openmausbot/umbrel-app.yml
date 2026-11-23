@@ -4,7 +4,7 @@ name: OpenMausBot
 tagline: Open-source Grok Bot alternative with persistent AI teammates and local workspaces
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-openmausbot/logo.png
 category: AI
-version: "0.1.175-3"
+version: "0.1.175-4"
 port: 8799
 description: >-
   OpenMausBot (also known as MausBot, formerly OpenGrokBot) is an open-source alternative to Grok Bot, Meta Muse, OpenAI dots, and Cue by Manus. It provides your own self-hosted team of AI bots inside a modern, local-first chat workspace.
