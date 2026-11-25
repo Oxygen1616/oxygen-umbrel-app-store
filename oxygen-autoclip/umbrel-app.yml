@@ -1,0 +1,52 @@
+manifestVersion: 1
+id: oxygen-autoclip
+name: AutoClip
+tagline: Turn any video, link, or live stream into ready-to-post clips with AI
+icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-autoclip/logo.png
+category: AI
+version: "1.6.1"
+port: 8796
+description: >-
+  AutoClip is an open-source, local-first AI video clipping workspace for podcasts, interviews, and gaming streams — with smart reframing, burned-in captions, AI covers, and ready-to-post exports for TikTok, Shorts, Reels, YouTube, and Bilibili.
+
+
+  Drop in a video link, local file, or live stream replay and AutoClip automatically finds the best moments, tracks speakers, generates titles and covers, and cuts vertical or landscape clips locally on your Umbrel.
+
+
+  FEATURES
+
+
+  • Smart Highlight Detection: Analyzes transcripts and visual scenes to extract high-impact clips and compilations.
+
+  • Auto Captions & Covers: Burns in styled subtitles (with 13 UI languages and RTL support) and generates custom covers.
+
+  • Smart Reframing: Automatically crops 16:9 videos into 9:16 vertical format with speaker tracking.
+
+  • Multi-Provider AI: Bring your own API key (OpenAI, Gemini, DashScope, DeepSeek, Kimi, GLM, Grok) or run offline with Ollama / LM Studio.
+
+  • Built-in Task Queue: Powered by FastAPI, Celery, and Redis for reliable background video processing.
+
+
+  HOW TO CONFIGURE
+
+  1. Open AutoClip from your Umbrel app drawer (first launch builds the frontend and Python environment, which takes a few minutes).
+
+  2. Open Settings in the AutoClip web UI to configure your LLM provider API key (or local Ollama endpoint).
+
+  3. Drop a video link or upload a file to start clipping.
+developer: zhouxiaoka
+website: https://zhouxiaoka.github.io/autoclip_intro/
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/zhouxiaoka/autoclip
+support: https://github.com/zhouxiaoka/autoclip/issues
+gallery:
+  - https://raw.githubusercontent.com/zhouxiaoka/autoclip/main/docs/images/v1.6/en-01-home.jpg
+  - https://raw.githubusercontent.com/zhouxiaoka/autoclip/main/docs/images/v1.6/en-02-replays-obs.jpg
+  - https://raw.githubusercontent.com/zhouxiaoka/autoclip/main/docs/images/v1.6/en-05-result-card.jpg
+releaseNotes: >-
+  v1.6.1: Initial release of AutoClip for Umbrel OS featuring AI highlight detection, smart 9:16 reframing, burned-in captions, cover generation, and background Celery + Redis processing.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""

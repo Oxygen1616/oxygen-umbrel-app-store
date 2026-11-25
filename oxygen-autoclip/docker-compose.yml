@@ -1,0 +1,148 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-autoclip_server_1
+      APP_PORT: 8000
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /data/redis /data/storage/data /data/storage/logs /data/storage/uploads
+        chmod -R 777 /data
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    command: redis-server --appendonly yes
+    volumes:
+      - ${APP_DATA_DIR}/data/redis:/data
+
+  server:
+    image: python:3.11-slim
+    restart: unless-stopped
+    init: true
+    shm_size: "1g"
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONPATH=/data/app
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=sqlite:////data/app/data/autoclip.db
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - LOG_LEVEL=INFO
+      - AUTOCLIP_HOST=0.0.0.0
+      - LLM_PROVIDER=${LLM_PROVIDER:-openai}
+      - API_MODEL_NAME=${API_MODEL_NAME:-gpt-4o-mini}
+      - API_DASHSCOPE_API_KEY=${API_DASHSCOPE_API_KEY:-}
+      - API_OPENAI_API_KEY=${API_OPENAI_API_KEY:-}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-}
+      - DASHSCOPE_BASE_URL=${DASHSCOPE_BASE_URL:-}
+      - API_GEMINI_API_KEY=${API_GEMINI_API_KEY:-}
+      - API_SILICONFLOW_API_KEY=${API_SILICONFLOW_API_KEY:-}
+      - AUTOCLIP_ALLOWED_ORIGINS=${AUTOCLIP_ALLOWED_ORIGINS:-}
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    working_dir: /data
+    command:
+      - /bin/bash
+      - -ec
+      - |
+        cd /data
+
+        # Ensure runtime tools (ffmpeg, git, curl) are always present in container
+        if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v git >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; then
+          echo "Installing runtime system dependencies (ffmpeg, git, curl)..."
+          apt-get update && apt-get install -y --no-install-recommends ffmpeg git curl ca-certificates && rm -rf /var/lib/apt/lists/*
+        fi
+
+        # First-time setup: clone, build frontend, and install Python venv
+        if [ ! -f /data/app/frontend/dist/index.html ] || [ ! -f /data/venv/bin/uvicorn ]; then
+          echo "Setting up AutoClip for the first time..."
+          if ! command -v node >/dev/null 2>&1 || ! command -v g++ >/dev/null 2>&1; then
+            apt-get update && apt-get install -y --no-install-recommends build-essential nodejs npm && rm -rf /var/lib/apt/lists/*
+          fi
+
+          if [ ! -f /data/app/requirements.txt ]; then
+            rm -rf /data/app
+            git clone --depth 1 https://github.com/zhouxiaoka/autoclip.git /data/app
+          fi
+
+          # Persist data, logs, and uploads under /data/storage
+          mkdir -p /data/storage/data/projects /data/storage/data/uploads /data/storage/data/temp /data/storage/data/output /data/storage/logs
+          rm -rf /data/app/data /data/app/logs
+          ln -sfn /data/storage/data /data/app/data
+          ln -sfn /data/storage/logs /data/app/logs
+
+          if [ ! -f /data/app/.env ] && [ -f /data/app/env.example ]; then
+            cp /data/app/env.example /data/app/.env
+          fi
+
+          echo "Building AutoClip frontend..."
+          cd /data/app/frontend
+          npm ci
+          npx vite build --base=/
+
+          echo "Installing AutoClip Python dependencies..."
+          python3 -m venv /data/venv
+          /data/venv/bin/pip install --no-cache-dir -r /data/app/requirements.txt
+        fi
+
+        cd /data/app
+        mkdir -p /data/storage/data/projects /data/storage/data/uploads /data/storage/data/temp /data/storage/data/output /data/storage/logs
+
+        # Write SPA + API combined entrypoint wrapper
+        cat <<'PY' > /data/app/serve_umbrel.py
+        from pathlib import Path
+        from fastapi.responses import FileResponse
+        from fastapi.staticfiles import StaticFiles
+        from backend.main import app
+
+        dist = Path("/data/app/frontend/dist")
+        assets = dist / "assets"
+        if assets.is_dir():
+            app.mount("/assets", StaticFiles(directory=str(assets)), name="assets")
+
+        @app.get("/{full_path:path}")
+        async def spa_fallback(full_path: str):
+            candidate = (dist / full_path).resolve()
+            if full_path and candidate.is_file() and str(candidate).startswith(str(dist.resolve())):
+                return FileResponse(str(candidate))
+            return FileResponse(str(dist / "index.html"))
+        PY
+
+        echo "Waiting for Redis..."
+        for i in $$(seq 1 30); do
+          if /data/venv/bin/python -c "import redis, os; redis.Redis.from_url(os.getenv('REDIS_URL', 'redis://redis:6379/0')).ping()" >/dev/null 2>&1; then
+            break
+          fi
+          sleep 1
+        done
+
+        echo "Initializing AutoClip database..."
+        /data/venv/bin/python /data/app/scripts/ops/init_database.py
+
+        echo "Starting Celery worker and beat..."
+        /data/venv/bin/celery -A backend.core.celery_app worker --loglevel=info --concurrency=2 -Q celery,processing,video,notification,upload &
+        /data/venv/bin/celery -A backend.core.celery_app beat --loglevel=info &
+
+        echo "Starting AutoClip server on 0.0.0.0:8000..."
+        exec /data/venv/bin/python -m uvicorn serve_umbrel:app --host 0.0.0.0 --port 8000
