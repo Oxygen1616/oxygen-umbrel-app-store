@@ -1,0 +1,49 @@
+manifestVersion: 1
+id: oxygen-firecrawl
+name: Firecrawl
+tagline: Turn entire websites into LLM-ready markdown or structured data
+icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-firecrawl/logo.png
+category: AI
+version: "2.0.0"
+port: 8797
+description: >-
+  Firecrawl is an open-source API service that takes any URL, crawls it, and converts it into clean markdown or structured JSON ready for LLMs, RAG pipelines, and AI agents.
+
+
+  Self-hosted on your Umbrel with full Playwright browser rendering, PostgreSQL + Redis + RabbitMQ job queuing, and zero rate limits.
+
+
+  FEATURES
+
+
+  • Scrape & Crawl: Extract clean markdown, HTML, screenshots, and links from single pages or entire websites — including JS-rendered SPAs.
+
+  • Map & Search: Rapidly discover all URLs on a domain or combine web search with full-page extraction.
+
+  • Structured Extraction: Extract typed JSON schemas from web pages using your OpenAI-compatible or local LLM endpoint.
+
+  • Playwright Microservice: Built-in headless browser pool handles dynamic pages, anti-bot delays, and interactive rendering.
+
+
+  HOW TO USE
+
+  1. Install Firecrawl from the Oxygen App Store.
+
+  2. Point your AI agents, n8n workflows, MCP servers, or scripts to http://umbrel.local:8797 (or http://192.168.1.15:8797).
+
+  3. Test the API with:
+     curl -X POST http://umbrel.local:8797/v1/scrape -H "Content-Type: application/json" -d '{"url":"https://example.com","formats":["markdown"]}'
+developer: Mendable / Firecrawl
+website: https://firecrawl.dev
+submitter: Oxygen1616
+submission: https://github.com/Oxygen1616/oxygen-umbrel-app-store
+repo: https://github.com/firecrawl/firecrawl
+support: https://github.com/firecrawl/firecrawl/issues
+gallery:
+  - https://raw.githubusercontent.com/firecrawl/firecrawl/main/img/open-source-cloud.png
+releaseNotes: >-
+  v2.0.0: Initial release of self-hosted Firecrawl for Umbrel OS using official GHCR images (API, Playwright microservice, nuq-postgres, Redis, and RabbitMQ).
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""

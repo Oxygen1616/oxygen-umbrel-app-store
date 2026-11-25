@@ -1,0 +1,92 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-nod_server_1
+      APP_PORT: 4310
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /data/postgres /data/nod-data /data/pnpm-store
+        chmod -R 777 /data
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    environment:
+      POSTGRES_USER: nod
+      POSTGRES_PASSWORD: ${APP_SEED}
+      POSTGRES_DB: nod
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nod -d nod"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 10s
+
+  server:
+    image: node:24-bookworm-slim
+    restart: unless-stopped
+    init: true
+    shm_size: "1g"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    environment:
+      - NODE_ENV=production
+      - PORT=4310
+      - NOD_HOST=0.0.0.0
+      - NOD_DATA_ROOT=/data/nod-data
+      - NOD_POSTGRES_PASSWORD=${APP_SEED}
+      - DATABASE_URL=postgres://nod:${APP_SEED}@postgres:5432/nod
+      - PNPM_HOME=/data/pnpm-store
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    working_dir: /data
+    command:
+      - /bin/bash
+      - -ec
+      - |
+        cd /data
+
+        if [ ! -f /data/app/dist/index.html ] || [ ! -d /data/app/node_modules ]; then
+          echo "Setting up n8n Nod for the first time..."
+          apt-get update && apt-get install -y --no-install-recommends git curl ca-certificates python3 make g++ && rm -rf /var/lib/apt/lists/*
+          corepack enable
+
+          if [ ! -f /data/app/package.json ]; then
+            rm -rf /data/app
+            git clone --depth 1 https://github.com/n8n-io/nod.git /data/app
+          fi
+
+          cd /data/app
+          if [ ! -f /data/app/.env ] && [ -f /data/app/.env.example ]; then
+            cp /data/app/.env.example /data/app/.env
+          fi
+
+          pnpm install --frozen-lockfile --prod=false
+          pnpm exec vite build
+        fi
+
+        cd /data/app
+        echo "Starting n8n Nod on 0.0.0.0:4310..."
+        exec ./node_modules/.bin/tsx src/server/index.ts

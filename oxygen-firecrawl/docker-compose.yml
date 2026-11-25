@@ -1,0 +1,121 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: oxygen-firecrawl_api_1
+      APP_PORT: 3002
+      PROXY_AUTH_ADD: "false"
+
+  permissions:
+    image: alpine:latest
+    user: "0:0"
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /data/postgres /data/redis /data/rabbitmq
+        chmod -R 777 /data
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    command: redis-server --bind 0.0.0.0
+    volumes:
+      - ${APP_DATA_DIR}/data/redis:/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    command: rabbitmq-server
+    volumes:
+      - ${APP_DATA_DIR}/data/rabbitmq:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_running"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  nuq-postgres:
+    image: ghcr.io/firecrawl/nuq-postgres:latest
+    restart: unless-stopped
+    depends_on:
+      permissions:
+        condition: service_completed_successfully
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${APP_SEED}
+      POSTGRES_DB: postgres
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  playwright-service:
+    image: ghcr.io/firecrawl/playwright-service:latest
+    restart: unless-stopped
+    environment:
+      PORT: 3000
+      MAX_CONCURRENT_PAGES: 10
+      BLOCK_MEDIA: "true"
+    tmpfs:
+      - /tmp/.cache:noexec,nosuid,size=1g
+
+  api:
+    image: ghcr.io/firecrawl/firecrawl:latest
+    restart: unless-stopped
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      redis:
+        condition: service_started
+      playwright-service:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      nuq-postgres:
+        condition: service_healthy
+    environment:
+      HOST: "0.0.0.0"
+      PORT: 3002
+      WORKER_PORT: 3005
+      ENV: local
+      USE_DB_AUTHENTICATION: "false"
+      REDIS_URL: redis://redis:6379
+      REDIS_RATE_LIMIT_URL: redis://redis:6379
+      PLAYWRIGHT_MICROSERVICE_URL: http://playwright-service:3000/scrape
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${APP_SEED}
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: nuq-postgres
+      POSTGRES_PORT: 5432
+      NUQ_RABBITMQ_URL: amqp://rabbitmq:5672
+      NUM_WORKERS_PER_QUEUE: 4
+      CRAWL_CONCURRENT_REQUESTS: 10
+      MAX_CONCURRENT_JOBS: 5
+      BROWSER_POOL_SIZE: 5
+      BULL_AUTH_KEY: ${APP_SEED}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      MODEL_NAME: ${MODEL_NAME:-}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-}
+      HARNESS_STARTUP_TIMEOUT_MS: 60000
+    command: node dist/src/harness.js --start-docker
