@@ -16,7 +16,7 @@ services:
       - -c
       - |
         mkdir -p /data/redis /data/storage/data /data/storage/logs /data/storage/uploads
-        chmod -R 777 /data
+        chmod 777 /data /data/redis /data/storage
     volumes:
       - ${APP_DATA_DIR}/data:/data
 
