@@ -6,7 +6,7 @@ services:
       PROXY_AUTH_ADD: "false"
 
   web:
-    image: ghcr.io/tashfeenahmed/freellmapi:latest
+    image: ghcr.io/tashfeenahmed/freellmapi:v0.16.46
     restart: on-failure
     environment:
       - PORT=3001
