@@ -4,7 +4,7 @@ name: Nod
 tagline: Open-source personal AI agent by n8n with memory, approvals, and schedules
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-nod/logo.png
 category: AI
-version: "0.1.0-1"
+version: "0.1.0-2"
 port: 8798
 description: >-
   Nod (by n8n) is an open-source personal AI agent that works across Gmail, Calendar, Slack, Notion, and the web — remembering your preferences, running scheduled checks, and asking for your approval before acting for you.
