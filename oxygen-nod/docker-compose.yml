@@ -16,7 +16,8 @@ services:
       - -c
       - |
         mkdir -p /data/postgres /data/nod-data /data/pnpm-store
-        chmod -R 777 /data
+        chmod 777 /data /data/nod-data /data/pnpm-store
+        chmod 700 /data/postgres
     volumes:
       - ${APP_DATA_DIR}/data:/data
 
