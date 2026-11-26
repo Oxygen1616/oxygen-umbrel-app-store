@@ -35,6 +35,9 @@ services:
     restart: unless-stopped
     init: true
     shm_size: "1g"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "umbrel.local:host-gateway"
     depends_on:
       permissions:
         condition: service_completed_successfully
@@ -108,6 +111,33 @@ services:
 
         cd /data/app
         mkdir -p /data/storage/data/projects /data/storage/data/uploads /data/storage/data/temp /data/storage/data/output /data/storage/logs
+
+        # Patch provider_presets.json so OpenAI-compatible presets (OpenRouter, NVIDIA, Groq, etc.)
+        # and DeepSeek default model work cleanly, then rebuild frontend if not yet rebuilt for this patch.
+        if [ ! -f /data/app/.presets_patched_v1 ]; then
+          /data/venv/bin/python - <<'PY'
+        import json
+        from pathlib import Path
+        p = Path('/data/app/backend/presets/provider_presets.json')
+        if p.exists():
+            data = json.loads(p.read_text(encoding='utf-8'))
+            skip = {'openai', 'dashscope', 'siliconflow', 'ollama', 'lmstudio'}
+            for pid, cfg in data.get('providers', {}).items():
+                if cfg.get('protocol') == 'openai-completions' and cfg.get('base_url') and pid not in skip:
+                    cfg['openai_compat_remap'] = True
+            ds = data.get('providers', {}).get('deepseek')
+            if ds:
+                ds['default_model'] = 'deepseek-chat'
+                ds.setdefault('candidates', {})['analysis'] = ['deepseek-chat', 'deepseek-reasoner']
+            p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        PY
+          if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
+            apt-get update && apt-get install -y --no-install-recommends nodejs npm && rm -rf /var/lib/apt/lists/*
+          fi
+          cd /data/app/frontend && npx vite build --base=/
+          cd /data/app
+          touch /data/app/.presets_patched_v1
+        fi
 
         # Write SPA + API combined entrypoint wrapper
         cat <<'PY' > /data/app/serve_umbrel.py
