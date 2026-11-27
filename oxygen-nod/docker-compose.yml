@@ -15,9 +15,8 @@ services:
       - sh
       - -c
       - |
-        mkdir -p /data/postgres /data/nod-data /data/pnpm-store
+        mkdir -p /data/nod-data /data/pnpm-store
         chmod 777 /data /data/nod-data /data/pnpm-store
-        chmod 700 /data/postgres
     volumes:
       - ${APP_DATA_DIR}/data:/data
 
@@ -32,9 +31,9 @@ services:
       POSTGRES_PASSWORD: ${APP_SEED}
       POSTGRES_DB: nod
     volumes:
-      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
+      - ${APP_DATA_DIR}/data/pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U nod -d nod"]
+      test: ["CMD-SHELL", "pg_isready -U nod"]
       interval: 5s
       timeout: 5s
       retries: 15
