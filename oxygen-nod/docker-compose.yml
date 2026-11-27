@@ -94,6 +94,9 @@ services:
         # Allow LAN hosts/same-origin requests (e.g. umbrel.local:8798, 192.168.1.15:8798) when NOD_ALLOW_LAN=true
         node -e 'const fs=require("fs"),f="/data/app/src/server/access.ts";if(fs.existsSync(f)){let s=fs.readFileSync(f,"utf8");if(!s.includes("NOD_ALLOW_LAN")){s=s.replace("if (!hosts.has(request.headers.host || '\'''\''))","if (process.env.NOD_ALLOW_LAN !== '\''true'\'' && !hosts.has(request.headers.host || '\'''\''))").replace("!hosts.has(requested.host)","(process.env.NOD_ALLOW_LAN === '\''true'\'' ? requested.host !== (request.headers.host || '\'''\'') : !hosts.has(requested.host))");fs.writeFileSync(f,s);}}'
 
+        # Inject crypto.randomUUID polyfill for non-HTTPS LAN access (e.g. http://umbrel.local:8798)
+        node -e 'const fs=require("fs");const poly="<script>if(typeof crypto!==\"undefined\"&&typeof crypto.randomUUID!==\"function\"){crypto.randomUUID=function(){var b=new Uint8Array(16);crypto.getRandomValues(b);b[6]=(b[6]&0x0f)|0x40;b[8]=(b[8]&0x3f)|0x80;var h=Array.from(b,function(x){return x.toString(16).padStart(2,\"0\")}).join(\"\");return h.slice(0,8)+\"-\"+h.slice(8,12)+\"-\"+h.slice(12,16)+\"-\"+h.slice(16,20)+\"-\"+h.slice(20)};}</script>";for(const f of ["/data/app/dist/web/index.html","/data/app/index.html"]){if(fs.existsSync(f)){let s=fs.readFileSync(f,"utf8");if(!s.includes("crypto.randomUUID=function")&&s.includes("<head>")){fs.writeFileSync(f,s.replace("<head>","<head>"+poly));}}}'
+
         chmod 700 /data/nod-data
         cd /data/app
         echo "Starting n8n Nod on 0.0.0.0:4310..."
