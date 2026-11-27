@@ -16,7 +16,8 @@ services:
       - -c
       - |
         mkdir -p /data/nod-data /data/pnpm-store
-        chmod 777 /data /data/nod-data /data/pnpm-store
+        chmod 755 /data /data/pnpm-store
+        chmod 700 /data/nod-data
     volumes:
       - ${APP_DATA_DIR}/data:/data
 
@@ -89,6 +90,7 @@ services:
           pnpm exec vite build
         fi
 
+        chmod 700 /data/nod-data
         cd /data/app
         echo "Starting n8n Nod on 0.0.0.0:4310..."
         exec ./node_modules/.bin/tsx src/server/index.ts
