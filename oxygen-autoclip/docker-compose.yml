@@ -139,6 +139,18 @@ services:
           touch /data/app/.presets_patched_v1
         fi
 
+        # Inject crypto.randomUUID polyfill for non-HTTPS LAN access (e.g. http://umbrel.local:8796)
+        /data/venv/bin/python - <<'PY'
+        from pathlib import Path
+        polyfill = '<script>if(typeof crypto!=="undefined"&&typeof crypto.randomUUID!=="function"){crypto.randomUUID=function(){var b=new Uint8Array(16);crypto.getRandomValues(b);b[6]=(b[6]&0x0f)|0x40;b[8]=(b[8]&0x3f)|0x80;var h=Array.from(b,function(x){return x.toString(16).padStart(2,"0")}).join("");return h.slice(0,8)+"-"+h.slice(8,12)+"-"+h.slice(12,16)+"-"+h.slice(16,20)+"-"+h.slice(20)};}</script>'
+        for rel in ('/data/app/frontend/dist/index.html', '/data/app/frontend/index.html'):
+            p = Path(rel)
+            if p.exists():
+                html = p.read_text(encoding='utf-8')
+                if 'crypto.randomUUID=function' not in html and '<head>' in html:
+                    p.write_text(html.replace('<head>', '<head>' + polyfill, 1), encoding='utf-8')
+        PY
+
         # Write SPA + API combined entrypoint wrapper
         cat <<'PY' > /data/app/serve_umbrel.py
         from pathlib import Path
