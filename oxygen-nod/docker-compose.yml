@@ -55,6 +55,7 @@ services:
       - NODE_ENV=production
       - PORT=4310
       - NOD_HOST=0.0.0.0
+      - NOD_AUTH_TOKEN=${APP_PASSWORD}
       - NOD_DATA_ROOT=/data/nod-data
       - NOD_POSTGRES_PASSWORD=${APP_SEED}
       - DATABASE_URL=postgres://nod:${APP_SEED}@postgres:5432/nod
@@ -68,7 +69,7 @@ services:
       - |
         cd /data
 
-        if [ ! -f /data/app/dist/index.html ] || [ ! -d /data/app/node_modules ]; then
+        if [ ! -f /data/app/dist/web/index.html ] || [ ! -d /data/app/node_modules ]; then
           echo "Setting up n8n Nod for the first time..."
           apt-get update && apt-get install -y --no-install-recommends git curl ca-certificates python3 make g++ && rm -rf /var/lib/apt/lists/*
           corepack enable
