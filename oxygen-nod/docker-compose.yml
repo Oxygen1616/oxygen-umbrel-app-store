@@ -56,6 +56,7 @@ services:
       - NODE_ENV=production
       - PORT=4310
       - NOD_HOST=0.0.0.0
+      - NOD_ALLOW_LAN=true
       - NOD_AUTH_TOKEN=${APP_PASSWORD}
       - NOD_DATA_ROOT=/data/nod-data
       - NOD_POSTGRES_PASSWORD=${APP_SEED}
@@ -89,6 +90,9 @@ services:
           pnpm install --frozen-lockfile --prod=false
           pnpm exec vite build
         fi
+
+        # Allow LAN hosts/same-origin requests (e.g. umbrel.local:8798, 192.168.1.15:8798) when NOD_ALLOW_LAN=true
+        node -e 'const fs=require("fs"),f="/data/app/src/server/access.ts";if(fs.existsSync(f)){let s=fs.readFileSync(f,"utf8");if(!s.includes("NOD_ALLOW_LAN")){s=s.replace("if (!hosts.has(request.headers.host || '\'''\''))","if (process.env.NOD_ALLOW_LAN !== '\''true'\'' && !hosts.has(request.headers.host || '\'''\''))").replace("!hosts.has(requested.host)","(process.env.NOD_ALLOW_LAN === '\''true'\'' ? requested.host !== (request.headers.host || '\'''\'') : !hosts.has(requested.host))");fs.writeFileSync(f,s);}}'
 
         chmod 700 /data/nod-data
         cd /data/app
