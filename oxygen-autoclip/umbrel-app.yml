@@ -4,7 +4,7 @@ name: AutoClip
 tagline: Turn any video, link, or live stream into ready-to-post clips with AI
 icon: https://raw.githubusercontent.com/Oxygen1616/oxygen-umbrel-app-store/master/oxygen-autoclip/logo.png
 category: AI
-version: "1.6.1-3"
+version: "1.6.1-4"
 port: 8796
 description: >-
   AutoClip is an open-source, local-first AI video clipping workspace for podcasts, interviews, and gaming streams — with smart reframing, burned-in captions, AI covers, and ready-to-post exports for TikTok, Shorts, Reels, YouTube, and Bilibili.
