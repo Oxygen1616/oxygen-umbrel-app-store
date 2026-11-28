@@ -140,53 +140,65 @@ services:
         fi
 
         # Allow saving a new provider key (e.g. Gemini/OpenRouter/OmniRoute) without being blocked by the unconfigured default legacy-analysis OpenAI slot.
-        if [ ! -f /data/app/.save_issue_patched_v1 ]; then
+        if [ ! -f /data/app/.save_issue_patched_v2 ]; then
           /data/venv/bin/python - <<'PY'
         from pathlib import Path
         p = Path('/data/app/frontend/src/features/settings/modelSettingsLogic.ts')
         if p.exists():
             src = p.read_text(encoding='utf-8')
-            old_issue = """    if (role === 'analysis' && allowAccountOnly && !s.analysis?.model.trim()
-        && s.connections.some(c => persistableConnection(c, new Set()))) continue"""
-            new_issue = """    const analysisConn = role === 'analysis' ? s.connections.find(c => c.id === s.analysis?.connection_id) : undefined
-    const unconfiguredDefaultAnalysis = role === 'analysis' && s.analysis?.connection_id === 'legacy-analysis'
-      && (!analysisConn || !connectionReady(analysisConn))
-      && s.connections.some(c => c.id !== 'legacy-analysis' && persistableConnection(c, new Set()))
-    if (role === 'analysis' && allowAccountOnly && (!s.analysis?.model.trim() || unconfiguredDefaultAnalysis)
-        && s.connections.some(c => persistableConnection(c, new Set()))) continue"""
-            old_save = """export function forSave(s: ModelSettings): ModelSettings {
-  const cover = s.cover?.model.trim() ? s.cover : null
-  const active = new Set([s.analysis?.connection_id, s.vision?.connection_id, cover?.connection_id, s.transcription?.connection_id])
-  return {
-    ...s,
-    cover,
-    analysis: s.analysis?.model.trim() ? s.analysis : null,"""
-            new_save = """export function forSave(s: ModelSettings): ModelSettings {
-  const cover = s.cover?.model.trim() ? s.cover : null
-  const legacyConn = s.analysis?.connection_id === 'legacy-analysis'
-    ? s.connections.find(c => c.id === 'legacy-analysis')
-    : undefined
-  const dropUnconfiguredDefaultAnalysis = s.analysis?.connection_id === 'legacy-analysis'
-    && (!legacyConn || !connectionReady(legacyConn))
-    && s.connections.some(c => c.id !== 'legacy-analysis' && persistableConnection(c, new Set()))
-  const analysis = !dropUnconfiguredDefaultAnalysis && s.analysis?.model.trim() ? s.analysis : null
-  const active = new Set([analysis?.connection_id, s.vision?.connection_id, cover?.connection_id, s.transcription?.connection_id])
-  return {
-    ...s,
-    cover,
-    analysis,"""
+            old_issue = (
+                "    if (role === 'analysis' && allowAccountOnly && !s.analysis?.model.trim()\n"
+                "        && s.connections.some(c => persistableConnection(c, new Set()))) continue"
+            )
+            new_issue = (
+                "    const analysisConn = role === 'analysis' ? s.connections.find(c => c.id === s.analysis?.connection_id) : undefined\n"
+                "    const unconfiguredDefaultAnalysis = role === 'analysis' && s.analysis?.connection_id === 'legacy-analysis'\n"
+                "      && (!analysisConn || !connectionReady(analysisConn))\n"
+                "      && s.connections.some(c => c.id !== 'legacy-analysis' && persistableConnection(c, new Set()))\n"
+                "    if (role === 'analysis' && allowAccountOnly && (!s.analysis?.model.trim() || unconfiguredDefaultAnalysis)\n"
+                "        && s.connections.some(c => persistableConnection(c, new Set()))) continue"
+            )
+            old_save = (
+                "export function forSave(s: ModelSettings): ModelSettings {\n"
+                "  const cover = s.cover?.model.trim() ? s.cover : null\n"
+                "  const active = new Set([s.analysis?.connection_id, s.vision?.connection_id, cover?.connection_id, s.transcription?.connection_id])\n"
+                "  return {\n"
+                "    ...s,\n"
+                "    cover,\n"
+                "    analysis: s.analysis?.model.trim() ? s.analysis : null,"
+            )
+            new_save = (
+                "export function forSave(s: ModelSettings): ModelSettings {\n"
+                "  const cover = s.cover?.model.trim() ? s.cover : null\n"
+                "  const legacyConn = s.analysis?.connection_id === 'legacy-analysis'\n"
+                "    ? s.connections.find(c => c.id === 'legacy-analysis')\n"
+                "    : undefined\n"
+                "  const dropUnconfiguredDefaultAnalysis = s.analysis?.connection_id === 'legacy-analysis'\n"
+                "    && (!legacyConn || !connectionReady(legacyConn))\n"
+                "    && s.connections.some(c => c.id !== 'legacy-analysis' && persistableConnection(c, new Set()))\n"
+                "  const analysis = !dropUnconfiguredDefaultAnalysis && s.analysis?.model.trim() ? s.analysis : null\n"
+                "  const active = new Set([analysis?.connection_id, s.vision?.connection_id, cover?.connection_id, s.transcription?.connection_id])\n"
+                "  return {\n"
+                "    ...s,\n"
+                "    cover,\n"
+                "    analysis,"
+            )
+            patched = 0
             if old_issue in src:
                 src = src.replace(old_issue, new_issue, 1)
+                patched += 1
             if old_save in src:
                 src = src.replace(old_save, new_save, 1)
+                patched += 1
             p.write_text(src, encoding='utf-8')
+            print(f'Patched modelSettingsLogic.ts ({patched}/2)')
         PY
           if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
             apt-get update && apt-get install -y --no-install-recommends nodejs npm && rm -rf /var/lib/apt/lists/*
           fi
           cd /data/app/frontend && npx vite build --base=/
           cd /data/app
-          touch /data/app/.save_issue_patched_v1
+          touch /data/app/.save_issue_patched_v2
         fi
 
         # Inject crypto.randomUUID polyfill for non-HTTPS LAN access (e.g. http://umbrel.local:8796)
